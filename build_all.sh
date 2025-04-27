@@ -42,7 +42,7 @@ mkdir -p "$BOOK_DIR/chapters"
 # === 2.1 复制所有 md 文件（保持结构）===
 # === 2.1 复制所有 .md 文件（保持结构，并显示每次复制信息）===
 find . -name "*.md" | while read -r md_file; do
-    dst_path="$BOOK_DIR/chapters/$(dirname "$md_file" | sed 's|^\./||')"
+    dst_path="$BOOK_DIR/$(dirname "$md_file" | sed 's|^\./||')"
     mkdir -p "$dst_path"
     cp "$md_file" "$dst_path/"
     echo "✅ Copied: $md_file --> $dst_path/"
@@ -50,7 +50,7 @@ done
 
 # === 2.2 复制所有 *_files 文件夹（图片资源，并显示每次复制信息）===
 find . -type d -name "*_files" | while read -r d; do
-    dst_path="$BOOK_DIR/chapters/$(dirname "$d" | sed 's|^\./||')"
+    dst_path="$BOOK_DIR/$(dirname "$d" | sed 's|^\./||')"
     mkdir -p "$dst_path"
     cp -r "$d" "$dst_path/"
     echo "📂 Copied folder: $d --> $dst_path/"
