@@ -69,6 +69,9 @@ if [[ ! -f "$TOC_FILE" ]]; then
 fi
 
 # === 5. 生成 HTML 页面 ===
+echo "🧹 Cleaning old build..."
+rm -rf "$BOOK_DIR/_build"
+
 echo "📘 Building Jupyter Book..."
 if [[ -n "$BUILD_CHAPTER" ]]; then
     jupyter-book build "$BOOK_DIR/chapters/$BUILD_CHAPTER"
