@@ -71,21 +71,21 @@ git commit -m "🔖 Save current files before deploy" || echo "⚠️ No changes
 #     exit 1
 # fi
 
-# # === 5. 生成 HTML 页面 ===
-# echo "🧹 Cleaning old build..."
-# rm -rf "$BOOK_DIR/_build"
+# === 5. 生成 HTML 页面 ===
+echo "🧹 Cleaning old build..."
+rm -rf "$BOOK_DIR/_build"
 
-# echo "📘 Building Jupyter Book..."
-# if [[ -n "$BUILD_CHAPTER" ]]; then
-#     jupyter-book build "$BOOK_DIR/chapters/$BUILD_CHAPTER"
-# else
-#     jupyter-book build "$BOOK_DIR"
-# fi
+echo "📘 Building Jupyter Book..."
+if [[ -n "$BUILD_CHAPTER" ]]; then
+    jupyter-book build "$BOOK_DIR/chapters/$BUILD_CHAPTER"
+else
+    jupyter-book build "$BOOK_DIR"
+fi
 
-# if [[ $? -ne 0 ]]; then
-#     echo "❌ jupyter-book build failed. Please fix your TOC or markdown files first."
-#     exit 1
-# fi
+if [[ $? -ne 0 ]]; then
+    echo "❌ jupyter-book build failed. Please fix your TOC or markdown files first."
+    exit 1
+fi
 # === 6. 直接用 subtree 推送 HTML 到 docs 分支，不切分支 ===
 
 echo "🚀 Pushing built HTML files to docs branch..."
