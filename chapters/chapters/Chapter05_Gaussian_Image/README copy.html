@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter05_Gaussian_Image/README copy';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Awesome-Computational-Imaging
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter01_SIREN</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter01_SIREN/explore_siren.html">Siren Exploration</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Chapter01_SIREN/README.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter01_SIREN/siren_notes.html">SIREN Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter02_NeRF</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter02_NeRF/nerf.html">NeRF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter02_NeRF/nerf_notes.html">NeRF Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter02_NeRF/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter03_FourierFeatures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter03_FourierFeatures/fourier_features.html">Fourier Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter03_FourierFeatures/fourier_features_merged.html">Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Chapter03_FourierFeatures/fourier_features_notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter03_FourierFeatures/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter04_3D_Gaussian_Splatting</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter04_3D_Gaussian_Splatting/3DGS.html">3D Gaussian Splatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter04_3D_Gaussian_Splatting/3DGS_merged.html">Merged 3DGS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter04_3D_Gaussian_Splatting/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter04_3D_Gaussian_Splatting/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter05_Gaussian_Image</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gaussian_image.html">Gaussian Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter06_Pixel2Gaussian</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter06_Pixel2Gaussian/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter06_Pixel2Gaussian/pixel2gaussian.html">Pixel2Gaussian</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter06_Pixel2Gaussian/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter07_FPM_INR</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter07_FPM_INR/fpm_inr.html">Fourier Ptychographic Microscopy Image Stack Reconstruction Using Implicit Neural Representations</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Chapter07_FPM_INR/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter07_FPM_INR/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter08_DeCAF</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter08_DeCAF/decaf.html">Recovery of Continuous 3D Refractive Index Maps from Discrete Intensity-Only Measurements Using Neural Fields</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Chapter08_DeCAF/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter08_DeCAF/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter09_Neural_SpaceTime</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter09_Neural_SpaceTime/neural_spacetime.html">📘论文题目：</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Chapter09_Neural_SpaceTime/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter09_Neural_SpaceTime/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter10_DDPM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter10_DDPM/ddpm_blog_intro.html">Background</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Chapter10_DDPM/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter10_DDPM/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter10_DPS</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter10_DPS/DPS.html">1. Background</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Chapter10_DPS/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter10_DPS/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter11_ScoreDiffusion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter11_ScoreDiffusion/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter11_ScoreDiffusion/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter12_PlugAndPlay</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter12_PlugAndPlay/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter12_PlugAndPlay/Plug-and-Play_Priors_Intro.html">Background</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../Chapter12_PlugAndPlay/README.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter13_PnP-DM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter13_PnP-DM/notes.html">Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter13_PnP-DM/README.html">Overview</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/Chapter05_Gaussian_Image/README copy.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#news">News</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-started">Quick Started</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cloning-the-repository">Cloning the Repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#representation">Representation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compression">Compression</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgments">Acknowledgments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#citation">Citation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="gaussianimage-1000-fps-image-representation-and-compression-by-2d-gaussian-splatting">
+<h1>GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting<a class="headerlink" href="#gaussianimage-1000-fps-image-representation-and-compression-by-2d-gaussian-splatting" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" /></a>
+<a class="reference external" href="https://arxiv.org/abs/2403.08551"><img alt="arXiv" src="https://img.shields.io/badge/GaussianImage-2403.08551-b31b1b" /></a>
+<a class="reference external" href="https://github.com/Xinjie-Q/GaussianImage"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Xinjie-Q/GaussianImage.svg?style=social&amp;label=Star&amp;maxAge=60" /></a></p>
+<p>[<a class="reference external" href="https://arxiv.org/abs/2403.08551">paper</a>][<a class="reference external" href="https://xingtongge.github.io/GaussianImage-page/">project page</a>][<a class="reference external" href="https://github.com/Xinjie-Q/GaussianImage">code</a>]</p>
+<p><a class="reference external" href="https://xinjie-q.github.io/">Xinjie Zhang*</a>, <a class="reference external" href="https://xingtongge.github.io/">Xingtong Ge*</a>, <a class="reference external" href="https://tongdaxu.github.io/">Tongda Xu</a>, <a class="reference external" href="https://scholar.google.com/citations?user=f5MTTy4AAAAJ&amp;amp;hl=en">Dailan He</a>, <a class="reference external" href="https://yanwang202199.github.io/">Yan Wang</a>, <a class="reference external" href="http://qinhongwei.com/academic/">Hongwei Qin</a>, <a class="reference external" href="https://guolusjtu.github.io/guoluhomepage/">Guo Lu</a>, <a class="reference external" href="https://cs.bit.edu.cn/szdw/jsml/fjs/gj/index.htm">Jing Geng📧</a>, <a class="reference external" href="https://eejzhang.people.ust.hk/">Jun Zhang📧</a></p>
+<p>(* denotes equal contribution, 📧 denotes corresponding author.)</p>
+<p>This is the official implementation of our paper <a class="reference external" href="https://arxiv.org/abs/2403.08551">GaussianImage</a>, a groundbreaking paradigm of image representation and compression by 2D Gaussian Splatting. With compact 2D Gaussian representation and a novel rasterization method, our approach achieves high representation performance with short training duration, minimal GPU memory overhead and ultra-fast rendering speed. Furthermore, we integrate existing vector quantization technique to build an low-complexity neural image codec. Remarkably, the decoding speed of our codec reaches around 2000 FPS, outpacing traditional codecs like JPEG, while also providing enhanced compression performance at lower bitrates. This establishes a significant advancement in the field of neural image codecs. More qualitative results can be found in our paper.</p>
+<div align="center">
+  <img src="./img/kodak_representation.png" alt="kodak_fitting" width="320" />
+  <img src="./img/div2k_representation.png" alt="div2k_fitting" width="320" />
+</div>
+<div align="center">
+  <img src="./img/kodak_codec.png" alt="kodak_codec" width="320" />
+  <img src="./img/div2k_codec.png" alt="div2k_codec" width="320" />
+</div>
+<div align=center>
+<img src="./img/visual.png" alt="visual" width="640" />
+</div>
+<section id="news">
+<h2>News<a class="headerlink" href="#news" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>2024/7/8</strong>: 🔥 We release our Python and CUDA code for GaussianImage presented in our paper. Have a try! Compared to the first version, we further improved the decoding speed of the GaussianImage codec to around 2000 FPS by removing the entropy coding operation, while only increasing the bpp overhead very slightly.</p></li>
+<li><p><strong>2024/7/1</strong>: 🌟 Our paper has been accepted by ECCV 2024! 🎉 Cheers!</p></li>
+</ul>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p><img alt="overview" src="chapters/Chapter05_Gaussian_Image/img/overview.png" /></p>
+<p>Implicit neural representations (INRs) recently achieved great success in image representation and compression, offering high visual quality and fast rendering speeds with 10-1000 FPS, assuming sufficient GPU resources are available. However, this requirement often hinders their use on low-end devices with limited memory. In response, we propose a groundbreaking paradigm of image representation and compression by 2D Gaussian Splatting, named GaussianImage. We first introduce 2D Gaussian to represent the image, where each Gaussian has 8 parameters including position, covariance and color. Subsequently, we unveil a novel rendering algorithm based on accumulated summation. Remarkably, our method with a minimum of $3\times$ lower GPU memory usage and $5\times$  faster fitting time not only rivals INRs (e.g., WIRE, I-NGP) in representation performance, but also delivers a faster rendering speed of 1500-2000 FPS regardless of parameter size. Furthermore, we integrate existing vector quantization technique to build an image codec. Experimental results demonstrate that our codec attains rate-distortion performance comparable to compression-based INRs such as COIN and COIN++, while facilitating decoding speeds of approximately 2000 FPS. Additionally, preliminary proof of concept shows that our codec surpasses COIN and COIN++ in performance when using partial bits-back coding.</p>
+</section>
+<section id="quick-started">
+<h2>Quick Started<a class="headerlink" href="#quick-started" title="Link to this heading">#</a></h2>
+<section id="cloning-the-repository">
+<h3>Cloning the Repository<a class="headerlink" href="#cloning-the-repository" title="Link to this heading">#</a></h3>
+<p>The repository contains submodules, thus please check it out with</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># SSH</span>
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:Xinjie-Q/GaussianImage.git<span class="w"> </span>--recursive
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># HTTPS</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Xinjie-Q/GaussianImage.git<span class="w"> </span>--recursive
+</pre></div>
+</div>
+<p>After cloning the repository, you can follow these steps to train GaussianImage models under different tasks.</p>
+</section>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>gsplat
+pip<span class="w"> </span>install<span class="w"> </span>.<span class="o">[</span>dev<span class="o">]</span>
+<span class="nb">cd</span><span class="w"> </span>../
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+<p>If you encounter errors while installing the packages listed in requirements.txt, you can try installing each Python package individually using the pip command.</p>
+<p>Before training, you need to download the <a class="reference external" href="https://r0k.us/graphics/kodak/">kodak</a> and <a class="reference external" href="https://data.vision.ee.ethz.ch/cvl/DIV2K/">DIV2K-validation</a> datasets. The dataset folder is organized as follows.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>├──<span class="w"> </span>dataset
+│<span class="w">   </span><span class="p">|</span><span class="w"> </span>kodak<span class="w"> </span>
+│<span class="w">     </span>├──<span class="w"> </span>kodim01.png
+│<span class="w">     </span>├──<span class="w"> </span>kodim02.png<span class="w"> </span>
+│<span class="w">     </span>├──<span class="w"> </span>...
+│<span class="w">   </span><span class="p">|</span><span class="w"> </span>DIV2K_valid_LR_bicubic
+│<span class="w">     </span>├──<span class="w"> </span>X2
+│<span class="w">        </span>├──<span class="w"> </span>0801x2.png
+│<span class="w">        </span>├──<span class="w"> </span>0802x2.png
+│<span class="w">        </span>├──<span class="w"> </span>...
+</pre></div>
+</div>
+<section id="representation">
+<h4>Representation<a class="headerlink" href="#representation" title="Link to this heading">#</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh<span class="w"> </span>./scripts/gaussianimage_cholesky/kodak.sh<span class="w"> </span>/path/to/your/dataset
+sh<span class="w"> </span>./scripts/gaussianimage_rs/kodak.sh<span class="w"> </span>/path/to/your/dataset
+sh<span class="w"> </span>./scripts/3dgs/kodak.sh<span class="w"> </span>/path/to/your/dataset
+
+sh<span class="w"> </span>./scripts/gaussianimage_cholesky/div2k.sh<span class="w"> </span>/path/to/your/dataset
+sh<span class="w"> </span>./scripts/gaussianimage_rs/div2k.sh<span class="w"> </span>/path/to/your/dataset
+sh<span class="w"> </span>./scripts/3dgs/div2k.sh<span class="w"> </span>/path/to/your/dataset
+</pre></div>
+</div>
+</section>
+<section id="compression">
+<h4>Compression<a class="headerlink" href="#compression" title="Link to this heading">#</a></h4>
+<p>After overfitting the image, we load the checkpoints from image representation and apply quantization-aware training technique to obtain the image compression results of GaussianImage models.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh<span class="w"> </span>./scripts/gaussianimage_cholesky/kodak_comp.sh<span class="w"> </span>/path/to/your/dataset
+sh<span class="w"> </span>./scripts/gaussianimage_rs/kodak_comp.sh<span class="w"> </span>/path/to/your/dataset
+
+sh<span class="w"> </span>./scripts/gaussianimage_cholesky/div2k_comp.sh<span class="w"> </span>/path/to/your/dataset
+sh<span class="w"> </span>./scripts/gaussianimage_rs/div2k_comp.sh<span class="w"> </span>/path/to/your/dataset
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="acknowledgments">
+<h2>Acknowledgments<a class="headerlink" href="#acknowledgments" title="Link to this heading">#</a></h2>
+<p>Our code was developed based on <a class="reference external" href="https://github.com/nerfstudio-project/gsplat">gsplat</a>. This is a concise and easily extensible Gaussian Splatting library.</p>
+<p>We thank <a class="reference external" href="https://github.com/lucidrains/vector-quantize-pytorch">vector-quantize-pytorch</a> for providing the framework to implement residual vector quantization.</p>
+</section>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Link to this heading">#</a></h2>
+<p>If you find our GaussianImage paradigm useful or relevant to your research, please kindly cite our paper:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@inproceedings</span><span class="p">{</span><span class="n">zhang2024gaussianimage</span><span class="p">,</span>
+  <span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="n">GaussianImage</span><span class="p">:</span> <span class="mi">1000</span> <span class="n">FPS</span> <span class="n">Image</span> <span class="n">Representation</span> <span class="ow">and</span> <span class="n">Compression</span> <span class="n">by</span> <span class="mi">2</span><span class="n">D</span> <span class="n">Gaussian</span> <span class="n">Splatting</span><span class="p">},</span>
+  <span class="n">author</span><span class="o">=</span><span class="p">{</span><span class="n">Zhang</span><span class="p">,</span> <span class="n">Xinjie</span> <span class="ow">and</span> <span class="n">Ge</span><span class="p">,</span> <span class="n">Xingtong</span> <span class="ow">and</span> <span class="n">Xu</span><span class="p">,</span> <span class="n">Tongda</span> <span class="ow">and</span> <span class="n">He</span><span class="p">,</span> <span class="n">Dailan</span> <span class="ow">and</span> <span class="n">Wang</span><span class="p">,</span> <span class="n">Yan</span> <span class="ow">and</span> <span class="n">Qin</span><span class="p">,</span> <span class="n">Hongwei</span> <span class="ow">and</span> <span class="n">Lu</span><span class="p">,</span> <span class="n">Guo</span> <span class="ow">and</span> <span class="n">Geng</span><span class="p">,</span> <span class="n">Jing</span> <span class="ow">and</span> <span class="n">Zhang</span><span class="p">,</span> <span class="n">Jun</span><span class="p">},</span>
+  <span class="n">booktitle</span><span class="o">=</span><span class="p">{</span><span class="n">European</span> <span class="n">Conference</span> <span class="n">on</span> <span class="n">Computer</span> <span class="n">Vision</span><span class="p">},</span>
+  <span class="n">year</span><span class="o">=</span><span class="p">{</span><span class="mi">2024</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/Chapter05_Gaussian_Image"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#news">News</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-started">Quick Started</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cloning-the-repository">Cloning the Repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#representation">Representation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compression">Compression</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgments">Acknowledgments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#citation">Citation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
