@@ -18,32 +18,25 @@ if [[ $# -gt 0 ]]; then
     fi
 fi
 
-# # === 1. ipynb 转为 md（在原目录生成 .md，保留 .ipynb）===
-# cd "$CHAPTERS_DIR"
-# find . -name "*.ipynb" | while read -r ipynb_file; do
-#     nb_dir="$(dirname "$ipynb_file")"  # ipynb所在的目录
-#     jupyter nbconvert --to markdown "$ipynb_file" --output-dir "$nb_dir"
-#     echo "✅ Converted $ipynb_file -> $nb_dir"
-# done
-# echo "🎯 All .ipynb files are now properly converted to .md!"
-
+# === 1. 保存当前工作区 ===
+echo "💾 Saving current changes..."
 git add .
-git commit -m "🔖 Save current files before deploy"
+git commit -m "🔖 Save current files before deploy" || echo "⚠️ No changes to commit."
 
-# === 2. 清空 compimg_book/chapters/，重新复制 .md 和 _files 过来 ===
+# === 2. 清空 compimg_book/chapters/，重新复制 .md 和 *_files ===
 echo "🔄 Preparing compimg_book/chapters..."
-rm -rf "$BOOK_DIR/chapters"    # 🔥 注意这里只删 compimg_book/chapters
+rm -rf "$BOOK_DIR/chapters"
 mkdir -p "$BOOK_DIR/chapters"
 cd "$CHAPTERS_DIR"
 
-# === 2.1 复制所有 md 文件到 compimg_book/chapters/ 保持目录结构 ===
+# === 2.1 复制所有 md 文件（保持结构）===
 find . -name "*.md" | while read -r md_file; do
     dst_path="$BOOK_DIR/chapters/$(dirname "$md_file")"
     mkdir -p "$dst_path"
     cp "$md_file" "$dst_path/"
 done
 
-# === 2.2 复制所有 *_files 文件夹（图片资源）到 compimg_book/chapters/ ===
+# === 2.2 复制所有 *_files 文件夹（图片资源）===
 find . -type d -name "*_files" | while read -r d; do
     dst_path="$BOOK_DIR/chapters/$(dirname "$d")"
     mkdir -p "$dst_path"
@@ -52,7 +45,7 @@ done
 
 echo "✅ All .md and *_files copied to $BOOK_DIR/chapters"
 
-# === 3. 确保 intro.md 存在且不是空的 ===
+# === 3. 确保 intro.md 存在 ===
 if [[ ! -s "$BOOK_DIR/intro.md" ]]; then
     echo "# $REPO_NAME" > "$BOOK_DIR/intro.md"
     echo "✅ Auto-generated intro.md"
@@ -77,29 +70,26 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-# === 6. 切换到临时干净分支（orphan branch）===
+# === 6. 切换到孤立分支 temp-docs（不会污染其他分支）===
 CURRENT_BRANCH=$(git branch --show-current)
 git switch --orphan temp-docs
 
+# 清空工作区（保留 .git）
 find . -mindepth 1 ! -regex '^\.\/\.git\(/.*\)?' -delete
 
 # === 7. 拷贝 build 结果和源文件 ===
 echo "📋 Copying build results and sources..."
-
 cp -r "$BOOK_DIR/_build/html/"* .
 cp "$TOC_FILE" .
-# cp -r "$BOOK_DIR/chapters/"* ./ 
-
-
-if [[ -f "$BOOK_DIR/intro.md" ]]; then
-    cp "$BOOK_DIR/intro.md" .
-fi
+cp "$BOOK_DIR/intro.md" .
 
 # === 8. 提交并推送到 docs 分支 ===
 git add .
 git commit -m "📘 Deploy: HTML + TOC + markdown sources"
+
 git branch -D docs 2>/dev/null
 git branch -m docs
+
 git remote set-url origin git@github.com:$GITHUB_USER/$REPO_NAME.git
 git push origin docs --force
 
@@ -107,5 +97,5 @@ git push origin docs --force
 git switch "$CURRENT_BRANCH"
 
 echo ""
-echo "✅ Done! Deployed HTML + _toc.yml + markdowns!"
+echo "✅ Done! Deployed to docs branch successfully!"
 echo "🔗 View it at: https://$GITHUB_USER.github.io/$REPO_NAME/"
