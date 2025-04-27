@@ -58,54 +58,54 @@ done
 
 
 
-# echo "✅ All .md and *_files copied to $BOOK_DIR/chapters"
+echo "✅ All .md and *_files copied to $BOOK_DIR/chapters"
 
-# # === 3. 确保 intro.md 存在 ===
-# if [[ ! -s "$BOOK_DIR/intro.md" ]]; then
-#     echo "# $REPO_NAME" > "$BOOK_DIR/intro.md"
-#     echo "✅ Auto-generated intro.md"
-# fi
+# === 3. 确保 intro.md 存在 ===
+if [[ ! -s "$BOOK_DIR/intro.md" ]]; then
+    echo "# $REPO_NAME" > "$BOOK_DIR/intro.md"
+    echo "✅ Auto-generated intro.md"
+fi
 
-# # === 4. 检查 TOC 文件是否存在 ===
-# if [[ ! -f "$TOC_FILE" ]]; then
-#     echo "❌ Error: _toc.yml not found at $TOC_FILE"
-#     exit 1
-# fi
+# === 4. 检查 TOC 文件是否存在 ===
+if [[ ! -f "$TOC_FILE" ]]; then
+    echo "❌ Error: _toc.yml not found at $TOC_FILE"
+    exit 1
+fi
 
-# # === 5. 生成 HTML 页面 ===
-# echo "🧹 Cleaning old build..."
-# rm -rf "$BOOK_DIR/_build"
+# === 5. 生成 HTML 页面 ===
+echo "🧹 Cleaning old build..."
+rm -rf "$BOOK_DIR/_build"
 
-# echo "📘 Building Jupyter Book..."
-# if [[ -n "$BUILD_CHAPTER" ]]; then
-#     jupyter-book build "$BOOK_DIR/chapters/$BUILD_CHAPTER"
-# else
-#     jupyter-book build "$BOOK_DIR"
-# fi
+echo "📘 Building Jupyter Book..."
+if [[ -n "$BUILD_CHAPTER" ]]; then
+    jupyter-book build "$BOOK_DIR/chapters/$BUILD_CHAPTER"
+else
+    jupyter-book build "$BOOK_DIR"
+fi
 
-# if [[ $? -ne 0 ]]; then
-#     echo "❌ jupyter-book build failed. Please fix your TOC or markdown files first."
-#     exit 1
-# fi
-# # === 6. 直接用 subtree 推送 HTML 到 docs 分支，不切分支 ===
-# echo "🚀 Pushing built HTML files to docs branch..."
-# # 先 add _build/html
-# git add compimg_book/_build/html
+if [[ $? -ne 0 ]]; then
+    echo "❌ jupyter-book build failed. Please fix your TOC or markdown files first."
+    exit 1
+fi
+# === 6. 直接用 subtree 推送 HTML 到 docs 分支，不切分支 ===
+echo "🚀 Pushing built HTML files to docs branch..."
+# 先 add _build/html
+git add compimg_book/_build/html
 
-# # 再 commit
-# git commit -m "✨ Build website for deploy"
+# 再 commit
+git commit -m "✨ Build website for deploy"
 
-# # 然后 subtree push
-# # 生成一个新的 commit，只包含 compimg_book/_build/html 的内容
-# git subtree split --prefix=compimg_book/_build/html -b deploy-docs
-# git push origin deploy-docs:docs --force
+# 然后 subtree push
+# 生成一个新的 commit，只包含 compimg_book/_build/html 的内容
+git subtree split --prefix=compimg_book/_build/html -b deploy-docs
+git push origin deploy-docs:docs --force
 
 
-# if [[ $? -ne 0 ]]; then
-#     echo "❌ Failed to push to docs branch."
-#     exit 1
-# fi
+if [[ $? -ne 0 ]]; then
+    echo "❌ Failed to push to docs branch."
+    exit 1
+fi
 
-# echo ""
-# echo "✅ Done! Successfully deployed clean HTML to docs branch!"
-# echo "🔗 View it at: https://$GITHUB_USER.github.io/$REPO_NAME/"
+echo ""
+echo "✅ Done! Successfully deployed clean HTML to docs branch!"
+echo "🔗 View it at: https://$GITHUB_USER.github.io/$REPO_NAME/"
