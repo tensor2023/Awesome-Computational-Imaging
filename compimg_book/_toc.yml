@@ -1,5 +1,5 @@
 format: jb-book
-root: compimg_book/index.md
+root: index.md
 #只影响网站目录结构，不管你本地的实际文件夹
 parts:
   - caption: Chapter01_SIREN
