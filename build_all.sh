@@ -37,10 +37,9 @@ git commit -m "🔖 Save current files before deploy" || echo "⚠️ No changes
 echo "🔄 Preparing compimg_book/chapters..."
 rm -rf "$BOOK_DIR/chapters"
 mkdir -p "$BOOK_DIR/chapters"
-cd "$CHAPTERS_DIR" #TODO
 
-# === 2.1 复制所有 md 文件（保持结构）===
 # === 2.1 复制所有 .md 文件（保持结构，并显示每次复制信息）===
+cd "$CHAPTERS_DIR" #只对里面的md和_files进行操作
 find . -name "*.md" | while read -r md_file; do
     dst_path="$BOOK_DIR/chapters/$(dirname "$md_file" | sed 's|^\./||')"
     mkdir -p "$dst_path"

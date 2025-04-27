@@ -40,3 +40,5 @@ git switch "$CURRENT_BRANCH"
 echo ""
 echo "✅ Deployment complete! Your clean website is now live!"
 echo "🔗 View it at: https://$GITHUB_USER.github.io/$REPO_NAME/"
+
+git branch -D deploy-docs
