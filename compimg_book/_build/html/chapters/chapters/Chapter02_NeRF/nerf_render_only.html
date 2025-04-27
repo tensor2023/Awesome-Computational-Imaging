@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>&lt;no title&gt; &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/chapters/Chapter02_NeRF/nerf_render_only';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Awesome-Computational-Imaging
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/chapters/chapters/Chapter02_NeRF/nerf_render_only.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><no title></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">imageio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span><span class="p">,</span> <span class="n">trange</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">run_nerf_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">clear_output</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">load_llff</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_llff_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">load_deepvoxels</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dv_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">load_blender</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_blender_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">load_LINEMOD</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_LINEMOD_data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">configargparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">run_nerf</span><span class="w"> </span><span class="kn">import</span> <span class="n">batchify</span><span class="p">,</span> <span class="n">run_network</span><span class="p">,</span> <span class="n">batchify_rays</span><span class="p">,</span> <span class="n">render</span><span class="p">,</span> <span class="n">render_path</span><span class="p">,</span> <span class="n">create_nerf</span><span class="p">,</span> <span class="n">raw2outputs</span><span class="p">,</span> <span class="n">render_rays</span><span class="p">,</span> <span class="n">config_parser</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">():</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">config_parser</span><span class="p">()</span>
+    <span class="c1"># args = parser.parse_args()</span>
+    
+
+    <span class="c1"># parser = config_parser()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span>
+        <span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/xqgao/2025/MIT/code/NeRF/nerf-pytorch-master/configs/lego.yaml&#39;</span>
+    <span class="p">])</span>
+
+    <span class="c1"># Load data</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">==</span> <span class="s1">&#39;llff&#39;</span><span class="p">:</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">bds</span><span class="p">,</span> <span class="n">render_poses</span><span class="p">,</span> <span class="n">i_test</span> <span class="o">=</span> <span class="n">load_llff_data</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">factor</span><span class="p">,</span>
+                                                                  <span class="n">recenter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bd_factor</span><span class="o">=</span><span class="mf">.75</span><span class="p">,</span>
+                                                                  <span class="n">spherify</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">spherify</span><span class="p">)</span>
+        <span class="n">hwf</span> <span class="o">=</span> <span class="n">poses</span><span class="p">[</span><span class="mi">0</span><span class="p">,:</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">poses</span> <span class="o">=</span> <span class="n">poses</span><span class="p">[:,:</span><span class="mi">3</span><span class="p">,:</span><span class="mi">4</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loaded llff&#39;</span><span class="p">,</span> <span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">render_poses</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i_test</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">i_test</span> <span class="o">=</span> <span class="p">[</span><span class="n">i_test</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">llffhold</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Auto LLFF holdout,&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">llffhold</span><span class="p">)</span>
+            <span class="n">i_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])[::</span><span class="n">args</span><span class="o">.</span><span class="n">llffhold</span><span class="p">]</span>
+
+        <span class="n">i_val</span> <span class="o">=</span> <span class="n">i_test</span>
+        <span class="n">i_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="k">if</span>
+                        <span class="p">(</span><span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i_test</span> <span class="ow">and</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i_val</span><span class="p">)])</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;DEFINING BOUNDS&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">no_ndc</span><span class="p">:</span>
+            <span class="n">near</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">bds</span><span class="p">)</span> <span class="o">*</span> <span class="mf">.9</span>
+            <span class="n">far</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">bds</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.</span>
+            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">near</span> <span class="o">=</span> <span class="mf">0.</span>
+            <span class="n">far</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NEAR FAR&#39;</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">==</span> <span class="s1">&#39;blender&#39;</span><span class="p">:</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">i_split</span> <span class="o">=</span> <span class="n">load_blender_data</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">half_res</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">testskip</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loaded blender&#39;</span><span class="p">,</span> <span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">render_poses</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">)</span>
+        <span class="n">i_train</span><span class="p">,</span> <span class="n">i_val</span><span class="p">,</span> <span class="n">i_test</span> <span class="o">=</span> <span class="n">i_split</span>
+
+        <span class="n">near</span> <span class="o">=</span> <span class="mf">2.</span>
+        <span class="n">far</span> <span class="o">=</span> <span class="mf">6.</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">white_bkgd</span><span class="p">:</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">==</span> <span class="s1">&#39;LINEMOD&#39;</span><span class="p">:</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">i_split</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span> <span class="o">=</span> <span class="n">load_LINEMOD_data</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">half_res</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">testskip</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Loaded LINEMOD, images shape: </span><span class="si">{</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">, hwf: </span><span class="si">{</span><span class="n">hwf</span><span class="si">}</span><span class="s1">, K: </span><span class="si">{</span><span class="n">K</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[CHECK HERE] near: </span><span class="si">{</span><span class="n">near</span><span class="si">}</span><span class="s1">, far: </span><span class="si">{</span><span class="n">far</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+        <span class="n">i_train</span><span class="p">,</span> <span class="n">i_val</span><span class="p">,</span> <span class="n">i_test</span> <span class="o">=</span> <span class="n">i_split</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">white_bkgd</span><span class="p">:</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">==</span> <span class="s1">&#39;deepvoxels&#39;</span><span class="p">:</span>
+
+        <span class="n">images</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">i_split</span> <span class="o">=</span> <span class="n">load_dv_data</span><span class="p">(</span><span class="n">scene</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                                                                 <span class="n">basedir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span>
+                                                                 <span class="n">testskip</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">testskip</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loaded deepvoxels&#39;</span><span class="p">,</span> <span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">render_poses</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">)</span>
+        <span class="n">i_train</span><span class="p">,</span> <span class="n">i_val</span><span class="p">,</span> <span class="n">i_test</span> <span class="o">=</span> <span class="n">i_split</span>
+
+        <span class="n">hemi_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">poses</span><span class="p">[:,:</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">near</span> <span class="o">=</span> <span class="n">hemi_R</span><span class="o">-</span><span class="mf">1.</span>
+        <span class="n">far</span> <span class="o">=</span> <span class="n">hemi_R</span><span class="o">+</span><span class="mf">1.</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unknown dataset type&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span><span class="p">,</span> <span class="s1">&#39;exiting&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Cast intrinsics to right types</span>
+    <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">focal</span> <span class="o">=</span> <span class="n">hwf</span>
+    <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+    <span class="n">hwf</span> <span class="o">=</span> <span class="p">[</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">focal</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">K</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="p">[</span><span class="n">focal</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">W</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">focal</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">H</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">render_test</span><span class="p">:</span>
+        <span class="n">render_poses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">poses</span><span class="p">[</span><span class="n">i_test</span><span class="p">])</span>
+
+    <span class="c1"># Create log dir and copy the config file</span>
+    <span class="n">basedir</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">basedir</span>
+    <span class="n">expname</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">expname</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="s1">&#39;args.txt&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">args</span><span class="p">)):</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> = </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="s1">&#39;config.txt&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="c1"># Create nerf model</span>
+    <span class="n">render_kwargs_train</span><span class="p">,</span> <span class="n">render_kwargs_test</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">grad_vars</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">create_nerf</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">global_step</span> <span class="o">=</span> <span class="n">start</span>
+
+    <span class="n">bds_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;near&#39;</span> <span class="p">:</span> <span class="n">near</span><span class="p">,</span>
+        <span class="s1">&#39;far&#39;</span> <span class="p">:</span> <span class="n">far</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">render_kwargs_train</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bds_dict</span><span class="p">)</span>
+    <span class="n">render_kwargs_test</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bds_dict</span><span class="p">)</span>
+
+    <span class="c1"># Move testing data to GPU</span>
+    <span class="n">render_poses</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">render_poses</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="c1"># Short circuit if only rendering out from trained model</span>
+    
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RENDER ONLY&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">render_test</span><span class="p">:</span>
+            <span class="c1"># render_test switches to test poses</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">i_test</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Default is smoother render_poses path</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">testsavedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="s1">&#39;renderonly_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{:06d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;test&#39;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">render_test</span> <span class="k">else</span> <span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">testsavedir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test poses shape&#39;</span><span class="p">,</span> <span class="n">render_poses</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">rgbs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">render_path</span><span class="p">(</span><span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">chunk</span><span class="p">,</span> <span class="n">render_kwargs_test</span><span class="p">,</span> <span class="n">gt_imgs</span><span class="o">=</span><span class="n">images</span><span class="p">,</span> <span class="n">savedir</span><span class="o">=</span><span class="n">testsavedir</span><span class="p">,</span> <span class="n">render_factor</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">render_factor</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done rendering&#39;</span><span class="p">,</span> <span class="n">testsavedir</span><span class="p">)</span>
+        <span class="n">imageio</span><span class="o">.</span><span class="n">mimwrite</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testsavedir</span><span class="p">,</span> <span class="s1">&#39;video.mp4&#39;</span><span class="p">),</span> <span class="n">to8b</span><span class="p">(</span><span class="n">rgbs</span><span class="p">),</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">quality</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+        <span class="k">return</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">set_default_tensor_type</span><span class="p">(</span><span class="s1">&#39;torch.cuda.FloatTensor&#39;</span><span class="p">)</span>
+
+    <span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/torch/__init__.py:1236: UserWarning: torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at /pytorch/torch/csrc/tensor/python_tensor.cpp:434.)
+  _C._set_default_tensor_type(t)
+
+
+Loaded blender (138, 400, 400, 4) torch.Size([40, 4, 4]) [400, 400, np.float64(555.5555155968841)] /home/xqgao/2025/MIT/Datasets/NeRF/nerf_synthetic/lego
+Found ckpts [&#39;null&#39;]
+Not ndc!
+RENDER ONLY
+test poses shape torch.Size([40, 4, 4])
+
+
+  0%|          | 0/40 [00:00&lt;?, ?it/s]
+
+0 0.004059314727783203
+
+
+/home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/torch/functional.py:539: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /pytorch/aten/src/ATen/native/TensorShape.cpp:3637.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+  2%|▎         | 1/40 [00:06&lt;04:05,  6.29s/it]
+
+torch.Size([400, 400, 3]) torch.Size([400, 400])
+1 6.288769245147705
+
+
+  5%|▌         | 2/40 [00:12&lt;03:53,  6.13s/it]
+
+2 6.023773431777954
+
+
+  8%|▊         | 3/40 [00:18&lt;03:45,  6.09s/it]
+
+3 6.03666353225708
+
+
+ 10%|█         | 4/40 [00:24&lt;03:38,  6.08s/it]
+
+4 6.0545337200164795
+
+
+ 12%|█▎        | 5/40 [00:30&lt;03:32,  6.07s/it]
+
+5 6.06751275062561
+
+
+ 15%|█▌        | 6/40 [00:36&lt;03:26,  6.08s/it]
+
+6 6.082669258117676
+
+
+ 18%|█▊        | 7/40 [00:42&lt;03:20,  6.09s/it]
+
+7 6.109835863113403
+
+
+ 20%|██        | 8/40 [00:48&lt;03:15,  6.10s/it]
+
+8 6.124653100967407
+
+
+ 22%|██▎       | 9/40 [00:54&lt;03:09,  6.11s/it]
+
+9 6.136879205703735
+
+
+ 25%|██▌       | 10/40 [01:01&lt;03:03,  6.12s/it]
+
+10 6.139219045639038
+
+
+ 28%|██▊       | 11/40 [01:07&lt;02:57,  6.13s/it]
+
+11 6.154747009277344
+
+
+ 30%|███       | 12/40 [01:13&lt;02:51,  6.14s/it]
+
+12 6.1579673290252686
+
+
+ 32%|███▎      | 13/40 [01:19&lt;02:45,  6.15s/it]
+
+13 6.162424802780151
+
+
+ 35%|███▌      | 14/40 [01:25&lt;02:39,  6.15s/it]
+
+14 6.16940450668335
+
+
+ 38%|███▊      | 15/40 [01:31&lt;02:34,  6.16s/it]
+
+15 6.181149005889893
+
+
+ 40%|████      | 16/40 [01:38&lt;02:27,  6.16s/it]
+
+16 6.1707072257995605
+
+
+ 42%|████▎     | 17/40 [01:44&lt;02:21,  6.17s/it]
+
+17 6.168968677520752
+
+
+ 45%|████▌     | 18/40 [01:50&lt;02:15,  6.17s/it]
+
+18 6.1801393032073975
+
+
+ 48%|████▊     | 19/40 [01:56&lt;02:09,  6.17s/it]
+
+19 6.179092645645142
+
+
+ 50%|█████     | 20/40 [02:02&lt;02:03,  6.17s/it]
+
+20 6.178071975708008
+
+
+ 52%|█████▎    | 21/40 [02:08&lt;01:57,  6.18s/it]
+
+21 6.184280157089233
+
+
+ 55%|█████▌    | 22/40 [02:15&lt;01:51,  6.18s/it]
+
+22 6.181585311889648
+
+
+ 57%|█████▊    | 23/40 [02:21&lt;01:45,  6.18s/it]
+
+23 6.191661357879639
+
+
+ 60%|██████    | 24/40 [02:27&lt;01:38,  6.19s/it]
+
+24 6.196957349777222
+
+
+ 62%|██████▎   | 25/40 [02:33&lt;01:32,  6.19s/it]
+
+25 6.18497109413147
+
+
+ 65%|██████▌   | 26/40 [02:39&lt;01:26,  6.19s/it]
+
+26 6.186652660369873
+
+
+ 68%|██████▊   | 27/40 [02:46&lt;01:20,  6.18s/it]
+
+27 6.180799722671509
+
+
+ 70%|███████   | 28/40 [02:52&lt;01:14,  6.19s/it]
+
+28 6.185983896255493
+
+
+ 72%|███████▎  | 29/40 [02:58&lt;01:08,  6.18s/it]
+
+29 6.177866458892822
+
+
+ 75%|███████▌  | 30/40 [03:04&lt;01:01,  6.18s/it]
+
+30 6.167341470718384
+
+
+ 78%|███████▊  | 31/40 [03:10&lt;00:55,  6.18s/it]
+
+31 6.167719602584839
+
+
+ 80%|████████  | 32/40 [03:16&lt;00:49,  6.17s/it]
+
+32 6.165492296218872
+
+
+ 82%|████████▎ | 33/40 [03:23&lt;00:43,  6.17s/it]
+
+33 6.165848970413208
+
+
+ 85%|████████▌ | 34/40 [03:29&lt;00:37,  6.17s/it]
+
+34 6.16896390914917
+
+
+ 88%|████████▊ | 35/40 [03:35&lt;00:30,  6.16s/it]
+
+35 6.150846719741821
+
+
+ 90%|█████████ | 36/40 [03:41&lt;00:24,  6.16s/it]
+
+36 6.150238037109375
+
+
+ 92%|█████████▎| 37/40 [03:47&lt;00:18,  6.16s/it]
+
+37 6.1558897495269775
+
+
+ 95%|█████████▌| 38/40 [03:53&lt;00:12,  6.16s/it]
+
+38 6.153788805007935
+
+
+ 98%|█████████▊| 39/40 [04:00&lt;00:06,  6.15s/it]
+
+39 6.148360729217529
+
+
+100%|██████████| 40/40 [04:06&lt;00:00,  6.15s/it]
+
+
+Done rendering /home/xqgao/2025/MIT/code/NeRF/nerf-pytorch-master/logs/blender_paper_lego/renderonly_path_000000
+</pre></div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/chapters/Chapter02_NeRF"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

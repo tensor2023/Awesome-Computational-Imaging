@@ -1,0 +1,876 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/chapters/Chapter05_Gaussian_Image/gaussian_image';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Awesome-Computational-Imaging
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/chapters/chapters/Chapter05_Gaussian_Image/gaussian_image.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">1. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">2. The Core Idea</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-matrix-factorization">2.1 Covariance matrix factorization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accumulated-blending">2.2 Accumulated Blending</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compression">2.3 Compression</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributions">3. Contributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">4. References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simpletrainer2d-training-2d-gaussians-to-reconstruct-an-image">🧠 SimpleTrainer2d: Training 2D Gaussians to Reconstruct an Image</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">⚙️ Initialization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-loop">🔁 Training Loop</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#testing">🧪 Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">✅ Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-argv-batch-image-training-and-evaluation">🚀 main(argv): Batch Image Training and Evaluation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><img alt="image.png" src="../../../_images/image6.png" /></p>
+<section id="gaussianimage-1000-fps-image-representation-and-compression-by-2d-gaussian-splatting">
+<h1>GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting<a class="headerlink" href="#gaussianimage-1000-fps-image-representation-and-compression-by-2d-gaussian-splatting" title="Link to this heading">#</a></h1>
+<p><em>Xinjie Zhang, Xingtong Ge, Tongda Xu, Dailan He, Yan Wang, Hongwei Qin, Guo Lu, Jing Geng, Jun Zhang</em><br />
+HKUST, BIT, NYU, CUHK, AIR&#64;Tsinghua, SenseTime, SJTU<br />
+arXiv, July 2024<br />
+<a class="reference external" href="https://github.com/Xinjie-Q/GaussianImage">[Code]</a></p>
+<hr class="docutils" />
+<section id="background">
+<h2>1. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>Implicit neural representations (INRs) have recently gained popularity in image processing. These methods represent images as continuous functions, often modeled by MLPs, that map spatial coordinates $(x, y)$ to RGB values.<br />
+Notable methods like SIREN [1] and WIRE [2] show impressive results in terms of image fidelity. However, they also come with significant drawbacks:</p>
+<ul class="simple">
+<li><p>Slow rendering speeds, often below 100 FPS</p></li>
+<li><p>High GPU memory usage</p></li>
+<li><p>Long training time</p></li>
+<li><p>Poor performance on low-end or mobile devices</p></li>
+</ul>
+<p>To address some of these issues, grid-based INRs like I-NGP [3] and NeuRBF [4] use multi-resolution feature grids to speed up training, but they still require large memory and are not suitable for real-time deployment.</p>
+<p>Recently, 3D Gaussian Splatting [5] has been proposed in the context of 3D scene reconstruction, providing fast and visually high-quality rendering by explicitly modeling 3D Gaussians. This work inspires the core idea of <strong>GaussianImage</strong>, which brings this approach to <strong>2D image representation and compression</strong>.</p>
+</section>
+<hr class="docutils" />
+<section id="the-core-idea">
+<h2>2. The Core Idea<a class="headerlink" href="#the-core-idea" title="Link to this heading">#</a></h2>
+<p>GaussianImage replaces MLP-based INRs with <strong>a set of 2D Gaussians</strong>. Each image is represented as a sum of weighted Gaussian functions in 2D space. Every Gaussian is defined by:</p>
+<ul class="simple">
+<li><p>Position $\mu \in \mathbb{R}^2$</p></li>
+<li><p>Covariance matrix $\Sigma \in \mathbb{R}^{2 \times 2}$</p></li>
+<li><p>Weighted color coefficient $c’ \in \mathbb{R}^3$</p></li>
+</ul>
+<section id="covariance-matrix-factorization">
+<h3>2.1 Covariance matrix factorization<a class="headerlink" href="#covariance-matrix-factorization" title="Link to this heading">#</a></h3>
+<p>To ensure $\Sigma$ is positive semi-definite, it is represented using Cholesky decomposition:</p>
+<p>$$
+\Sigma = LL^\top, \quad
+L = \begin{bmatrix} l_1 &amp; 0 \ l_2 &amp; l_3 \end{bmatrix}
+$$</p>
+<p>This form is optimized during training for numerical stability.</p>
+</section>
+<hr class="docutils" />
+<section id="accumulated-blending">
+<h3>2.2 Accumulated Blending<a class="headerlink" href="#accumulated-blending" title="Link to this heading">#</a></h3>
+<p>Instead of traditional $\alpha$-blending, which requires depth sorting and is not applicable to 2D images, GaussianImage uses an <strong>accumulated summation</strong> approach:</p>
+<p>$$
+C_i = \sum_{n \in N} c_n \cdot \alpha_n = \sum_{n \in N} c_n \cdot o_n \cdot \exp(-\sigma_n)
+$$</p>
+<p>where $\sigma_n$ is the Mahalanobis distance:</p>
+<p>$$
+\sigma_n = \frac{1}{2} d_n^\top \Sigma^{-1} d_n
+$$</p>
+<p>$d_n$ is the offset between the current pixel and the Gaussian center.</p>
+<p>To further simplify, color and opacity are merged:</p>
+<p>$$
+C_i = \sum_{n \in N} c’_n \cdot \exp(-\sigma_n)
+$$</p>
+<p>This yields a permutation-invariant and highly parallel rendering pipeline.</p>
+</section>
+<hr class="docutils" />
+<section id="compression">
+<h3>2.3 Compression<a class="headerlink" href="#compression" title="Link to this heading">#</a></h3>
+<p>After overfitting an image with Gaussians, a codec is built by quantizing attributes:</p>
+<ul class="simple">
+<li><p>Position → FP16</p></li>
+<li><p>Covariance → 6-bit integers</p></li>
+<li><p>Color → Residual Vector Quantization (RVQ)</p></li>
+</ul>
+<p>An optional bits-back coding [6] further improves compression rate:</p>
+<p>$$
+\text{Saved Bits} = \log(N - K)! - \log(N - K)
+$$</p>
+<p>This makes the method not only fast but also practical as a neural image codec.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="contributions">
+<h2>3. Contributions<a class="headerlink" href="#contributions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Proposes a new 2D image representation method using Gaussian Splatting</p></li>
+<li><p>Introduces accumulated blending rasterization to eliminate depth sorting</p></li>
+<li><p>Achieves over <strong>2000 FPS</strong> rendering, with low memory footprint</p></li>
+<li><p>Builds a neural image codec with vector quantization and optional bits-back coding</p></li>
+<li><p>Matches or surpasses existing INR-based codecs (COIN, COIN++) in compression performance</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>4. References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<p>[1] Sitzmann et al., “Implicit Neural Representations with Periodic Activation Functions”, NeurIPS 2020<br />
+[2] Saragadam et al., “WIRE: Wavelet Implicit Neural Representations”, CVPR 2023<br />
+[3] Müller et al., “Instant Neural Graphics Primitives”, SIGGRAPH 2022<br />
+[4] Chen et al., “NeuRBF: Neural Fields with Radial Basis Functions”, ICCV 2023<br />
+[5] Kerbl et al., “3D Gaussian Splatting for Real-Time Radiance Field Rendering”, SIGGRAPH 2023<br />
+[6] Townsend et al., “Practical Lossless Compression with Latent Variables using Bits-Back Coding”, arXiv 2019</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pytorch_msssim</span><span class="w"> </span><span class="kn">import</span> <span class="n">ms_ssim</span> <span class="k">as</span> <span class="n">ms_ssim_func</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">transforms</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</section>
+<section id="simpletrainer2d-training-2d-gaussians-to-reconstruct-an-image">
+<h2>🧠 SimpleTrainer2d: Training 2D Gaussians to Reconstruct an Image<a class="headerlink" href="#simpletrainer2d-training-2d-gaussians-to-reconstruct-an-image" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">SimpleTrainer2d</span></code> is a lightweight trainer designed to optimize a set of 2D Gaussians to fit a given image. The goal is to learn $N$ Gaussians that, when rendered, closely match the original image using accumulated blending. The training is based on minimizing the L2 reconstruction loss between the ground truth image $x$ and the rendered image $\hat{x}$:</p>
+<p>$$
+\mathcal{L}_{\text{rec}} = | x - \hat{x} |_2^2
+$$</p>
+<p>Each Gaussian is parameterized by position $\mu \in \mathbb{R}^2$, covariance matrix $\Sigma \in \mathbb{R}^{2 \times 2}$ (either via Cholesky or RS decomposition), and a weighted color vector $c’ \in \mathbb{R}^3$. The rendering equation follows the paper’s accumulated formulation:</p>
+<p>$$
+\hat{x}<em>i = \sum</em>{n=1}^{N} c’_n \cdot \exp\left(-\frac{1}{2} d_n^\top \Sigma_n^{-1} d_n\right)
+$$</p>
+<p>where $d_n$ is the offset from the pixel $i$ to the center $\mu_n$ of the $n$-th Gaussian.</p>
+<hr class="docutils" />
+<section id="initialization">
+<h3>⚙️ Initialization<a class="headerlink" href="#initialization" title="Link to this heading">#</a></h3>
+<p>The trainer:</p>
+<ul class="simple">
+<li><p>Loads the image into a tensor (<code class="docutils literal notranslate"><span class="pre">gt_image</span></code>) on GPU.</p></li>
+<li><p>Selects the model backend:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">GaussianImage_Cholesky</span></code>: Uses Cholesky decomposition $\Sigma = LL^\top$</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GaussianImage_RS</span></code>: Uses Rotation-Scaling decomposition $\Sigma = (RS)(RS)^\top$</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">3DGS</span></code>: Projects 3D Gaussians to 2D, included as a baseline</p></li>
+</ul>
+</li>
+<li><p>Loads pretrained weights if a model path is given.</p></li>
+<li><p>Prepares a log directory for saving checkpoints and training curves.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="training-loop">
+<h3>🔁 Training Loop<a class="headerlink" href="#training-loop" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">train()</span></code> method runs for a fixed number of iterations (e.g., 30k), calling the model’s internal <code class="docutils literal notranslate"><span class="pre">train_iter()</span></code> function. This updates Gaussian parameters using gradient descent (Adan optimizer), and logs:</p>
+<ul class="simple">
+<li><p>Loss $\mathcal{L}_{\text{rec}}$</p></li>
+<li><p>Peak signal-to-noise ratio (PSNR), calculated as:</p></li>
+</ul>
+<p>$$
+\text{PSNR} = 10 \cdot \log_{10}\left( \frac{1}{\text{MSE}} \right)
+$$</p>
+<p>Every 10 steps, the progress bar updates with loss and PSNR.</p>
+<p>After training, the model is evaluated on:</p>
+<ul class="simple">
+<li><p>PSNR</p></li>
+<li><p>Multi-scale SSIM (MS-SSIM)</p></li>
+<li><p>Inference speed: averaged over 100 forward passes for FPS calculation.</p></li>
+</ul>
+<p>All results are saved to disk in <code class="docutils literal notranslate"><span class="pre">.npy</span></code> and <code class="docutils literal notranslate"><span class="pre">.pth</span></code> formats.</p>
+</section>
+<hr class="docutils" />
+<section id="testing">
+<h3>🧪 Testing<a class="headerlink" href="#testing" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">test()</span></code> method evaluates the model in inference mode. It:</p>
+<ul class="simple">
+<li><p>Renders the image with <code class="docutils literal notranslate"><span class="pre">self.gaussian_model()</span></code></p></li>
+<li><p>Computes MSE, PSNR, and MS-SSIM against the ground truth</p></li>
+<li><p>Optionally saves the rendered image for visual comparison</p></li>
+</ul>
+<p>If enabled, the image is saved as <code class="docutils literal notranslate"><span class="pre">{image_name}_fitting.png</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="summary">
+<h3>✅ Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">SimpleTrainer2d</span></code> offers a modular and extensible pipeline for fitting Gaussian-based image representations. It supports different Gaussian parameterizations, measures both accuracy and speed, and saves logs for downstream analysis. It’s ideal for experiments benchmarking the effectiveness of different 2D Gaussian models on real images.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SimpleTrainer2d</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Trains random 2d gaussians to fit an image.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+        <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">,</span>
+        <span class="n">model_name</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;GaussianImage_Cholesky&quot;</span><span class="p">,</span>
+        <span class="n">iterations</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">30000</span><span class="p">,</span>
+        <span class="n">model_path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gt_image</span> <span class="o">=</span> <span class="n">image_path_to_tensor</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_points</span> <span class="o">=</span> <span class="n">num_points</span>
+        <span class="n">image_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_name</span> <span class="o">=</span> <span class="n">image_path</span><span class="o">.</span><span class="n">stem</span>
+        <span class="n">BLOCK_H</span><span class="p">,</span> <span class="n">BLOCK_W</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gt_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">gt_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span> <span class="o">=</span> <span class="n">iterations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_imgs</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">save_imgs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/home/xqgao/2025/MIT/code/GS/GaussianImage-main/checkpoints/</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">data_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">iterations</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">num_points</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">model_name</span> <span class="o">==</span> <span class="s2">&quot;GaussianImage_Cholesky&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">gaussianimage_cholesky</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianImage_Cholesky</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span> <span class="o">=</span> <span class="n">GaussianImage_Cholesky</span><span class="p">(</span><span class="n">loss_type</span><span class="o">=</span><span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="n">opt_type</span><span class="o">=</span><span class="s2">&quot;adan&quot;</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_points</span><span class="p">,</span> <span class="n">H</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">BLOCK_H</span><span class="o">=</span><span class="n">BLOCK_H</span><span class="p">,</span> <span class="n">BLOCK_W</span><span class="o">=</span><span class="n">BLOCK_W</span><span class="p">,</span> 
+                <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">model_name</span> <span class="o">==</span> <span class="s2">&quot;GaussianImage_RS&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">gaussianimage_rs</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianImage_RS</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span> <span class="o">=</span> <span class="n">GaussianImage_RS</span><span class="p">(</span><span class="n">loss_type</span><span class="o">=</span><span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="n">opt_type</span><span class="o">=</span><span class="s2">&quot;adan&quot;</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_points</span><span class="p">,</span> <span class="n">H</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">BLOCK_H</span><span class="o">=</span><span class="n">BLOCK_H</span><span class="p">,</span> <span class="n">BLOCK_W</span><span class="o">=</span><span class="n">BLOCK_W</span><span class="p">,</span> 
+                <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> 
+
+        <span class="k">elif</span> <span class="n">model_name</span> <span class="o">==</span> <span class="s2">&quot;3DGS&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">gaussiansplatting_3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gaussian3D</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span> <span class="o">=</span> <span class="n">Gaussian3D</span><span class="p">(</span><span class="n">loss_type</span><span class="o">=</span><span class="s2">&quot;Fusion2&quot;</span><span class="p">,</span> <span class="n">opt_type</span><span class="o">=</span><span class="s2">&quot;adan&quot;</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_points</span><span class="p">,</span> <span class="n">H</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">BLOCK_H</span><span class="o">=</span><span class="n">BLOCK_H</span><span class="p">,</span> <span class="n">BLOCK_W</span><span class="o">=</span><span class="n">BLOCK_W</span><span class="p">,</span> 
+                <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">sh_degree</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">sh_degree</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logwriter</span> <span class="o">=</span> <span class="n">LogWriter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">model_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;loading model path:</span><span class="si">{</span><span class="n">model_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">model_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
+            <span class="n">pretrained_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">checkpoint</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">model_dict</span><span class="p">}</span>
+            <span class="n">model_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">pretrained_dict</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">model_dict</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>     
+        <span class="n">psnr_list</span><span class="p">,</span> <span class="n">iter_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Training progress&quot;</span><span class="p">)</span>
+        <span class="n">best_psnr</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">loss</span><span class="p">,</span> <span class="n">psnr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">train_iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gt_image</span><span class="p">)</span>
+            <span class="n">psnr_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psnr</span><span class="p">)</span>
+            <span class="n">iter_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">iter</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;Loss&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="mi">7</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;PSNR&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">psnr</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="mi">4</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">,&quot;</span><span class="p">})</span>
+                    <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+        <span class="n">progress_bar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">psnr_value</span><span class="p">,</span> <span class="n">ms_ssim_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+            <span class="n">test_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="p">()</span>
+            <span class="n">test_end_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">test_start_time</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logwriter</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Training Complete in </span><span class="si">{:.4f}</span><span class="s2">s, Eval time:</span><span class="si">{:.8f}</span><span class="s2">s, FPS:</span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="n">test_end_time</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">test_end_time</span><span class="p">))</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">/</span> <span class="s2">&quot;gaussian_model.pth.tar&quot;</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">/</span> <span class="s2">&quot;training.npy&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;iterations&quot;</span><span class="p">:</span> <span class="n">iter_list</span><span class="p">,</span> <span class="s2">&quot;training_psnr&quot;</span><span class="p">:</span> <span class="n">psnr_list</span><span class="p">,</span> <span class="s2">&quot;training_time&quot;</span><span class="p">:</span> <span class="n">end_time</span><span class="p">,</span> 
+        <span class="s2">&quot;psnr&quot;</span><span class="p">:</span> <span class="n">psnr_value</span><span class="p">,</span> <span class="s2">&quot;ms-ssim&quot;</span><span class="p">:</span> <span class="n">ms_ssim_value</span><span class="p">,</span> <span class="s2">&quot;rendering_time&quot;</span><span class="p">:</span> <span class="n">test_end_time</span><span class="p">,</span> <span class="s2">&quot;rendering_fps&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="n">test_end_time</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">psnr_value</span><span class="p">,</span> <span class="n">ms_ssim_value</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">test_end_time</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">test_end_time</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="p">()</span>
+
+        <span class="n">mse_loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">&quot;render&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">gt_image</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+        <span class="n">psnr</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">mse_loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">ms_ssim_value</span> <span class="o">=</span> <span class="n">ms_ssim_func</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">&quot;render&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">gt_image</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span> <span class="n">data_range</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size_average</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logwriter</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Test PSNR:</span><span class="si">{:.4f}</span><span class="s2">, MS_SSIM:</span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">psnr</span><span class="p">,</span> <span class="n">ms_ssim_value</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_imgs</span><span class="p">:</span>
+            <span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">&quot;render&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+            <span class="c1"># Save image</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_name</span> <span class="o">+</span> <span class="s2">&quot;_fitting.png&quot;</span>
+            <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">/</span> <span class="n">name</span><span class="p">))</span>
+
+            <span class="c1"># Show image with matplotlib</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">psnr</span><span class="p">,</span> <span class="n">ms_ssim_value</span>
+
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">image_path_to_tensor</span><span class="p">(</span><span class="n">image_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+    <span class="n">img_tensor</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#[1, C, H, W]</span>
+    <span class="k">return</span> <span class="n">img_tensor</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Example training script.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--dataset&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;/home/xqgao/2025/MIT/Datasets/Kodak&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Training dataset&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--data_name&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;kodak&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Training dataset&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--iterations&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;number of training epochs (default: </span><span class="si">%(default)s</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--model_name&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;GaussianImage_Cholesky&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;model selection: GaussianImage_Cholesky, GaussianImage_RS, 3DGS&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--sh_degree&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SH degree (default: </span><span class="si">%(default)s</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--num_points&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;2D GS points (default: </span><span class="si">%(default)s</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--model_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to a checkpoint&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--seed&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set random seed for reproducibility&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--save_imgs&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save image&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--lr&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Learning rate (default: </span><span class="si">%(default)s</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">args</span>
+
+</pre></div>
+</div>
+</section>
+</section>
+<section id="main-argv-batch-image-training-and-evaluation">
+<h2>🚀 main(argv): Batch Image Training and Evaluation<a class="headerlink" href="#main-argv-batch-image-training-and-evaluation" title="Link to this heading">#</a></h2>
+<p>This function runs <code class="docutils literal notranslate"><span class="pre">SimpleTrainer2d</span></code> on an entire dataset (e.g., Kodak or DIV2K). For each image, it trains a set of 2D Gaussians to minimize L2 loss and logs metrics such as PSNR, MS-SSIM, training time, and FPS. All results are saved using <code class="docutils literal notranslate"><span class="pre">LogWriter</span></code>, and the script computes the average performance across all images to evaluate model quality and speed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">argv</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">([])</span>  
+<span class="c1"># Cache the args as a text string to save them in the output dir later</span>
+<span class="n">args_text</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+
+<span class="n">logwriter</span> <span class="o">=</span> <span class="n">LogWriter</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./checkpoints/</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">data_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">iterations</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">num_points</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+<span class="n">psnrs</span><span class="p">,</span> <span class="n">ms_ssims</span><span class="p">,</span> <span class="n">training_times</span><span class="p">,</span> <span class="n">eval_times</span><span class="p">,</span> <span class="n">eval_fpses</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="n">image_h</span><span class="p">,</span> <span class="n">image_w</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">data_name</span> <span class="o">==</span> <span class="s2">&quot;kodak&quot;</span><span class="p">:</span>
+    <span class="n">image_length</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">0</span>
+<span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">data_name</span> <span class="o">==</span> <span class="s2">&quot;DIV2K_valid_LRX2&quot;</span><span class="p">:</span>
+    <span class="n">image_length</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">800</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">start</span><span class="o">+</span><span class="n">image_length</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">data_name</span> <span class="o">==</span> <span class="s2">&quot;kodak&quot;</span><span class="p">:</span>
+        <span class="n">image_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.png&#39;</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">data_name</span> <span class="o">==</span> <span class="s2">&quot;DIV2K_valid_LRX2&quot;</span><span class="p">:</span>
+        <span class="n">image_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span> <span class="o">/</span>  <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s1">04</span><span class="si">}</span><span class="s1">x2.png&#39;</span>
+
+    <span class="n">trainer</span> <span class="o">=</span> <span class="n">SimpleTrainer2d</span><span class="p">(</span><span class="n">image_path</span><span class="o">=</span><span class="n">image_path</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">num_points</span><span class="p">,</span> 
+        <span class="n">iterations</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">iterations</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_path</span><span class="p">)</span>
+    <span class="n">psnr</span><span class="p">,</span> <span class="n">ms_ssim</span><span class="p">,</span> <span class="n">training_time</span><span class="p">,</span> <span class="n">eval_time</span><span class="p">,</span> <span class="n">eval_fps</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">psnrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psnr</span><span class="p">)</span>
+    <span class="n">ms_ssims</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ms_ssim</span><span class="p">)</span>
+    <span class="n">training_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">training_time</span><span class="p">)</span> 
+    <span class="n">eval_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eval_time</span><span class="p">)</span>
+    <span class="n">eval_fpses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eval_fps</span><span class="p">)</span>
+    <span class="n">image_h</span> <span class="o">+=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">H</span>
+    <span class="n">image_w</span> <span class="o">+=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">W</span>
+    <span class="n">image_name</span> <span class="o">=</span> <span class="n">image_path</span><span class="o">.</span><span class="n">stem</span>
+    <span class="n">logwriter</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">x</span><span class="si">{}</span><span class="s2">, PSNR:</span><span class="si">{:.4f}</span><span class="s2">, MS-SSIM:</span><span class="si">{:.4f}</span><span class="s2">, Training:</span><span class="si">{:.4f}</span><span class="s2">s, Eval:</span><span class="si">{:.8f}</span><span class="s2">s, FPS:</span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">image_name</span><span class="p">,</span> <span class="n">trainer</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="n">trainer</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">psnr</span><span class="p">,</span> <span class="n">ms_ssim</span><span class="p">,</span> <span class="n">training_time</span><span class="p">,</span> <span class="n">eval_time</span><span class="p">,</span> <span class="n">eval_fps</span><span class="p">))</span>
+
+<span class="n">avg_psnr</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">psnrs</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">avg_ms_ssim</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">ms_ssims</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">avg_training_time</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">training_times</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">avg_eval_time</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">eval_times</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">avg_eval_fps</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">eval_fpses</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">avg_h</span> <span class="o">=</span> <span class="n">image_h</span><span class="o">//</span><span class="n">image_length</span>
+<span class="n">avg_w</span> <span class="o">=</span> <span class="n">image_w</span><span class="o">//</span><span class="n">image_length</span>
+
+<span class="n">logwriter</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Average: </span><span class="si">{}</span><span class="s2">x</span><span class="si">{}</span><span class="s2">, PSNR:</span><span class="si">{:.4f}</span><span class="s2">, MS-SSIM:</span><span class="si">{:.4f}</span><span class="s2">, Training:</span><span class="si">{:.4f}</span><span class="s2">s, Eval:</span><span class="si">{:.8f}</span><span class="s2">s, FPS:</span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">avg_h</span><span class="p">,</span> <span class="n">avg_w</span><span class="p">,</span> <span class="n">avg_psnr</span><span class="p">,</span> <span class="n">avg_ms_ssim</span><span class="p">,</span> <span class="n">avg_training_time</span><span class="p">,</span> <span class="n">avg_eval_time</span><span class="p">,</span> <span class="n">avg_eval_fps</span><span class="p">))</span>    
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Training progress: 100%|██████████| 50000/50000 [06:54&lt;00:00, 120.76it/s, Loss=0.0001107, PSNR=39.5578,]
+
+
+Test PSNR:39.5580, MS_SSIM:0.998474
+Training Complete in 414.0497s, Eval time:0.00043770s, FPS:2284.6784
+1: 512x768, PSNR:39.5580, MS-SSIM:0.9985, Training:414.0497s, Eval:0.00043770s, FPS:2284.6784
+
+
+Training progress: 100%|██████████| 50000/50000 [20:12&lt;00:00, 41.24it/s, Loss=0.0000530, PSNR=42.7581,] 
+
+
+Test PSNR:42.7585, MS_SSIM:0.997255
+Training Complete in 1212.2935s, Eval time:0.00050834s, FPS:1967.1988
+2: 512x768, PSNR:42.7585, MS-SSIM:0.9973, Training:1212.2935s, Eval:0.00050834s, FPS:1967.1988
+
+
+Training progress: 100%|██████████| 50000/50000 [15:04&lt;00:00, 55.27it/s, Loss=0.0000227, PSNR=46.4439,] 
+
+
+Test PSNR:46.4443, MS_SSIM:0.998835
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/chapters/Chapter05_Gaussian_Image"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">1. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">2. The Core Idea</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-matrix-factorization">2.1 Covariance matrix factorization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accumulated-blending">2.2 Accumulated Blending</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compression">2.3 Compression</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributions">3. Contributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">4. References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simpletrainer2d-training-2d-gaussians-to-reconstruct-an-image">🧠 SimpleTrainer2d: Training 2D Gaussians to Reconstruct an Image</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">⚙️ Initialization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-loop">🔁 Training Loop</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#testing">🧪 Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">✅ Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#main-argv-batch-image-training-and-evaluation">🚀 main(argv): Batch Image Training and Evaluation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,745 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>📘论文题目： &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/chapters/Chapter09_Neural_SpaceTime/neural_spacetime';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Awesome-Computational-Imaging
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/chapters/chapters/Chapter09_Neural_SpaceTime/neural_spacetime.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>📘论文题目：</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">📘论文题目：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">🔍研究背景</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">💡论文核心思想</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">🧠技术细节</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">🧪实验结果</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">⚠️方法限制</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">✅总结</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dpc">✅ 在 DPC（差分相位衬度）显微镜中：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pattern">🔦 每个 pattern = 一种照明方向：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">📸 然后对应每个 pattern，你会有：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">📌 总结一下：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">🧠 类比一下：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hermitian-hamiltonian">✅ <code class="docutils literal notranslate"><span class="pre">Hermitian</span></code> 是哈密顿（Hamiltonian）吗？</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hermitian">📘 什么是 Hermitian 矩阵？</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#a-h-a-forward-model">✅ <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 和 forward model 有关吗？</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#a-h-a">✅ <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 是半正定的吗？有闭式解吗？</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">❗ 为什么是半正定？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">✅ 如果是正定，就有闭式解？</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">✅ 总结（中英对照）：</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>好的，以下是这篇论文的中文总结：</p>
+<hr class="docutils" />
+<section id="id1">
+<h1>📘论文题目：<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p><strong>《使用神经时空模型的动态结构光显微成像（Dynamic Structured Illumination Microscopy with a Neural Space-time Model）》</strong></p>
+<p><strong>作者</strong>：Ruiming Cao, Fanglin Linda Liu, Li-Hao Yeh, Laura Waller<br />
+<strong>机构</strong>：加州大学伯克利分校 &amp; Chan Zuckerberg Biohub<br />
+<strong>发表时间</strong>：2022年（arXiv预印本）</p>
+<hr class="docutils" />
+</section>
+<section id="id2">
+<h1>🔍研究背景<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<p>结构光照明显微（SIM）是一种能够突破衍射极限的超分辨成像方法。传统的SIM需要通过多幅图像叠加实现超分辨，但这会导致采集速度下降，并且在样本移动时会产生运动伪影。</p>
+<hr class="docutils" />
+</section>
+<section id="id3">
+<h1>💡论文核心思想<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<p>作者提出了 <strong>Speckle Flow SIM</strong> 方法，突破了传统SIM在动态场景下成像的限制。其主要思路是：</p>
+<ul class="simple">
+<li><p>使用 <strong>固定不变的散斑照明</strong>（不再需要多次改变光照图案）；</p></li>
+<li><p>让样本自然地 <strong>在拍摄过程中移动</strong>；</p></li>
+<li><p>引入一个 <strong>神经时空模型（neural space-time model）</strong>，由两个多层感知机（MLP）组成：</p>
+<ul>
+<li><p>一个 MLP 学习 <strong>场景本身（高分辨图像）</strong>；</p></li>
+<li><p>另一个 MLP 学习 <strong>每个像素随时间的运动轨迹</strong>。</p></li>
+</ul>
+</li>
+</ul>
+<p>这允许在没有改变照明的情况下，仅通过采集动态图像序列来重建超分辨图像。</p>
+<hr class="docutils" />
+</section>
+<section id="id4">
+<h1>🧠技术细节<a class="headerlink" href="#id4" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>将二维空间坐标 $(x, y)$ 和时间 $t$ 送入“运动MLP”，输出对应的位移 $\delta r_t$；</p></li>
+<li><p>将修正后的坐标 $x + \delta x_t, y + \delta y_t$ 送入“场景MLP”，得到该时刻像素值；</p></li>
+<li><p>整个过程使用可微分的前向模型 + 反向传播优化；</p></li>
+<li><p>用坐标编码（positional encoding）来增强MLP表示高频细节的能力。</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="id5">
+<h1>🧪实验结果<a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>仿真数据</strong>：在 hydra 变形场景中，使用 10 帧图像就可以还原出清晰细节；</p></li>
+<li><p><strong>实物实验</strong>：对 USAF-1951 分辨率卡进行实验，达到了 <strong>1.88× 的衍射极限提升</strong>；</p></li>
+<li><p>比较不同位置编码频率、帧数对重建效果的影响；</p></li>
+<li><p>在某些配置下，可以超过传统的 2× 超分辨极限。</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="id6">
+<h1>⚠️方法限制<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p><strong>计算开销大</strong>：一个实验场景需训练 50 万步，耗时可达 13 小时；</p></li>
+<li><p><strong>适用于平滑的、可变形的运动</strong>，不适用于跳跃、随机等非连续运动；</p></li>
+<li><p><strong>需要提前标定 speckle 照明场</strong>，可能因系统抖动而与真实照明不完全一致。</p></li>
+</ol>
+<hr class="docutils" />
+</section>
+<section id="id7">
+<h1>✅总结<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<p>Speckle Flow SIM 是一种<strong>创新的动态超分辨显微方法</strong>，它使用固定照明与神经网络建模相结合的方式，在<strong>样本移动的过程中实现高分辨率重建</strong>，实验上可达到 1.88× 超分辨率，并且具有<strong>设备简单、无需复杂光学切换</strong>的优势。</p>
+<p>未来可扩展到荧光通道、提升速度，或推广到更多多帧成像系统中。</p>
+<hr class="docutils" />
+<p>需要我用 Markdown 帮你写一份博客结构吗？</p>
+<p>这个问题问得非常好！你说的 “pattern 是不是不同的滤波方式”，确实很接近，但我们来 <strong>更准确</strong> 地解释一下：</p>
+<hr class="docutils" />
+</section>
+<section id="dpc">
+<h1>✅ 在 DPC（差分相位衬度）显微镜中：<a class="headerlink" href="#dpc" title="Link to this heading">#</a></h1>
+<p>“<strong>pattern</strong>” 指的是不同的 <strong>照明方向（illumination direction）</strong>，<br />
+<strong>不是滤波方式的选择，而是光从不同角度照射样本。</strong></p>
+<hr class="docutils" />
+</section>
+<section id="pattern">
+<h1>🔦 每个 pattern = 一种照明方向：<a class="headerlink" href="#pattern" title="Link to this heading">#</a></h1>
+<p>比如你定义了：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">],</span>   <span class="c1"># 从上照</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">],</span>   <span class="c1"># 从下照</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>   <span class="c1"># 从左照</span>
+    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>   <span class="c1"># 从右照</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>这 4 个 <code class="docutils literal notranslate"><span class="pre">pattern</span></code> 就代表光从不同方向打到样本上的 4 次成像。<br />
+每一次成像都会导致不同的边缘高亮、不同的阴影，因此带有不同的结构信息。</p>
+<hr class="docutils" />
+</section>
+<section id="id8">
+<h1>📸 然后对应每个 pattern，你会有：<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>一个 <strong>实际采集到的图像</strong>：<code class="docutils literal notranslate"><span class="pre">imgs[i]</span></code></p></li>
+<li><p>一个 <strong>DPC transfer function 滤波器</strong>：<code class="docutils literal notranslate"><span class="pre">Hu[i]</span></code>（吸收通道），<code class="docutils literal notranslate"><span class="pre">Hp[i]</span></code>（相位通道）</p></li>
+</ul>
+<p>这些 transfer function 是你根据光学模型和 pupil 函数生成的：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Hu</span><span class="p">,</span> <span class="n">Hp</span> <span class="o">=</span> <span class="n">gen_transfer_func</span><span class="p">(</span><span class="n">list_source</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">pupil</span><span class="o">=...</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这个 <code class="docutils literal notranslate"><span class="pre">Hu[i]</span></code> 实际上是对应“pattern i”的<strong>频域滤波器</strong>，模拟该照明方向下系统的响应。</p>
+<hr class="docutils" />
+</section>
+<section id="id9">
+<h1>📌 总结一下：<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>名词</p></th>
+<th class="head"><p>含义</p></th>
+<th class="head"><p>举例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pattern</p></td>
+<td><p>一种照明方向</p></td>
+<td><p>上照、下照、左照、右照</p></td>
+</tr>
+<tr class="row-odd"><td><p>imgs[i]</p></td>
+<td><p>该方向照明下的图像</p></td>
+<td><p>(H, W) 图像</p></td>
+</tr>
+<tr class="row-even"><td><p>Hu[i], Hp[i]</p></td>
+<td><p>该方向对应的频域滤波器</p></td>
+<td><p>用于估计吸收和相位的频域响应</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+</section>
+<section id="id10">
+<h1>🧠 类比一下：<a class="headerlink" href="#id10" title="Link to this heading">#</a></h1>
+<p>你可以想象：</p>
+<blockquote>
+<div><p>pattern 就像是医生用手电从不同角度照你的脸，想通过阴影判断骨骼形状。不同角度就是不同的 pattern。Hu 和 Hp 就是告诉你不同角度的“阴影怎么看”才能判断出真实结构。</p>
+</div></blockquote>
+<hr class="docutils" />
+<p>如果你想看看这些 transfer function 是怎么根据 pupil 函数和方向算出来的，我可以帮你解读 <code class="docutils literal notranslate"><span class="pre">gen_transfer_func()</span></code> 的具体数学步骤！</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dpc_tikhonov_solver</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">Hu</span><span class="p">,</span> <span class="n">Hp</span><span class="p">,</span> <span class="n">amp_reg</span><span class="o">=</span><span class="mf">5e-5</span><span class="p">,</span> <span class="n">phase_reg</span><span class="o">=</span><span class="mf">5e-5</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="mf">0.515</span><span class="p">):</span>
+
+    <span class="n">AHA</span> <span class="o">=</span> <span class="p">[(</span><span class="n">Hu</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">Hu</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">amp_reg</span><span class="p">,</span> <span class="p">(</span><span class="n">Hu</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">Hp</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+           <span class="p">(</span><span class="n">Hp</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">Hu</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">Hp</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">Hp</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">phase_reg</span><span class="p">]</span>
+    <span class="n">determinant</span> <span class="o">=</span> <span class="n">AHA</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">AHA</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">AHA</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">AHA</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">fIntensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">AHy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([(</span><span class="n">Hu</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">fIntensity</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">Hp</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">fIntensity</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)])</span>
+    <span class="n">absorption</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft2</span><span class="p">((</span><span class="n">AHA</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">AHy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">AHA</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">AHy</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">determinant</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">real</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft2</span><span class="p">((</span><span class="n">AHA</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">AHy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">AHA</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">AHy</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">determinant</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">real</span>
+
+    <span class="k">return</span> <span class="n">absorption</span><span class="p">,</span> <span class="n">phase</span>
+
+</pre></div>
+</div>
+<p>/home/xqgao/2025/MIT/code/NeRF_optics/nstm-main/nstm/dpc_utils.py
+非常棒的问题！你的理解已经非常接近了，现在我们来一步步厘清你提到的几个关键词之间的 <strong>线性代数和物理背景</strong>：</p>
+<hr class="docutils" />
+</section>
+<section id="hermitian-hamiltonian">
+<h1>✅ <code class="docutils literal notranslate"><span class="pre">Hermitian</span></code> 是哈密顿（Hamiltonian）吗？<a class="headerlink" href="#hermitian-hamiltonian" title="Link to this heading">#</a></h1>
+<p><strong>❌ 不是。</strong></p>
+<p>在这里：</p>
+<ul class="simple">
+<li><p><strong>Hermitian</strong> 指的是<strong>厄米矩阵（Hermitian matrix）</strong></p></li>
+<li><p>这是线性代数的概念，不是物理里的哈密顿量</p></li>
+</ul>
+<hr class="docutils" />
+<section id="hermitian">
+<h2>📘 什么是 Hermitian 矩阵？<a class="headerlink" href="#hermitian" title="Link to this heading">#</a></h2>
+<p>一个复数矩阵 ( A ) 是 Hermitian（厄米的），满足：</p>
+<p>[
+A = A^H = \overline{A}^T
+]</p>
+<p>即：矩阵等于它的共轭转置。<br />
+这是复数世界里类似“对称矩阵”的概念。</p>
+<p>在 <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 中，( A^H ) 表示 A 的共轭转置。</p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="a-h-a-forward-model">
+<h1>✅ <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 和 forward model 有关吗？<a class="headerlink" href="#a-h-a-forward-model" title="Link to this heading">#</a></h1>
+<p><strong>✅ 是的，非常有关。</strong></p>
+<p>你可以理解成：</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">A</span></code> 就是前向模型（forward model）<br />
+<code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 是这个前向模型的能量结构，用来稳定反问题</p>
+</div></blockquote>
+<p>在 DPC 中：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">=</span> <span class="pre">[Hu,</span> <span class="pre">Hp]</span></code> 是将物体（absorption + phase）映射到观测图像的 forward model</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 反映了你能从图像中<strong>稳定恢复</strong>哪些频率信息</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="a-h-a">
+<h1>✅ <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 是半正定的吗？有闭式解吗？<a class="headerlink" href="#a-h-a" title="Link to this heading">#</a></h1>
+<p><strong>✅ 是的，它是半正定（semi-positive definite），因此通常有闭式解。</strong></p>
+<section id="id11">
+<h2>❗ 为什么是半正定？<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>因为 ( A^H A ) 总是半正定（semi-positive definite）：</p>
+<p>[
+x^H A^H A x = |Ax|^2 \ge 0
+]</p>
+<blockquote>
+<div><p>所以对所有 ( x )，都有非负的结果，说明它的所有特征值都是非负的。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="id12">
+<h2>✅ 如果是正定，就有闭式解？<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<p><strong>对！</strong></p>
+<p>当 <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 是正定（positive definite）时，解：</p>
+<p>[
+x = (A^H A)^{-1} A^H y
+]</p>
+<p>就是 Tikhonov 正则化的闭式解。即使它不是正定（比如有退化方向），加上正则项 ( \lambda I ) 后也可以稳定求解：</p>
+<p>[
+x = (A^H A + \lambda I)^{-1} A^H y
+]</p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="id13">
+<h1>✅ 总结（中英对照）：<a class="headerlink" href="#id13" title="Link to this heading">#</a></h1>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>概念</p></th>
+<th class="head"><p>是否</p></th>
+<th class="head"><p>原因</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Hermitian 是 Hamiltonian 吗？</p></td>
+<td><p>❌ 否</p></td>
+<td><p>Hermitian 是线性代数中的共轭转置，不是物理的哈密顿量</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AHA</span></code> 与 forward model 有关吗？</p></td>
+<td><p>✅ 是</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">A</span></code> 就是前向模型，<code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 是它的正规方程形式</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AHA</span></code> 是半正定吗？</p></td>
+<td><p>✅ 是</p></td>
+<td><p>所有 <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 都是半正定的</p></td>
+</tr>
+<tr class="row-odd"><td><p>有闭式解吗？</p></td>
+<td><p>✅ 有</p></td>
+<td><p>只要加上正则项或矩阵条件良好，就能稳定求解</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<p>如果你想我举一个数值例子，用 numpy 实际算一次 <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 和它的逆解（含正则项），我可以直接给你一个 Jupyter Notebook 风格的例子。这样你可以完全看清它在做什么～</p>
+<p>把s弄成了(1,5,1,512,512)后：
+发生异常: ValueError
+operands could not be broadcast together with shapes (1,5,1,512,512) (1,1,1,5,1)
+File “/home/xqgao/2025/MIT/code/NeRF_optics/nstm-main/nstm/dpc_utils.py”, line 117, in gen_transfer_func
+Hp = 1j * 2 * np.fft.ifft2(1j * M.imag, axes=(-2, -1)) / DC[:, np.newaxis, np.newaxis] / wavelength
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+File “/home/xqgao/2025/MIT/code/NeRF_optics/nstm-main/examples/DPC.py”, line 113, in <module>
+Hu, Hp = dpc_utils.gen_transfer_func(list_source=s, pupil=pupil, wavelength=param.wavelength, shifted_out=False)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: operands could not be broadcast together with shapes (1,5,1,512,512) (1,1,1,5,1)</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/chapters/Chapter09_Neural_SpaceTime"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">📘论文题目：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">🔍研究背景</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">💡论文核心思想</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">🧠技术细节</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">🧪实验结果</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">⚠️方法限制</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">✅总结</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dpc">✅ 在 DPC（差分相位衬度）显微镜中：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pattern">🔦 每个 pattern = 一种照明方向：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">📸 然后对应每个 pattern，你会有：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">📌 总结一下：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">🧠 类比一下：</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hermitian-hamiltonian">✅ <code class="docutils literal notranslate"><span class="pre">Hermitian</span></code> 是哈密顿（Hamiltonian）吗？</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hermitian">📘 什么是 Hermitian 矩阵？</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#a-h-a-forward-model">✅ <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 和 forward model 有关吗？</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#a-h-a">✅ <code class="docutils literal notranslate"><span class="pre">A^H</span> <span class="pre">A</span></code> 是半正定的吗？有闭式解吗？</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">❗ 为什么是半正定？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">✅ 如果是正定，就有闭式解？</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">✅ 总结（中英对照）：</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
