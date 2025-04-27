@@ -81,7 +81,14 @@ if [[ $? -ne 0 ]]; then
 fi
 # === 6. 直接用 subtree 推送 HTML 到 docs 分支，不切分支 ===
 echo "🚀 Pushing built HTML files to docs branch..."
-git subtree push --prefix "$BOOK_DIR/_build/html" origin docs
+# 先 add _build/html
+git add compimg_book/_build/html
+
+# 再 commit
+git commit -m "✨ Build website for deploy"
+
+# 然后 subtree push
+git subtree push --prefix compimg_book/_build/html origin docs
 
 if [[ $? -ne 0 ]]; then
     echo "❌ Failed to push to docs branch."
