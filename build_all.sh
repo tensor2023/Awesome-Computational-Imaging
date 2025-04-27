@@ -79,28 +79,14 @@ if [[ $? -ne 0 ]]; then
     echo "❌ jupyter-book build failed. Please fix your TOC or markdown files first."
     exit 1
 fi
+# === 6. 直接用 subtree 推送 HTML 到 docs 分支，不切分支 ===
+echo "🚀 Pushing built HTML files to docs branch..."
+git subtree push --prefix "$BOOK_DIR/_build/html" origin docs
 
-# === 6. 切换到 docs 分支 ===
-CURRENT_BRANCH=$(git branch --show-current)
-echo "🔀 Switching to docs branch..."
-git switch docs || { echo "❌ Failed to switch to docs branch."; exit 1; }
-
-# === 7. 清空 docs 分支（保留 .git）===
-echo "🧹 Cleaning up docs branch..."
-find . -mindepth 1 ! -regex '^\.\/\.git\(/.*\)?' -delete
-
-# === 8. 拷贝 build 出来的 HTML 文件到 docs 分支 ===
-echo "📋 Copying built HTML files to docs branch..."
-cp -r "$BOOK_DIR/_build/html/"* .
-
-# === 9. 提交并推送到 docs 分支 ===
-echo "🚀 Committing and pushing to docs branch..."
-git add .
-git commit -m "📘 Deploy: Clean HTML build"
-git push origin docs --force
-
-# === 10. 切回原分支 master ===
-git switch "$CURRENT_BRANCH"
+if [[ $? -ne 0 ]]; then
+    echo "❌ Failed to push to docs branch."
+    exit 1
+fi
 
 echo ""
 echo "✅ Done! Successfully deployed clean HTML to docs branch!"
