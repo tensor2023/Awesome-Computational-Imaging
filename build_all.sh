@@ -40,68 +40,72 @@ mkdir -p "$BOOK_DIR/chapters"
 # cd "$CHAPTERS_DIR" TODO
 
 # === 2.1 复制所有 md 文件（保持结构）===
+# === 2.1 复制所有 .md 文件（保持结构，并显示每次复制信息）===
 find . -name "*.md" | while read -r md_file; do
     dst_path="$BOOK_DIR/chapters/$(dirname "$md_file" | sed 's|^\./||')"
     mkdir -p "$dst_path"
     cp "$md_file" "$dst_path/"
+    echo "✅ Copied: $md_file --> $dst_path/"
 done
 
-# === 2.2 复制所有 *_files 文件夹（图片资源）===
+# === 2.2 复制所有 *_files 文件夹（图片资源，并显示每次复制信息）===
 find . -type d -name "*_files" | while read -r d; do
     dst_path="$BOOK_DIR/chapters/$(dirname "$d" | sed 's|^\./||')"
     mkdir -p "$dst_path"
     cp -r "$d" "$dst_path/"
+    echo "📂 Copied folder: $d --> $dst_path/"
 done
 
 
-echo "✅ All .md and *_files copied to $BOOK_DIR/chapters"
 
-# === 3. 确保 intro.md 存在 ===
-if [[ ! -s "$BOOK_DIR/intro.md" ]]; then
-    echo "# $REPO_NAME" > "$BOOK_DIR/intro.md"
-    echo "✅ Auto-generated intro.md"
-fi
+# echo "✅ All .md and *_files copied to $BOOK_DIR/chapters"
 
-# === 4. 检查 TOC 文件是否存在 ===
-if [[ ! -f "$TOC_FILE" ]]; then
-    echo "❌ Error: _toc.yml not found at $TOC_FILE"
-    exit 1
-fi
+# # === 3. 确保 intro.md 存在 ===
+# if [[ ! -s "$BOOK_DIR/intro.md" ]]; then
+#     echo "# $REPO_NAME" > "$BOOK_DIR/intro.md"
+#     echo "✅ Auto-generated intro.md"
+# fi
 
-# === 5. 生成 HTML 页面 ===
-echo "🧹 Cleaning old build..."
-rm -rf "$BOOK_DIR/_build"
+# # === 4. 检查 TOC 文件是否存在 ===
+# if [[ ! -f "$TOC_FILE" ]]; then
+#     echo "❌ Error: _toc.yml not found at $TOC_FILE"
+#     exit 1
+# fi
 
-echo "📘 Building Jupyter Book..."
-if [[ -n "$BUILD_CHAPTER" ]]; then
-    jupyter-book build "$BOOK_DIR/chapters/$BUILD_CHAPTER"
-else
-    jupyter-book build "$BOOK_DIR"
-fi
+# # === 5. 生成 HTML 页面 ===
+# echo "🧹 Cleaning old build..."
+# rm -rf "$BOOK_DIR/_build"
 
-if [[ $? -ne 0 ]]; then
-    echo "❌ jupyter-book build failed. Please fix your TOC or markdown files first."
-    exit 1
-fi
-# === 6. 直接用 subtree 推送 HTML 到 docs 分支，不切分支 ===
-echo "🚀 Pushing built HTML files to docs branch..."
-# 先 add _build/html
-git add compimg_book/_build/html
+# echo "📘 Building Jupyter Book..."
+# if [[ -n "$BUILD_CHAPTER" ]]; then
+#     jupyter-book build "$BOOK_DIR/chapters/$BUILD_CHAPTER"
+# else
+#     jupyter-book build "$BOOK_DIR"
+# fi
 
-# 再 commit
-git commit -m "✨ Build website for deploy"
+# if [[ $? -ne 0 ]]; then
+#     echo "❌ jupyter-book build failed. Please fix your TOC or markdown files first."
+#     exit 1
+# fi
+# # === 6. 直接用 subtree 推送 HTML 到 docs 分支，不切分支 ===
+# echo "🚀 Pushing built HTML files to docs branch..."
+# # 先 add _build/html
+# git add compimg_book/_build/html
 
-# 然后 subtree push
-# 生成一个新的 commit，只包含 compimg_book/_build/html 的内容
-git subtree split --prefix=compimg_book/_build/html -b deploy-docs
-git push origin deploy-docs:docs --force
+# # 再 commit
+# git commit -m "✨ Build website for deploy"
+
+# # 然后 subtree push
+# # 生成一个新的 commit，只包含 compimg_book/_build/html 的内容
+# git subtree split --prefix=compimg_book/_build/html -b deploy-docs
+# git push origin deploy-docs:docs --force
 
 
-if [[ $? -ne 0 ]]; then
-    echo "❌ Failed to push to docs branch."
-    exit 1
-fi
+# if [[ $? -ne 0 ]]; then
+#     echo "❌ Failed to push to docs branch."
+#     exit 1
+# fi
 
-echo ""
-echo "✅ Done! Successfully deployed clean HTML to docs branch!"
-echo "🔗 View it at: https://$GITHUB_USER.github.io/$REPO_NAME/"
+# echo ""
+# echo "✅ Done! Successfully deployed clean HTML to docs branch!"
+# echo "🔗 View it at: https://$GITHUB_USER.github.io/$REPO_NAME/"
