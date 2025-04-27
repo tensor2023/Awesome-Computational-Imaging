@@ -28,10 +28,10 @@ fi
 # echo "🎯 All .ipynb files are now properly converted to .md!"
 
 
-# === 1. 保存当前工作区 ===
-echo "💾 Saving current changes..."
-git add .
-git commit -m "🔖 Save current files before deploy" || echo "⚠️ No changes to commit."
+# # === 1. 保存当前工作区 ===
+# echo "💾 Saving current changes..."
+# git add .
+# git commit -m "🔖 Save current files before deploy" || echo "⚠️ No changes to commit."
 
 # # === 2. 清空 compimg_book/chapters/，重新复制 .md 和 *_files ===
 # echo "🔄 Preparing compimg_book/chapters..."
