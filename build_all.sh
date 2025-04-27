@@ -37,7 +37,7 @@ git commit -m "🔖 Save current files before deploy" || echo "⚠️ No changes
 echo "🔄 Preparing compimg_book/chapters..."
 rm -rf "$BOOK_DIR/chapters"
 mkdir -p "$BOOK_DIR/chapters"
-# cd "$CHAPTERS_DIR" TODO
+cd "$CHAPTERS_DIR" TODO
 
 # === 2.1 复制所有 md 文件（保持结构）===
 # === 2.1 复制所有 .md 文件（保持结构，并显示每次复制信息）===
