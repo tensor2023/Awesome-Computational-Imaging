@@ -18,6 +18,16 @@ if [[ $# -gt 0 ]]; then
     fi
 fi
 
+# # === 1. ipynb 转为 md（在原目录生成 .md，保留 .ipynb）===
+# cd "$CHAPTERS_DIR"
+# find . -name "*.ipynb" | while read -r ipynb_file; do
+#     nb_dir="$(dirname "$ipynb_file")"  # ipynb所在的目录
+#     jupyter nbconvert --to markdown "$ipynb_file" --output-dir "$nb_dir"
+#     echo "✅ Converted $ipynb_file -> $nb_dir"
+# done
+# echo "🎯 All .ipynb files are now properly converted to .md!"
+
+
 # === 1. 保存当前工作区 ===
 echo "💾 Saving current changes..."
 git add .
@@ -27,7 +37,7 @@ git commit -m "🔖 Save current files before deploy" || echo "⚠️ No changes
 echo "🔄 Preparing compimg_book/chapters..."
 rm -rf "$BOOK_DIR/chapters"
 mkdir -p "$BOOK_DIR/chapters"
-cd "$CHAPTERS_DIR"
+# cd "$CHAPTERS_DIR" TODO
 
 # === 2.1 复制所有 md 文件（保持结构）===
 find . -name "*.md" | while read -r md_file; do
@@ -70,32 +80,28 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-# === 6. 切换到孤立分支 temp-docs（不会污染其他分支）===
+# === 6. 切换到 docs 分支 ===
 CURRENT_BRANCH=$(git branch --show-current)
-git switch --orphan temp-docs
+echo "🔀 Switching to docs branch..."
+git switch docs || { echo "❌ Failed to switch to docs branch."; exit 1; }
 
-# 清空工作区（保留 .git）
+# === 7. 清空 docs 分支（保留 .git）===
+echo "🧹 Cleaning up docs branch..."
 find . -mindepth 1 ! -regex '^\.\/\.git\(/.*\)?' -delete
 
-# === 7. 拷贝 build 结果和源文件 ===
-echo "📋 Copying build results and sources..."
+# === 8. 拷贝 build 出来的 HTML 文件到 docs 分支 ===
+echo "📋 Copying built HTML files to docs branch..."
 cp -r "$BOOK_DIR/_build/html/"* .
-cp "$TOC_FILE" .
-cp "$BOOK_DIR/intro.md" .
 
-# === 8. 提交并推送到 docs 分支 ===
+# === 9. 提交并推送到 docs 分支 ===
+echo "🚀 Committing and pushing to docs branch..."
 git add .
-git commit -m "📘 Deploy: HTML + TOC + markdown sources"
-
-git branch -D docs 2>/dev/null
-git branch -m docs
-
-git remote set-url origin git@github.com:$GITHUB_USER/$REPO_NAME.git
+git commit -m "📘 Deploy: Clean HTML build"
 git push origin docs --force
 
-# === 9. 切回原分支 ===
+# === 10. 切回原分支 master ===
 git switch "$CURRENT_BRANCH"
 
 echo ""
-echo "✅ Done! Deployed to docs branch successfully!"
+echo "✅ Done! Successfully deployed clean HTML to docs branch!"
 echo "🔗 View it at: https://$GITHUB_USER.github.io/$REPO_NAME/"
