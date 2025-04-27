@@ -88,7 +88,7 @@ git add compimg_book/_build/html
 git commit -m "✨ Build website for deploy"
 
 # 然后 subtree push
-git subtree push --prefix compimg_book/_build/html origin docs
+git subtree push --prefix compimg_book/_build/html origin docs --force
 
 if [[ $? -ne 0 ]]; then
     echo "❌ Failed to push to docs branch."
