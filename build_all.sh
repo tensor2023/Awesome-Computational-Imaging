@@ -109,3 +109,7 @@ fi
 echo ""
 echo "✅ Done! Successfully deployed clean HTML to docs branch!"
 echo "🔗 View it at: https://$GITHUB_USER.github.io/$REPO_NAME/"
+echo "🚀 Using ghp-import to deploy the full HTML site"
+ghp-import -n -p compimg_book/_build/html
+
+echo "✅ Site deployed successfully!"
