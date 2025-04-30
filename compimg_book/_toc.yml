@@ -1,0 +1,59 @@
+format: jb-book
+root: index.md
+
+parts:
+  - caption: Chapter01_SIREN
+    chapters:
+      - file: Chapter01_SIREN/Chapter01_SIREN
+
+  - caption: Chapter02_NeRF
+    chapters:
+      - file: Chapter02_NeRF/Chapter02_NeRF
+
+  - caption: Chapter03_FourierFeatures
+    chapters:
+      - file: Chapter03_FourierFeatures/Chapter03_FourierFeatures
+
+  - caption: Chapter04_3D_Gaussian_Splatting
+    chapters:
+      - file: Chapter04_3D_Gaussian_Splatting/Chapter04_3D_Gaussian_Splatting
+
+  - caption: Chapter05_Gaussian_Image
+    chapters:
+      - file: Chapter05_Gaussian_Image/Chapter05_Gaussian_Image
+
+  - caption: Chapter06_Pixel2Gaussian
+    chapters:
+      - file: Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian
+
+  - caption: Chapter07_FPM_INR
+    chapters:
+      - file: Chapter07_FPM_INR/Chapter07_FPM_INR
+
+  - caption: Chapter08_DeCAF
+    chapters:
+      - file: Chapter08_DeCAF/Chapter08_DeCAF
+
+  - caption: Chapter09_Neural_SpaceTime
+    chapters:
+      - file: Chapter09_Neural_SpaceTime/Chapter09_Neural_SpaceTime
+
+  - caption: Chapter10_DDPM
+    chapters:
+      - file: Chapter10_DDPM/Chapter10_DDPM
+
+  - caption: Chapter11_DPS
+    chapters:
+      - file: Chapter11_DPS/Chapter11_DPS
+
+  - caption: Chapter12_ScoreDiffusion
+    chapters:
+      - file: Chapter12_ScoreDiffusion/Chapter12_ScoreDiffusion
+
+  - caption: Chapter13_PlugAndPlay
+    chapters:
+      - file: Chapter13_PlugAndPlay/Chapter13_PlugAndPlay
+
+  - caption: Chapter14_PnP-DM
+    chapters:
+      - file: Chapter14_PnP-DM/Chapter14_PnP-DM

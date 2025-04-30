@@ -1,0 +1,1264 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter02_NeRF/Chapter02_NeRF';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Index
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/Chapter02_NeRF/Chapter02_NeRF.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">3. The Core Idea</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="nerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis">
+<h1>NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis<a class="headerlink" href="#nerf-representing-scenes-as-neural-radiance-fields-for-view-synthesis" title="Link to this heading">#</a></h1>
+<p><img alt="image.png" src="../../_images/image1.png" />
+Code: https://github.com/bmild/nerf, https://github.com/yenchenlin/nerf-pytorch</p>
+</section>
+<section id="highlights">
+<h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
+<p>Inspired by SIREN(https://www.vincentsitzmann.com/siren/), we represent 3D scenes as a consistent function, instead of relying on discrete geometry or voxel-based representations. We use a simple, fully-connected MLP that models complex scenes as <strong>continuous neural radiance fields</strong>, a <strong>differentiable volume rendering technique</strong> that allows training from 2D images without any 3D supervision.</p>
+</section>
+<section id="background">
+<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<p>Novel view synthesis — generating new images of a 3D scene from a sparse set of captured views — is a long-standing challenge in computer vision and computer graphics.</p>
+<p>Traditional approaches rely on:</p>
+<ul class="simple">
+<li><p>Explicit 3D reconstruction (point clouds, voxel grids, triangle meshes),</p></li>
+<li><p>Or dense view interpolation (light fields) which requires heavy sampling,</p></li>
+<li><p>Or multi-view stereo, which struggles under non-Lambertian materials or occlusions.</p></li>
+</ul>
+<p>Recent deep learning methods have proposed:</p>
+<ul class="simple">
+<li><p><strong>Implicit neural scene representations</strong>, such as Occupancy Networks [1] and DeepSDF [2], mapping coordinates to occupancy or signed distance fields,</p></li>
+<li><p><strong>Voxel-based neural rendering</strong>, such as DeepVoxels [3],</p></li>
+<li><p><strong>Image-based interpolation methods</strong>, like Local Light Field Fusion (LLFF) [4].</p></li>
+</ul>
+<p>However, existing techniques often suffer from either:</p>
+<ul class="simple">
+<li><p>The need for ground-truth 3D geometry,</p></li>
+<li><p>Limited ability to capture fine details,</p></li>
+<li><p>Or high memory and computational costs for high-resolution modeling.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="the-core-idea">
+<h1>3. The Core Idea<a class="headerlink" href="#the-core-idea" title="Link to this heading">#</a></h1>
+<p>The key idea of NeRF is simple but powerful:</p>
+<blockquote>
+<div><p>Represent a 3D scene as a continuous volumetric field using a multilayer perceptron (MLP).</p>
+</div></blockquote>
+<p>Specifically:</p>
+<ul class="simple">
+<li><p><strong>Input</strong>: a 5D coordinate $(x, y, z, \theta, \phi)$, or a 3D position $x$ and 2D viewing direction $d$.</p></li>
+<li><p><strong>Output</strong>: the volume density $\sigma$ and RGB color $c=(r,g,b)$ at that point and direction.</p></li>
+</ul>
+<p>To render a novel view, NeRF traces rays from the virtual camera, samples 3D points along each ray, queries the network, and integrates their contributions using volume rendering.</p>
+<p>The rendering equation is:</p>
+<p>$$
+C(r) = \int_{t_n}^{t_f} T(t) , \sigma(r(t)) , c(r(t), d) , dt
+$$</p>
+<p>where transmittance $T(t)$ is:</p>
+<p>$$
+T(t) = \exp\left( -\int_{t_n}^{t} \sigma(r(s)), ds \right)
+$$</p>
+<p>The integral is numerically estimated using stratified sampling and quadrature.</p>
+<p>Further improvements include:</p>
+<ul class="simple">
+<li><p><strong>Positional encoding</strong>: mapping coordinates to a higher dimensional space with sinusoidal functions to better represent high-frequency details,</p></li>
+<li><p><strong>Hierarchical volume sampling</strong>: using a coarse-to-fine strategy to focus computational effort where density is high.</p></li>
+</ul>
+<p>Because the entire rendering process is differentiable, the network can be optimized end-to-end using only RGB images and known camera poses.</p>
+<hr class="docutils" />
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<p>[1] Lars Mescheder, Michael Oechsle, Michael Niemeyer, Sebastian Nowozin, Andreas Geiger.<br />
+<strong>“Occupancy Networks: Learning 3D Reconstruction in Function Space.”</strong><br />
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2019.</p>
+<p>[2] Jeong Joon Park, Peter Florence, Julian Straub, Richard Newcombe, Steven Lovegrove.<br />
+<strong>“DeepSDF: Learning Continuous Signed Distance Functions for Shape Representation.”</strong><br />
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2019.</p>
+<p>[3] Vincent Sitzmann, Justus Thies, Felix Heide, Matthias Nießner, Gordon Wetzstein, Michael Zollhöfer.<br />
+<strong>“DeepVoxels: Learning Persistent 3D Feature Embeddings.”</strong><br />
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2019.</p>
+<p>[4] Ben Mildenhall, Pratul P. Srinivasan, Rodrigo Ortiz-Cayon, Nima Khademi Kalantari, Ravi Ramamoorthi, Ren Ng, Abhishek Kar.<br />
+<strong>“Local Light Field Fusion: Practical View Synthesis with Prescriptive Sampling Guidelines.”</strong><br />
+ACM Transactions on Graphics (TOG), Proceedings of SIGGRAPH, 2019.</p>
+<p>Corresponding code: code/NeRF/nerf-pytorch-master/run_nerf.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># 当前 notebook 的路径</span>
+<span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;__file__&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="s2">&quot;__file__&quot;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+<span class="c1"># 目标 train.py 所在目录</span>
+<span class="n">gs_code_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_dir</span><span class="p">,</span> <span class="s1">&#39;../../../code/NeRF/nerf-pytorch-master&#39;</span><span class="p">))</span>
+
+<span class="c1"># 添加到 sys.path</span>
+<span class="k">if</span> <span class="n">gs_code_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gs_code_dir</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Added </span><span class="si">{</span><span class="n">gs_code_dir</span><span class="si">}</span><span class="s2"> to sys.path&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">imageio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span><span class="p">,</span> <span class="n">trange</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">run_nerf_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">load_llff</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_llff_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">load_deepvoxels</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dv_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">load_blender</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_blender_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">load_LINEMOD</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_LINEMOD_data</span>
+
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>At first, <code class="docutils literal notranslate"><span class="pre">batchify</span></code> allows us to handle large datasets by processing them in smaller, manageable pieces, helping to avoid memory overflow.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">batchify</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">chunk</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructs a version of &#39;fn&#39; that applies to smaller batches.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">chunk</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fn</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ret</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">fn</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">chunk</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">chunk</span><span class="p">)],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">batchify_rays</span><span class="p">(</span><span class="n">rays_flat</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="mi">1024</span><span class="o">*</span><span class="mi">32</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render rays in smaller minibatches to avoid OOM.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">all_ret</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rays_flat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">chunk</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">render_rays</span><span class="p">(</span><span class="n">rays_flat</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">chunk</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ret</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_ret</span><span class="p">:</span>
+                <span class="n">all_ret</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">all_ret</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
+    <span class="n">all_ret</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">all_ret</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">all_ret</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">all_ret</span>
+
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">run_network</span></code> function processes 3D coordinates (or <code class="docutils literal notranslate"><span class="pre">pose</span></code>) and viewing directions through a neural network.</p>
+<p>As for <code class="docutils literal notranslate"><span class="pre">embed_fn</span></code>, when the input image is 256×256, we sample one ray per pixel, resulting in 256×256 = 65536 rays. Each ray corresponds to a 3D point, so the input to the embedder has shape <code class="docutils literal notranslate"><span class="pre">[65536,</span> <span class="pre">3]</span></code>. When <code class="docutils literal notranslate"><span class="pre">multires=10</span></code>, the embedder applies 10 sine and 10 cosine functions to each coordinate, plus the original input. This gives 21 functions per coordinate, and 21 × 3 = 63 dimensions per point. The embedded output has shape <code class="docutils literal notranslate"><span class="pre">[65536,</span> <span class="pre">63]</span></code>.</p>
+<p>If viewing directions (<code class="docutils literal notranslate"><span class="pre">viewdirs</span></code>) are provided, they are also embedded using the same approach.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run_network</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">viewdirs</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">embed_fn</span><span class="p">,</span> <span class="n">embeddirs_fn</span><span class="p">,</span> <span class="n">netchunk</span><span class="o">=</span><span class="mi">1024</span><span class="o">*</span><span class="mi">64</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepares inputs and applies network &#39;fn&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inputs_flat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">embedded</span> <span class="o">=</span> <span class="n">embed_fn</span><span class="p">(</span><span class="n">inputs_flat</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">viewdirs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">input_dirs</span> <span class="o">=</span> <span class="n">viewdirs</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">input_dirs_flat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">input_dirs</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_dirs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="n">embedded_dirs</span> <span class="o">=</span> <span class="n">embeddirs_fn</span><span class="p">(</span><span class="n">input_dirs_flat</span><span class="p">)</span>
+        <span class="n">embedded</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">embedded</span><span class="p">,</span> <span class="n">embedded_dirs</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">outputs_flat</span> <span class="o">=</span> <span class="n">batchify</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">netchunk</span><span class="p">)(</span><span class="n">embedded</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">outputs_flat</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="p">[</span><span class="n">outputs_flat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">outputs</span>
+</pre></div>
+</div>
+<p>Next, The <code class="docutils literal notranslate"><span class="pre">render</span></code> function takes rays or camera poses and outputs predicted rgb, disparity, and opacity by calling <code class="docutils literal notranslate"><span class="pre">batchify_rays</span></code>, which runs the network on all rays in chunks.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">render_path</span></code> function loops over a sequence of poses, calls <code class="docutils literal notranslate"><span class="pre">render</span></code> for each, and collects the rendered images.
+<img alt="image.png" src="../../_images/image1.png" />
+As shown in Fig. 1, we input the pose and coordinates, with the target being a 2D image that corresponds to the scene rendered from the specific camera pose. NeRF learns to map the input to the target in a supervised manner.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="mi">1024</span><span class="o">*</span><span class="mi">32</span><span class="p">,</span> <span class="n">rays</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c2w</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ndc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">near</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">far</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                  <span class="n">use_viewdirs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">c2w_staticcam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render rays</span>
+<span class="sd">    Args:</span>
+<span class="sd">      H: int. Height of image in pixels.</span>
+<span class="sd">      W: int. Width of image in pixels.</span>
+<span class="sd">      focal: float. Focal length of pinhole camera.</span>
+<span class="sd">      chunk: int. Maximum number of rays to process simultaneously. Used to</span>
+<span class="sd">        control maximum memory usage. Does not affect final results.</span>
+<span class="sd">      rays: array of shape [2, batch_size, 3]. Ray origin and direction for</span>
+<span class="sd">        each example in batch.</span>
+<span class="sd">      c2w: array of shape [3, 4]. Camera-to-world transformation matrix.</span>
+<span class="sd">      ndc: bool. If True, represent ray origin, direction in NDC coordinates.</span>
+<span class="sd">      near: float or array of shape [batch_size]. Nearest distance for a ray.</span>
+<span class="sd">      far: float or array of shape [batch_size]. Farthest distance for a ray.</span>
+<span class="sd">      use_viewdirs: bool. If True, use viewing direction of a point in space in model.</span>
+<span class="sd">      c2w_staticcam: array of shape [3, 4]. If not None, use this transformation matrix for </span>
+<span class="sd">       camera while using other c2w argument for viewing directions.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      rgb_map: [batch_size, 3]. Predicted RGB values for rays.</span>
+<span class="sd">      disp_map: [batch_size]. Disparity map. Inverse of depth.</span>
+<span class="sd">      acc_map: [batch_size]. Accumulated opacity (alpha) along a ray.</span>
+<span class="sd">      extras: dict with everything returned by render_rays().</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">c2w</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># special case to render full image</span>
+        <span class="n">rays_o</span><span class="p">,</span> <span class="n">rays_d</span> <span class="o">=</span> <span class="n">get_rays</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">c2w</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># use provided ray batch</span>
+        <span class="n">rays_o</span><span class="p">,</span> <span class="n">rays_d</span> <span class="o">=</span> <span class="n">rays</span>
+
+    <span class="k">if</span> <span class="n">use_viewdirs</span><span class="p">:</span>
+        <span class="c1"># provide ray directions as input</span>
+        <span class="n">viewdirs</span> <span class="o">=</span> <span class="n">rays_d</span>
+        <span class="k">if</span> <span class="n">c2w_staticcam</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># special case to visualize effect of viewdirs</span>
+            <span class="n">rays_o</span><span class="p">,</span> <span class="n">rays_d</span> <span class="o">=</span> <span class="n">get_rays</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">c2w_staticcam</span><span class="p">)</span>
+        <span class="n">viewdirs</span> <span class="o">=</span> <span class="n">viewdirs</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">viewdirs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">viewdirs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">viewdirs</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+    <span class="n">sh</span> <span class="o">=</span> <span class="n">rays_d</span><span class="o">.</span><span class="n">shape</span> <span class="c1"># [..., 3]</span>
+    <span class="k">if</span> <span class="n">ndc</span><span class="p">:</span>
+        <span class="c1"># for forward facing scenes</span>
+        <span class="n">rays_o</span><span class="p">,</span> <span class="n">rays_d</span> <span class="o">=</span> <span class="n">ndc_rays</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">rays_o</span><span class="p">,</span> <span class="n">rays_d</span><span class="p">)</span>
+
+    <span class="c1"># Create ray batch</span>
+    <span class="n">rays_o</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">rays_o</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+    <span class="n">rays_d</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">rays_d</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+    <span class="n">near</span><span class="p">,</span> <span class="n">far</span> <span class="o">=</span> <span class="n">near</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">rays_d</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">1</span><span class="p">]),</span> <span class="n">far</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">rays_d</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">rays</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">rays_o</span><span class="p">,</span> <span class="n">rays_d</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">use_viewdirs</span><span class="p">:</span>
+        <span class="n">rays</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">rays</span><span class="p">,</span> <span class="n">viewdirs</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Render and reshape</span>
+    <span class="n">all_ret</span> <span class="o">=</span> <span class="n">batchify_rays</span><span class="p">(</span><span class="n">rays</span><span class="p">,</span> <span class="n">chunk</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">all_ret</span><span class="p">:</span>
+        <span class="n">k_sh</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sh</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_ret</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">all_ret</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">all_ret</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">k_sh</span><span class="p">)</span>
+
+    <span class="n">k_extract</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rgb_map&#39;</span><span class="p">,</span> <span class="s1">&#39;disp_map&#39;</span><span class="p">,</span> <span class="s1">&#39;acc_map&#39;</span><span class="p">]</span>
+    <span class="n">ret_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">all_ret</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_extract</span><span class="p">]</span>
+    <span class="n">ret_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">all_ret</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">all_ret</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">k_extract</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">ret_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">ret_dict</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">render_path</span><span class="p">(</span><span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">render_kwargs</span><span class="p">,</span> <span class="n">gt_imgs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">savedir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">render_factor</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+    <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">focal</span> <span class="o">=</span> <span class="n">hwf</span>
+
+    <span class="k">if</span> <span class="n">render_factor</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Render downsampled for speed</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">H</span><span class="o">//</span><span class="n">render_factor</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">W</span><span class="o">//</span><span class="n">render_factor</span>
+        <span class="n">focal</span> <span class="o">=</span> <span class="n">focal</span><span class="o">/</span><span class="n">render_factor</span>
+
+    <span class="n">rgbs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">disps</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c2w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">render_poses</span><span class="p">)):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">rgb</span><span class="p">,</span> <span class="n">disp</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">render</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="n">chunk</span><span class="p">,</span> <span class="n">c2w</span><span class="o">=</span><span class="n">c2w</span><span class="p">[:</span><span class="mi">3</span><span class="p">,:</span><span class="mi">4</span><span class="p">],</span> <span class="o">**</span><span class="n">render_kwargs</span><span class="p">)</span>
+        <span class="n">rgbs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rgb</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">disps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">disp</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">disp</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        if gt_imgs is not None and render_factor==0:</span>
+<span class="sd">            p = -10. * np.log10(np.mean(np.square(rgb.cpu().numpy() - gt_imgs[i])))</span>
+<span class="sd">            print(p)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">savedir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rgb8</span> <span class="o">=</span> <span class="n">to8b</span><span class="p">(</span><span class="n">rgbs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savedir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:03d}</span><span class="s1">.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">imageio</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">rgb8</span><span class="p">)</span>
+
+
+    <span class="n">rgbs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">rgbs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">disps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">disps</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rgbs</span><span class="p">,</span> <span class="n">disps</span>
+</pre></div>
+</div>
+<p>This is the key part, the <code class="docutils literal notranslate"><span class="pre">create_nerf</span></code> function initializes the NeRF model with embeddings, sets up the optimizer, and prepares the rendering functions. It optionally loads a checkpoint to resume training and returns the necessary arguments for training and testing.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">create_nerf</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instantiate NeRF&#39;s MLP model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">embed_fn</span><span class="p">,</span> <span class="n">input_ch</span> <span class="o">=</span> <span class="n">get_embedder</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">multires</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">i_embed</span><span class="p">)</span>
+
+    <span class="n">input_ch_views</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">embeddirs_fn</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">use_viewdirs</span><span class="p">:</span>
+        <span class="n">embeddirs_fn</span><span class="p">,</span> <span class="n">input_ch_views</span> <span class="o">=</span> <span class="n">get_embedder</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">multires_views</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">i_embed</span><span class="p">)</span>
+    <span class="n">output_ch</span> <span class="o">=</span> <span class="mi">5</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">N_importance</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">4</span>
+    <span class="n">skips</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">NeRF</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">netdepth</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">netwidth</span><span class="p">,</span>
+                 <span class="n">input_ch</span><span class="o">=</span><span class="n">input_ch</span><span class="p">,</span> <span class="n">output_ch</span><span class="o">=</span><span class="n">output_ch</span><span class="p">,</span> <span class="n">skips</span><span class="o">=</span><span class="n">skips</span><span class="p">,</span>
+                 <span class="n">input_ch_views</span><span class="o">=</span><span class="n">input_ch_views</span><span class="p">,</span> <span class="n">use_viewdirs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">use_viewdirs</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">grad_vars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+    <span class="n">model_fine</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">N_importance</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">model_fine</span> <span class="o">=</span> <span class="n">NeRF</span><span class="p">(</span><span class="n">D</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">netdepth_fine</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">netwidth_fine</span><span class="p">,</span>
+                          <span class="n">input_ch</span><span class="o">=</span><span class="n">input_ch</span><span class="p">,</span> <span class="n">output_ch</span><span class="o">=</span><span class="n">output_ch</span><span class="p">,</span> <span class="n">skips</span><span class="o">=</span><span class="n">skips</span><span class="p">,</span>
+                          <span class="n">input_ch_views</span><span class="o">=</span><span class="n">input_ch_views</span><span class="p">,</span> <span class="n">use_viewdirs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">use_viewdirs</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">grad_vars</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model_fine</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+    <span class="n">network_query_fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">viewdirs</span><span class="p">,</span> <span class="n">network_fn</span> <span class="p">:</span> <span class="n">run_network</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">viewdirs</span><span class="p">,</span> <span class="n">network_fn</span><span class="p">,</span>
+                                                                <span class="n">embed_fn</span><span class="o">=</span><span class="n">embed_fn</span><span class="p">,</span>
+                                                                <span class="n">embeddirs_fn</span><span class="o">=</span><span class="n">embeddirs_fn</span><span class="p">,</span>
+                                                                <span class="n">netchunk</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">netchunk</span><span class="p">)</span>
+
+    <span class="c1"># Create optimizer</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">grad_vars</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">lrate</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">))</span>
+
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">basedir</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">basedir</span>
+    <span class="n">expname</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">expname</span>
+
+    <span class="c1">##########################</span>
+
+    <span class="c1"># Load checkpoints</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">ft_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">args</span><span class="o">.</span><span class="n">ft_path</span><span class="o">!=</span><span class="s1">&#39;None&#39;</span><span class="p">:</span>
+        <span class="n">ckpts</span> <span class="o">=</span> <span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">ft_path</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ckpts</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">)))</span> <span class="k">if</span> <span class="s1">&#39;tar&#39;</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found ckpts&#39;</span><span class="p">,</span> <span class="n">ckpts</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ckpts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">no_reload</span> <span class="ow">and</span> <span class="n">ckpts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">!=</span><span class="s1">&#39;null&#39;</span><span class="p">:</span>
+        <span class="n">ckpt_path</span> <span class="o">=</span> <span class="n">ckpts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reloading from&#39;</span><span class="p">,</span> <span class="n">ckpt_path</span><span class="p">)</span>
+        <span class="n">ckpt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ckpt_path</span><span class="p">)</span>
+
+        <span class="n">start</span> <span class="o">=</span> <span class="n">ckpt</span><span class="p">[</span><span class="s1">&#39;global_step&#39;</span><span class="p">]</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">ckpt</span><span class="p">[</span><span class="s1">&#39;optimizer_state_dict&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Load model</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">ckpt</span><span class="p">[</span><span class="s1">&#39;network_fn_state_dict&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">model_fine</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model_fine</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">ckpt</span><span class="p">[</span><span class="s1">&#39;network_fine_state_dict&#39;</span><span class="p">])</span>
+
+    <span class="c1">##########################</span>
+
+    <span class="n">render_kwargs_train</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;network_query_fn&#39;</span> <span class="p">:</span> <span class="n">network_query_fn</span><span class="p">,</span>
+        <span class="s1">&#39;perturb&#39;</span> <span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">perturb</span><span class="p">,</span>
+        <span class="s1">&#39;N_importance&#39;</span> <span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">N_importance</span><span class="p">,</span>
+        <span class="s1">&#39;network_fine&#39;</span> <span class="p">:</span> <span class="n">model_fine</span><span class="p">,</span>
+        <span class="s1">&#39;N_samples&#39;</span> <span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">N_samples</span><span class="p">,</span>
+        <span class="s1">&#39;network_fn&#39;</span> <span class="p">:</span> <span class="n">model</span><span class="p">,</span>
+        <span class="s1">&#39;use_viewdirs&#39;</span> <span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">use_viewdirs</span><span class="p">,</span>
+        <span class="s1">&#39;white_bkgd&#39;</span> <span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">white_bkgd</span><span class="p">,</span>
+        <span class="s1">&#39;raw_noise_std&#39;</span> <span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">raw_noise_std</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># NDC only good for LLFF-style forward facing data</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">!=</span> <span class="s1">&#39;llff&#39;</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">no_ndc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Not ndc!&#39;</span><span class="p">)</span>
+        <span class="n">render_kwargs_train</span><span class="p">[</span><span class="s1">&#39;ndc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">render_kwargs_train</span><span class="p">[</span><span class="s1">&#39;lindisp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">lindisp</span>
+
+    <span class="n">render_kwargs_test</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">render_kwargs_train</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">render_kwargs_train</span><span class="p">}</span>
+    <span class="n">render_kwargs_test</span><span class="p">[</span><span class="s1">&#39;perturb&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">render_kwargs_test</span><span class="p">[</span><span class="s1">&#39;raw_noise_std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
+
+    <span class="k">return</span> <span class="n">render_kwargs_train</span><span class="p">,</span> <span class="n">render_kwargs_test</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">grad_vars</span><span class="p">,</span> <span class="n">optimizer</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">config_parser</span><span class="p">():</span>
+
+    <span class="kn">import</span><span class="w"> </span><span class="nn">configargparse</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">configargparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="n">is_config_file</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;config file path&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--expname&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;experiment name&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--basedir&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../code/NeRF/nerf-pytorch-master/logs/&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;where to store ckpts and logs&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--datadir&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../Datasets/NeRF/nerf_llff_data/fern/&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;input data directory&#39;</span><span class="p">)</span>
+
+    <span class="c1"># training options</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--netdepth&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;layers in network&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--netwidth&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;channels per layer&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--netdepth_fine&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;layers in fine network&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--netwidth_fine&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;channels per layer in fine network&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--N_rand&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">32</span><span class="o">*</span><span class="mi">32</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;batch size (number of random rays per gradient step)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--lrate&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">5e-4</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;learning rate&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--lrate_decay&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;exponential learning rate decay (in 1000 steps)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--chunk&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1024</span><span class="o">*</span><span class="mi">32</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of rays processed in parallel, decrease if running out of memory&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--netchunk&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1024</span><span class="o">*</span><span class="mi">64</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of pts sent through network in parallel, decrease if running out of memory&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--no_batching&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;only take random rays from 1 image at a time&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--no_reload&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;do not reload weights from saved ckpt&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ft_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;specific weights npy file to reload for coarse network&#39;</span><span class="p">)</span>
+
+    <span class="c1"># rendering options</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--N_samples&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of coarse samples per ray&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--N_importance&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of additional fine samples per ray&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--perturb&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;set to 0. for no jitter, 1. for jitter&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--use_viewdirs&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;use full 5D input instead of 3D&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--i_embed&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;set 0 for default positional encoding, -1 for none&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--multires&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;log2 of max freq for positional encoding (3D location)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--multires_views&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;log2 of max freq for positional encoding (2D direction)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--raw_noise_std&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;std dev of noise added to regularize sigma_a output, 1e0 recommended&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--render_only&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;do not optimize, reload weights and render out render_poses path&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--render_test&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;render the test set instead of render_poses path&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--render_factor&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;downsampling factor to speed up rendering, set 4 or 8 for fast preview&#39;</span><span class="p">)</span>
+
+    <span class="c1"># training options</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--precrop_iters&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of steps to train on central crops&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--precrop_frac&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;fraction of img taken for central crops&#39;</span><span class="p">)</span> 
+
+    <span class="c1"># dataset options</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--dataset_type&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;llff&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;options: llff / blender / deepvoxels&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--testskip&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;will load 1/N images from test/val sets, useful for large datasets like deepvoxels&#39;</span><span class="p">)</span>
+
+    <span class="c1">## deepvoxels flags</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--shape&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;greek&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;options : armchair / cube / greek / vase&#39;</span><span class="p">)</span>
+
+    <span class="c1">## blender flags</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--white_bkgd&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;set to render synthetic data on a white bkgd (always use for dvoxels)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--half_res&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;load blender synthetic data at 400x400 instead of 800x800&#39;</span><span class="p">)</span>
+
+    <span class="c1">## llff flags</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--factor&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;downsample factor for LLFF images&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--no_ndc&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;do not use normalized device coordinates (set for non-forward facing scenes)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--lindisp&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;sampling linearly in disparity rather than depth&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--spherify&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;set for spherical 360 scenes&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--llffhold&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;will take every 1/N images as LLFF test set, paper uses 8&#39;</span><span class="p">)</span>
+
+    <span class="c1"># logging/saving options</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--i_print&quot;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;frequency of console printout and metric loggin&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--i_img&quot;</span><span class="p">,</span>     <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;frequency of tensorboard image logging&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--i_weights&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;frequency of weight ckpt saving&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--i_testset&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;frequency of testset saving&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--i_video&quot;</span><span class="p">,</span>   <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> 
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;frequency of render_poses video saving&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span>
+
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">config_parser</span><span class="p">()</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span>
+    <span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="s1">&#39;../../../../code/NeRF/nerf-pytorch-master/configs/lego.yaml&#39;</span>
+<span class="p">])</span>
+
+<span class="c1"># Load data</span>
+<span class="n">K</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">==</span> <span class="s1">&#39;llff&#39;</span><span class="p">:</span>
+    <span class="n">images</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">bds</span><span class="p">,</span> <span class="n">render_poses</span><span class="p">,</span> <span class="n">i_test</span> <span class="o">=</span> <span class="n">load_llff_data</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">factor</span><span class="p">,</span>
+                                                                <span class="n">recenter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bd_factor</span><span class="o">=</span><span class="mf">.75</span><span class="p">,</span>
+                                                                <span class="n">spherify</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">spherify</span><span class="p">)</span>
+    <span class="n">hwf</span> <span class="o">=</span> <span class="n">poses</span><span class="p">[</span><span class="mi">0</span><span class="p">,:</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">poses</span> <span class="o">=</span> <span class="n">poses</span><span class="p">[:,:</span><span class="mi">3</span><span class="p">,:</span><span class="mi">4</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loaded llff&#39;</span><span class="p">,</span> <span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">render_poses</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i_test</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">i_test</span> <span class="o">=</span> <span class="p">[</span><span class="n">i_test</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">llffhold</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Auto LLFF holdout,&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">llffhold</span><span class="p">)</span>
+        <span class="n">i_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])[::</span><span class="n">args</span><span class="o">.</span><span class="n">llffhold</span><span class="p">]</span>
+
+    <span class="n">i_val</span> <span class="o">=</span> <span class="n">i_test</span>
+    <span class="n">i_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="k">if</span>
+                    <span class="p">(</span><span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i_test</span> <span class="ow">and</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i_val</span><span class="p">)])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;DEFINING BOUNDS&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">no_ndc</span><span class="p">:</span>
+        <span class="n">near</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">bds</span><span class="p">)</span> <span class="o">*</span> <span class="mf">.9</span>
+        <span class="n">far</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">bds</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.</span>
+        
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">near</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">far</span> <span class="o">=</span> <span class="mf">1.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NEAR FAR&#39;</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span><span class="p">)</span>
+
+<span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">==</span> <span class="s1">&#39;blender&#39;</span><span class="p">:</span>
+    <span class="n">images</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">i_split</span> <span class="o">=</span> <span class="n">load_blender_data</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">half_res</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">testskip</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loaded blender&#39;</span><span class="p">,</span> <span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">render_poses</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">)</span>
+    <span class="n">i_train</span><span class="p">,</span> <span class="n">i_val</span><span class="p">,</span> <span class="n">i_test</span> <span class="o">=</span> <span class="n">i_split</span>
+
+    <span class="n">near</span> <span class="o">=</span> <span class="mf">2.</span>
+    <span class="n">far</span> <span class="o">=</span> <span class="mf">6.</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">white_bkgd</span><span class="p">:</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">==</span> <span class="s1">&#39;LINEMOD&#39;</span><span class="p">:</span>
+    <span class="n">images</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">i_split</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span> <span class="o">=</span> <span class="n">load_LINEMOD_data</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">half_res</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">testskip</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Loaded LINEMOD, images shape: </span><span class="si">{</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">, hwf: </span><span class="si">{</span><span class="n">hwf</span><span class="si">}</span><span class="s1">, K: </span><span class="si">{</span><span class="n">K</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[CHECK HERE] near: </span><span class="si">{</span><span class="n">near</span><span class="si">}</span><span class="s1">, far: </span><span class="si">{</span><span class="n">far</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+    <span class="n">i_train</span><span class="p">,</span> <span class="n">i_val</span><span class="p">,</span> <span class="n">i_test</span> <span class="o">=</span> <span class="n">i_split</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">white_bkgd</span><span class="p">:</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">==</span> <span class="s1">&#39;deepvoxels&#39;</span><span class="p">:</span>
+
+    <span class="n">images</span><span class="p">,</span> <span class="n">poses</span><span class="p">,</span> <span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">i_split</span> <span class="o">=</span> <span class="n">load_dv_data</span><span class="p">(</span><span class="n">scene</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                                                                <span class="n">basedir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span>
+                                                                <span class="n">testskip</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">testskip</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loaded deepvoxels&#39;</span><span class="p">,</span> <span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">render_poses</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">datadir</span><span class="p">)</span>
+    <span class="n">i_train</span><span class="p">,</span> <span class="n">i_val</span><span class="p">,</span> <span class="n">i_test</span> <span class="o">=</span> <span class="n">i_split</span>
+
+    <span class="n">hemi_R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">poses</span><span class="p">[:,:</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">near</span> <span class="o">=</span> <span class="n">hemi_R</span><span class="o">-</span><span class="mf">1.</span>
+    <span class="n">far</span> <span class="o">=</span> <span class="n">hemi_R</span><span class="o">+</span><span class="mf">1.</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unknown dataset type&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">dataset_type</span><span class="p">,</span> <span class="s1">&#39;exiting&#39;</span><span class="p">)</span>
+    <span class="c1"># return</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cast intrinsics to right types</span>
+<span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">focal</span> <span class="o">=</span> <span class="n">hwf</span>
+<span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+<span class="n">hwf</span> <span class="o">=</span> <span class="p">[</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">focal</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">K</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">focal</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">W</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">focal</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">H</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">])</span>
+
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">render_test</span><span class="p">:</span>
+    <span class="n">render_poses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">poses</span><span class="p">[</span><span class="n">i_test</span><span class="p">])</span>
+
+<span class="c1"># Create log dir and copy the config file</span>
+<span class="n">basedir</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">basedir</span>
+<span class="n">expname</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">expname</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="s1">&#39;args.txt&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">args</span><span class="p">)):</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> = </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="s1">&#39;config.txt&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+<span class="c1"># Create nerf model</span>
+<span class="n">render_kwargs_train</span><span class="p">,</span> <span class="n">render_kwargs_test</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">grad_vars</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">create_nerf</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">global_step</span> <span class="o">=</span> <span class="n">start</span>
+
+<span class="n">bds_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;near&#39;</span> <span class="p">:</span> <span class="n">near</span><span class="p">,</span>
+    <span class="s1">&#39;far&#39;</span> <span class="p">:</span> <span class="n">far</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">render_kwargs_train</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bds_dict</span><span class="p">)</span>
+<span class="n">render_kwargs_test</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bds_dict</span><span class="p">)</span>
+
+<span class="c1"># Move testing data to GPU</span>
+<span class="n">render_poses</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">render_poses</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Short circuit if only rendering out from trained model</span>
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">render_only</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RENDER ONLY&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">render_test</span><span class="p">:</span>
+            <span class="c1"># render_test switches to test poses</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">i_test</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Default is smoother render_poses path</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">testsavedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="s1">&#39;renderonly_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{:06d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;test&#39;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">render_test</span> <span class="k">else</span> <span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="n">start</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">testsavedir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test poses shape&#39;</span><span class="p">,</span> <span class="n">render_poses</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">rgbs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">render_path</span><span class="p">(</span><span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">chunk</span><span class="p">,</span> <span class="n">render_kwargs_test</span><span class="p">,</span> <span class="n">gt_imgs</span><span class="o">=</span><span class="n">images</span><span class="p">,</span> <span class="n">savedir</span><span class="o">=</span><span class="n">testsavedir</span><span class="p">,</span> <span class="n">render_factor</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">render_factor</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done rendering&#39;</span><span class="p">,</span> <span class="n">testsavedir</span><span class="p">)</span>
+        <span class="n">imageio</span><span class="o">.</span><span class="n">mimwrite</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">testsavedir</span><span class="p">,</span> <span class="s1">&#39;video.mp4&#39;</span><span class="p">),</span> <span class="n">to8b</span><span class="p">(</span><span class="n">rgbs</span><span class="p">),</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">quality</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+        <span class="c1"># return</span>
+</pre></div>
+</div>
+<p>There is optimazation loop.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prepare raybatch tensor if batching random rays</span>
+<span class="n">N_rand</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">N_rand</span>
+<span class="n">use_batching</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">no_batching</span>
+<span class="k">if</span> <span class="n">use_batching</span><span class="p">:</span>
+    <span class="c1"># For random ray batching</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;get rays&#39;</span><span class="p">)</span>
+    <span class="n">rays</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">get_rays_np</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">poses</span><span class="p">[:,:</span><span class="mi">3</span><span class="p">,:</span><span class="mi">4</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># [N, ro+rd, H, W, 3]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done, concats&#39;</span><span class="p">)</span>
+    <span class="n">rays_rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">rays</span><span class="p">,</span> <span class="n">images</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]],</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># [N, ro+rd+rgb, H, W, 3]</span>
+    <span class="n">rays_rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">rays_rgb</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span> <span class="c1"># [N, H, W, ro+rd+rgb, 3]</span>
+    <span class="n">rays_rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">rays_rgb</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">i_train</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># train images only</span>
+    <span class="n">rays_rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">rays_rgb</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span> <span class="c1"># [(N-1)*H*W, ro+rd+rgb, 3]</span>
+    <span class="n">rays_rgb</span> <span class="o">=</span> <span class="n">rays_rgb</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;shuffle rays&#39;</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">rays_rgb</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done&#39;</span><span class="p">)</span>
+    <span class="n">i_batch</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Move training data to GPU</span>
+<span class="k">if</span> <span class="n">use_batching</span><span class="p">:</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">images</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">poses</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">poses</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">use_batching</span><span class="p">:</span>
+    <span class="n">rays_rgb</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">rays_rgb</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+
+<span class="n">N_iters</span> <span class="o">=</span> <span class="mi">200000</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Begin&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;TRAIN views are&#39;</span><span class="p">,</span> <span class="n">i_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;TEST views are&#39;</span><span class="p">,</span> <span class="n">i_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;VAL views are&#39;</span><span class="p">,</span> <span class="n">i_val</span><span class="p">)</span>
+
+<span class="c1"># Summary writers</span>
+<span class="c1"># writer = SummaryWriter(os.path.join(basedir, &#39;summaries&#39;, expname))</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">N_iters</span><span class="p">):</span>
+    <span class="n">time0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># Sample random ray batch</span>
+    <span class="k">if</span> <span class="n">use_batching</span><span class="p">:</span>
+        <span class="c1"># Random over all images</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">rays_rgb</span><span class="p">[</span><span class="n">i_batch</span><span class="p">:</span><span class="n">i_batch</span><span class="o">+</span><span class="n">N_rand</span><span class="p">]</span> <span class="c1"># [B, 2+1, 3*?]</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">batch_rays</span><span class="p">,</span> <span class="n">target_s</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">batch</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">i_batch</span> <span class="o">+=</span> <span class="n">N_rand</span>
+        <span class="k">if</span> <span class="n">i_batch</span> <span class="o">&gt;=</span> <span class="n">rays_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shuffle data after an epoch!&quot;</span><span class="p">)</span>
+            <span class="n">rand_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randperm</span><span class="p">(</span><span class="n">rays_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">rays_rgb</span> <span class="o">=</span> <span class="n">rays_rgb</span><span class="p">[</span><span class="n">rand_idx</span><span class="p">]</span>
+            <span class="n">i_batch</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Random from one image</span>
+        <span class="n">img_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">i_train</span><span class="p">)</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">img_i</span><span class="p">]</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">pose</span> <span class="o">=</span> <span class="n">poses</span><span class="p">[</span><span class="n">img_i</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">,:</span><span class="mi">4</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">N_rand</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rays_o</span><span class="p">,</span> <span class="n">rays_d</span> <span class="o">=</span> <span class="n">get_rays</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">pose</span><span class="p">))</span>  <span class="c1"># (H, W, 3), (H, W, 3)</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">args</span><span class="o">.</span><span class="n">precrop_iters</span><span class="p">:</span>
+                <span class="n">dH</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">H</span><span class="o">//</span><span class="mi">2</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">precrop_frac</span><span class="p">)</span>
+                <span class="n">dW</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">W</span><span class="o">//</span><span class="mi">2</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">precrop_frac</span><span class="p">)</span>
+                <span class="n">coords</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">H</span><span class="o">//</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dH</span><span class="p">,</span> <span class="n">H</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dH</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">dH</span><span class="p">),</span> 
+                        <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">W</span><span class="o">//</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dW</span><span class="p">,</span> <span class="n">W</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dW</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">dW</span><span class="p">)</span>
+                    <span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">start</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Config] Center cropping of size </span><span class="si">{</span><span class="mi">2</span><span class="o">*</span><span class="n">dH</span><span class="si">}</span><span class="s2"> x </span><span class="si">{</span><span class="mi">2</span><span class="o">*</span><span class="n">dW</span><span class="si">}</span><span class="s2"> is enabled until iter </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">precrop_iters</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>                
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">coords</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">H</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">H</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">W</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">W</span><span class="p">)),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (H, W, 2)</span>
+
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># (H * W, 2)</span>
+            <span class="n">select_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="n">N_rand</span><span class="p">],</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># (N_rand,)</span>
+            <span class="n">select_coords</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="n">select_inds</span><span class="p">]</span><span class="o">.</span><span class="n">long</span><span class="p">()</span>  <span class="c1"># (N_rand, 2)</span>
+            <span class="n">rays_o</span> <span class="o">=</span> <span class="n">rays_o</span><span class="p">[</span><span class="n">select_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">select_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>  <span class="c1"># (N_rand, 3)</span>
+            <span class="n">rays_d</span> <span class="o">=</span> <span class="n">rays_d</span><span class="p">[</span><span class="n">select_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">select_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>  <span class="c1"># (N_rand, 3)</span>
+            <span class="n">batch_rays</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">rays_o</span><span class="p">,</span> <span class="n">rays_d</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">target_s</span> <span class="o">=</span> <span class="n">target</span><span class="p">[</span><span class="n">select_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">select_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>  <span class="c1"># (N_rand, 3)</span>
+            <span class="c1">#1024,3rgb</span>
+    <span class="c1">#####  Core optimization loop  #####</span>
+    <span class="n">rgb</span><span class="p">,</span> <span class="n">disp</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">extras</span> <span class="o">=</span> <span class="n">render</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">chunk</span><span class="p">,</span> <span class="n">rays</span><span class="o">=</span><span class="n">batch_rays</span><span class="p">,</span>
+                                            <span class="n">verbose</span><span class="o">=</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">,</span> <span class="n">retraw</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                            <span class="o">**</span><span class="n">render_kwargs_train</span><span class="p">)</span>
+
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">img_loss</span> <span class="o">=</span> <span class="n">img2mse</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">target_s</span><span class="p">)</span>
+    <span class="n">trans</span> <span class="o">=</span> <span class="n">extras</span><span class="p">[</span><span class="s1">&#39;raw&#39;</span><span class="p">][</span><span class="o">...</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">img_loss</span>
+    <span class="n">psnr</span> <span class="o">=</span> <span class="n">mse2psnr</span><span class="p">(</span><span class="n">img_loss</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s1">&#39;rgb0&#39;</span> <span class="ow">in</span> <span class="n">extras</span><span class="p">:</span>
+        <span class="n">img_loss0</span> <span class="o">=</span> <span class="n">img2mse</span><span class="p">(</span><span class="n">extras</span><span class="p">[</span><span class="s1">&#39;rgb0&#39;</span><span class="p">],</span> <span class="n">target_s</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">+</span> <span class="n">img_loss0</span>
+        <span class="n">psnr0</span> <span class="o">=</span> <span class="n">mse2psnr</span><span class="p">(</span><span class="n">img_loss0</span><span class="p">)</span>
+
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># NOTE: IMPORTANT!</span>
+    <span class="c1">###   update learning rate   ###</span>
+    <span class="n">decay_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">decay_steps</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">lrate_decay</span> <span class="o">*</span> <span class="mi">1000</span>
+    <span class="n">new_lrate</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">lrate</span> <span class="o">*</span> <span class="p">(</span><span class="n">decay_rate</span> <span class="o">**</span> <span class="p">(</span><span class="n">global_step</span> <span class="o">/</span> <span class="n">decay_steps</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">param_group</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">:</span>
+        <span class="n">param_group</span><span class="p">[</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_lrate</span>
+    <span class="c1">################################</span>
+
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">time0</span>
+    <span class="c1"># print(f&quot;Step: {global_step}, Loss: {loss}, Time: {dt}&quot;)</span>
+    <span class="c1">#####           end            #####</span>
+
+    <span class="c1"># Rest is logging</span>
+    <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="n">args</span><span class="o">.</span><span class="n">i_weights</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:06d}</span><span class="s1">.tar&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">({</span>
+            <span class="s1">&#39;global_step&#39;</span><span class="p">:</span> <span class="n">global_step</span><span class="p">,</span>
+            <span class="s1">&#39;network_fn_state_dict&#39;</span><span class="p">:</span> <span class="n">render_kwargs_train</span><span class="p">[</span><span class="s1">&#39;network_fn&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+            <span class="s1">&#39;network_fine_state_dict&#39;</span><span class="p">:</span> <span class="n">render_kwargs_train</span><span class="p">[</span><span class="s1">&#39;network_fine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+            <span class="s1">&#39;optimizer_state_dict&#39;</span><span class="p">:</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+        <span class="p">},</span> <span class="n">path</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saved checkpoints at&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="n">args</span><span class="o">.</span><span class="n">i_video</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Turn on testing mode</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="n">rgbs</span><span class="p">,</span> <span class="n">disps</span> <span class="o">=</span> <span class="n">render_path</span><span class="p">(</span><span class="n">render_poses</span><span class="p">,</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">chunk</span><span class="p">,</span> <span class="n">render_kwargs_test</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done, saving&#39;</span><span class="p">,</span> <span class="n">rgbs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">disps</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">moviebase</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_spiral_</span><span class="si">{:06d}</span><span class="s1">_&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">expname</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+        <span class="n">imageio</span><span class="o">.</span><span class="n">mimwrite</span><span class="p">(</span><span class="n">moviebase</span> <span class="o">+</span> <span class="s1">&#39;rgb.mp4&#39;</span><span class="p">,</span> <span class="n">to8b</span><span class="p">(</span><span class="n">rgbs</span><span class="p">),</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">quality</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+        <span class="n">imageio</span><span class="o">.</span><span class="n">mimwrite</span><span class="p">(</span><span class="n">moviebase</span> <span class="o">+</span> <span class="s1">&#39;disp.mp4&#39;</span><span class="p">,</span> <span class="n">to8b</span><span class="p">(</span><span class="n">disps</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">disps</span><span class="p">)),</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">quality</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+        <span class="c1"># if args.use_viewdirs:</span>
+        <span class="c1">#     render_kwargs_test[&#39;c2w_staticcam&#39;] = render_poses[0][:3,:4]</span>
+        <span class="c1">#     with torch.no_grad():</span>
+        <span class="c1">#         rgbs_still, _ = render_path(render_poses, hwf, args.chunk, render_kwargs_test)</span>
+        <span class="c1">#     render_kwargs_test[&#39;c2w_staticcam&#39;] = None</span>
+        <span class="c1">#     imageio.mimwrite(moviebase + &#39;rgb_still.mp4&#39;, to8b(rgbs_still), fps=30, quality=8)</span>
+
+    <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="n">args</span><span class="o">.</span><span class="n">i_testset</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">testsavedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">expname</span><span class="p">,</span> <span class="s1">&#39;testset_</span><span class="si">{:06d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">testsavedir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test poses shape&#39;</span><span class="p">,</span> <span class="n">poses</span><span class="p">[</span><span class="n">i_test</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="n">render_path</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">poses</span><span class="p">[</span><span class="n">i_test</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">hwf</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">chunk</span><span class="p">,</span> <span class="n">render_kwargs_test</span><span class="p">,</span> <span class="n">gt_imgs</span><span class="o">=</span><span class="n">images</span><span class="p">[</span><span class="n">i_test</span><span class="p">],</span> <span class="n">savedir</span><span class="o">=</span><span class="n">testsavedir</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saved test set&#39;</span><span class="p">)</span>
+
+
+
+    <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="n">args</span><span class="o">.</span><span class="n">i_print</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">tqdm</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TRAIN] Iter: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">  PSNR: </span><span class="si">{</span><span class="n">psnr</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        print(expname, i, psnr.numpy(), loss.numpy(), global_step.numpy())</span>
+<span class="sd">        print(&#39;iter time {:.05f}&#39;.format(dt))</span>
+
+<span class="sd">        with tf.contrib.summary.record_summaries_every_n_global_steps(args.i_print):</span>
+<span class="sd">            tf.contrib.summary.scalar(&#39;loss&#39;, loss)</span>
+<span class="sd">            tf.contrib.summary.scalar(&#39;psnr&#39;, psnr)</span>
+<span class="sd">            tf.contrib.summary.histogram(&#39;tran&#39;, trans)</span>
+<span class="sd">            if args.N_importance &gt; 0:</span>
+<span class="sd">                tf.contrib.summary.scalar(&#39;psnr0&#39;, psnr0)</span>
+
+
+<span class="sd">        if i%args.i_img==0:</span>
+
+<span class="sd">            # Log a rendered validation view to Tensorboard</span>
+<span class="sd">            img_i=np.random.choice(i_val)</span>
+<span class="sd">            target = images[img_i]</span>
+<span class="sd">            pose = poses[img_i, :3,:4]</span>
+<span class="sd">            with torch.no_grad():</span>
+<span class="sd">                rgb, disp, acc, extras = render(H, W, focal, chunk=args.chunk, c2w=pose,</span>
+<span class="sd">                                                    **render_kwargs_test)</span>
+
+<span class="sd">            psnr = mse2psnr(img2mse(rgb, target))</span>
+
+<span class="sd">            with tf.contrib.summary.record_summaries_every_n_global_steps(args.i_img):</span>
+
+<span class="sd">                tf.contrib.summary.image(&#39;rgb&#39;, to8b(rgb)[tf.newaxis])</span>
+<span class="sd">                tf.contrib.summary.image(&#39;disp&#39;, disp[tf.newaxis,...,tf.newaxis])</span>
+<span class="sd">                tf.contrib.summary.image(&#39;acc&#39;, acc[tf.newaxis,...,tf.newaxis])</span>
+
+<span class="sd">                tf.contrib.summary.scalar(&#39;psnr_holdout&#39;, psnr)</span>
+<span class="sd">                tf.contrib.summary.image(&#39;rgb_holdout&#39;, target[tf.newaxis])</span>
+
+
+<span class="sd">            if args.N_importance &gt; 0:</span>
+
+<span class="sd">                with tf.contrib.summary.record_summaries_every_n_global_steps(args.i_img):</span>
+<span class="sd">                    tf.contrib.summary.image(&#39;rgb0&#39;, to8b(extras[&#39;rgb0&#39;])[tf.newaxis])</span>
+<span class="sd">                    tf.contrib.summary.image(&#39;disp0&#39;, extras[&#39;disp0&#39;][tf.newaxis,...,tf.newaxis])</span>
+<span class="sd">                    tf.contrib.summary.image(&#39;z_std&#39;, extras[&#39;z_std&#39;][tf.newaxis,...,tf.newaxis])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">global_step</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/Chapter02_NeRF"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">3. The Core Idea</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

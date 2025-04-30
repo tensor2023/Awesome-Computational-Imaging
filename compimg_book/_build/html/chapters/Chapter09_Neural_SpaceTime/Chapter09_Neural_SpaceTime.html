@@ -1,0 +1,909 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Neural space–time model for dynamic multi-shot imaging &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter09_Neural_SpaceTime/Chapter09_Neural_SpaceTime';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Index
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/Chapter09_Neural_SpaceTime/Chapter09_Neural_SpaceTime.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Neural space–time model for dynamic multi-shot imaging</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Neural space–time model for dynamic multi-shot imaging</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2.Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">3.The Core Idea</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">3.1 Inputs and Outputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-structure-fig-1b">3.2 Network Structure (Fig. 1b)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-and-self-supervised-loss">3.3 Forward Model and Self-Supervised Loss</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-contribution">The Contribution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data">Neural space-time model example on differential phase contrast microscopy (DPC) data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-images">Visualize images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpc-transfer-function">DPC transfer function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-reconstruction">Baseline reconstruction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstruction-via-neural-space-time-model">Reconstruction via neural space-time model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-nstm-parameters">Define NSTM parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-loader">Data loader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-model">initialize model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-loss-function">Define loss function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-reconstruction">Run reconstruction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-the-reconstruction">Visualize the reconstruction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#temporal-interpolation">Temporal interpolation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="neural-spacetime-model-for-dynamic-multi-shot-imaging">
+<h1>Neural space–time model for dynamic multi-shot imaging<a class="headerlink" href="#neural-spacetime-model-for-dynamic-multi-shot-imaging" title="Link to this heading">#</a></h1>
+<p><img alt="image.png" src="../../_images/image8.png" />
+Github Repo: https://github.com/rmcao/nstm,
+Corresponding code: ../../../../code/NeRF_optics/nstm-main/examples/notebook-DPC.ipynb</p>
+</section>
+<section id="background">
+<h1>2.Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<p>Structured Illumination Microscopy (SIM) is a super-resolution imaging technique that breaks the diffraction limit. Traditional SIM achieves resolution enhancement by combining multiple images taken under varying illumination patterns. However, this leads to <strong>slow acquisition speed</strong> and <strong>motion artifacts</strong> when the sample moves during imaging. These methods have significantly expanded our ability to resolve biological structures, achieving breakthroughs in <strong>super-resolution</strong> [1], <strong>phase retrieval</strong> [2], and <strong>video reconstruction from single images</strong> [3].</p>
+<p>However, a major limitation remains: <strong>motion artifacts</strong>. When imaging dynamic (moving) scenes, the assumption that the sample remains static during multi-shot acquisition breaks down. This mismatch leads to blurring, ghosting, and misinterpretation of structures. Traditional solutions try to either:</p>
+<ul class="simple">
+<li><p>speed up hardware acquisition,</p></li>
+<li><p>use pre-trained deep networks with strong priors,</p></li>
+<li><p>or register images post hoc assuming simple motion.</p></li>
+</ul>
+<p>These strategies are often system-specific and don’t generalize well, especially when ground truth data is unavailable or motion is complex.</p>
+</section>
+<section id="the-core-idea">
+<h1>3.The Core Idea<a class="headerlink" href="#the-core-idea" title="Link to this heading">#</a></h1>
+<p><img alt="image.png" src="../../_images/image8.png" />
+The central innovation of this paper is to <strong>jointly predict motion and appearance</strong> of a dynamic scene using two neural networks—trained entirely in a <strong>self-supervised</strong> manner from raw multi-shot measurements.</p>
+<p>As illustrated in <strong>Fig. 1a</strong>, the system takes a sequence of raw images $I_{t_1}, I_{t_2}, I_{t_3}, I_{t_4}$ captured under different illumination conditions using an LED-array microscope. Each image corresponds to a slightly different time point, and due to sample motion, they do not align perfectly. A conventional reconstruction (middle) assumes a static scene and thus suffers from motion artifacts. In contrast, NSTM (right) reconstructs a clean scene at each time by modeling and correcting the motion.</p>
+<section id="inputs-and-outputs">
+<h2>3.1 Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Link to this heading">#</a></h2>
+<p>As shown in <strong>Fig. 1b</strong>, the <strong>inputs</strong> to the model are:</p>
+<ul class="simple">
+<li><p>A spatial grid of coordinates $(x, y)$ covering the image domain,</p></li>
+<li><p>A temporal coordinate $t$ representing the time point of interest.</p></li>
+</ul>
+<p>The <strong>outputs</strong> are:</p>
+<ul class="simple">
+<li><p>A reconstructed scene $o(x, y, t)$ at that time point,</p></li>
+<li><p>And ultimately, a synthetic measurement $\hat{I}_t$ generated by passing $o(x, y, t)$ through the system’s forward model.</p></li>
+</ul>
+</section>
+<section id="network-structure-fig-1b">
+<h2>3.2 Network Structure (Fig. 1b)<a class="headerlink" href="#network-structure-fig-1b" title="Link to this heading">#</a></h2>
+<p>The model consists of two coordinate-based neural networks (a form of <strong>Implicit Neural Representation</strong>, or INR):</p>
+<ol class="arabic simple">
+<li><p><strong>Motion Network</strong><br />
+Takes as input $(x, y, t)$ and outputs the motion displacement vector $(\delta x_t, \delta y_t)$:
+$$
+(\delta x_t, \delta y_t) = f_{\text{motion}}(x, y, t)
+$$
+This gives a <strong>pixel-wise motion kernel</strong> at time $t$.</p></li>
+<li><p><strong>Scene Network</strong><br />
+Takes the <strong>motion-compensated coordinate</strong> $(x + \delta x_t, y + \delta y_t)$ and outputs the reconstructed scene value at that location:
+$$
+o(x, y, t) = f_{\text{scene}}(x + \delta x_t, y + \delta y_t)
+$$
+Note: The scene network does <strong>not</strong> depend on $t$ directly—it learns a static canonical scene which is warped over time by the motion field.</p></li>
+</ol>
+</section>
+<section id="forward-model-and-self-supervised-loss">
+<h2>3.3 Forward Model and Self-Supervised Loss<a class="headerlink" href="#forward-model-and-self-supervised-loss" title="Link to this heading">#</a></h2>
+<p>Once the reconstructed scene $o(x, y, t)$ is obtained, it is passed through a <strong>forward model</strong> that simulates the image formation process of the actual imaging system:
+$$
+\hat{I}_t = F(o(x, y, t))
+$$</p>
+<p>The forward model $F$ is differentiable and specific to the imaging setup (e.g., DPC, SIM, DiffuserCam). It models how the scene would appear under the same conditions as the real measurement $I_t$.</p>
+<p>The model is trained by minimizing the mean squared error (MSE) between the synthetic and real measurements:
+$$
+\mathcal{L} = \sum_t |F(o(x, y, t)) - I_t|^2
+$$</p>
+<p>This loss is backpropagated through both the forward model and the two networks. In this way, <strong>the motion and the scene are jointly learned from scratch</strong>, using only the raw measurements as supervision.</p>
+</section>
+</section>
+<section id="the-contribution">
+<h1>The Contribution<a class="headerlink" href="#the-contribution" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>NSTM is the <strong>first self-supervised framework</strong> to jointly learn per-pixel motion and scene content from raw multi-shot measurements.</p></li>
+<li><p>It supports <strong>any multi-shot system</strong> with a differentiable forward model, including DPC, 3D SIM, and DiffuserCam.</p></li>
+<li><p>It enables <strong>motion-aware reconstruction</strong> that resolves artifacts in dynamic scenes, improving biological interpretability.</p></li>
+<li><p>The system uses a <strong>coarse-to-fine training strategy</strong> to prevent the motion and scene networks from interfering with each other during optimization.</p></li>
+<li><p>NSTM can even synthesize <strong>intermediate timepoints</strong> by querying the trained networks, enabling high-frame-rate interpolation.</p></li>
+</ul>
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<p>[1] Huang, B., Bates, M. &amp; Zhuang, X. (2009). Super-resolution fluorescence microscopy. <em>Annu. Rev. Biochem.</em></p>
+<p>[2] Park, Y., Depeursinge, C. &amp; Popescu, G. (2018). Quantitative phase imaging in biomedicine. <em>Nat. Photonics</em></p>
+<p>[3] Antipa, N. et al. (2019). Video from stills: lensless imaging with rolling shutter. <em>IEEE Int. Conf. Comput. Photography</em></p>
+</section>
+<section id="neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data">
+<h1>Neural space-time model example on differential phase contrast microscopy (DPC) data<a class="headerlink" href="#neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data" title="Link to this heading">#</a></h1>
+<p>Jupyter lab demo for “Neural space-time model for dynamic multi-shot imaging” by Ruiming Cao, et al. (2024)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">widget</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current working directory:&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+<span class="n">target_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;../../../code/NeRF_optics/nstm-main&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Appending path:&quot;</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flax</span><span class="w"> </span><span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">IntSlider</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CUDA_DEVICE_ORDER&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;PCI_BUS_ID&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CUDA_VISIBLE_DEVICES&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;0&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">calcil</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../../../../code/NeRF_optics/nstm-main&quot;</span><span class="p">)</span>  <span class="c1"># 把上一级目录（即项目根目录）加进 PYTHONPATH</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nstm</span><span class="w"> </span><span class="kn">import</span> <span class="n">dpc_utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nstm</span><span class="w"> </span><span class="kn">import</span> <span class="n">dpc_flow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nstm</span><span class="w"> </span><span class="kn">import</span> <span class="n">spacetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nstm</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nstm.hash_encoding</span><span class="w"> </span><span class="kn">import</span> <span class="n">HashParameters</span>
+</pre></div>
+</div>
+<section id="load-data">
+<h2>Load data<a class="headerlink" href="#load-data" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="s1">&#39;../../../code/NeRF_optics/nstm-main/examples/dpc_data.npz&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">data_path</span><span class="p">))</span>
+<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">]</span>
+<span class="n">num_frames</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">wavelength</span> <span class="o">=</span> <span class="mf">0.525</span>
+<span class="n">na</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">pixel_size</span> <span class="o">=</span> <span class="mf">0.454</span>
+
+<span class="n">dim_yx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">320</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">extent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">pixel_size</span> <span class="o">*</span> <span class="n">dim_yx</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">pixel_size</span> <span class="o">*</span> <span class="n">dim_yx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="n">param</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">SystemParameters</span><span class="p">(</span><span class="n">dim_yx</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">na</span><span class="p">,</span> <span class="n">pixel_size</span><span class="p">,</span> <span class="n">RI_medium</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">padding_yx</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="visualize-images">
+<h2>Visualize images<a class="headerlink" href="#visualize-images" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">():</span>
+    <span class="n">frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">clim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">init</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">updateFrame</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="n">frame</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">interact</span><span class="p">(</span><span class="n">updateFrame</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">),)</span>
+</pre></div>
+</div>
+</section>
+<section id="dpc-transfer-function">
+<h2>DPC transfer function<a class="headerlink" href="#dpc-transfer-function" title="Link to this heading">#</a></h2>
+<p>Visualizes the transfer functions used in Differential Phase Contrast (DPC) imaging</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pupil</span></code>: Generates the pupil function, defining the system’s frequency support based on NA and wavelength.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Hu</span></code>, <code class="docutils literal notranslate"><span class="pre">Hp</span></code>: Compute the absorption (<code class="docutils literal notranslate"><span class="pre">Hu</span></code>) and phase (<code class="docutils literal notranslate"><span class="pre">Hp</span></code>) transfer functions for each illumination source.</p></li>
+<li><p>The loop displays:</p>
+<ul>
+<li><p>Top row: real part of <code class="docutils literal notranslate"><span class="pre">Hu</span></code> (absorption transfer),</p></li>
+<li><p>Bottom row: imaginary part of <code class="docutils literal notranslate"><span class="pre">Hp</span></code> (phase transfer),
+using <code class="docutils literal notranslate"><span class="pre">fftshift</span></code> to center the frequency components.</p></li>
+</ul>
+</li>
+</ul>
+<p>Each column corresponds to a different illumination direction.</p>
+<p>These transfer functions are the core components of the DPC forward model. During reconstruction, the predicted scene (absorption and phase) is passed through the forward model using <code class="docutils literal notranslate"><span class="pre">Hu</span></code> and <code class="docutils literal notranslate"><span class="pre">Hp</span></code> to generate simulated measurements, which are then compared with actual measurements to compute the loss. Therefore, this step directly determines how the model “sees” and evaluates the scene during training.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pupil</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">wave_optics</span><span class="o">.</span><span class="n">genPupil</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">dim_yx</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">pixel_size</span><span class="p">,</span> <span class="n">NA</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">na</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">wavelength</span><span class="p">)</span>
+<span class="n">Hu</span><span class="p">,</span> <span class="n">Hp</span> <span class="o">=</span> <span class="n">dpc_utils</span><span class="o">.</span><span class="n">gen_transfer_func</span><span class="p">(</span><span class="n">list_source</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">pupil</span><span class="o">=</span><span class="n">pupil</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">shifted_out</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">Hu</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">),</span> <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">Hp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">),</span> <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="baseline-reconstruction">
+<h2>Baseline reconstruction<a class="headerlink" href="#baseline-reconstruction" title="Link to this heading">#</a></h2>
+<p>⚠️ Warning: The code is still throwing an error.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+      <span class="mi">3</span> <span class="n">img</span><span class="o">=</span><span class="n">img</span><span class="p">[:,:,:</span><span class="mi">320</span><span class="p">]</span>
+      <span class="mi">4</span> <span class="n">Hu</span><span class="o">=</span><span class="n">Hu</span><span class="p">[:,:,:</span><span class="mi">320</span><span class="p">]</span>
+<span class="o">----&gt;</span> <span class="mi">5</span> <span class="n">abs_baseline</span><span class="p">,</span> <span class="n">phase_baseline</span> <span class="o">=</span> <span class="n">dpc_utils</span><span class="o">.</span><span class="n">dpc_tikhonov_solver</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">Hu</span><span class="p">,</span> <span class="n">Hp</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">wavelength</span><span class="p">)</span>
+
+<span class="n">File</span> <span class="o">~/</span><span class="mi">2025</span><span class="o">/</span><span class="n">MIT</span><span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">NeRF_optics</span><span class="o">/</span><span class="n">nstm</span><span class="o">-</span><span class="n">main</span><span class="o">/</span><span class="n">nstm</span><span class="o">/</span><span class="n">dpc_utils</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">137</span><span class="p">,</span> <span class="ow">in</span> <span class="n">dpc_tikhonov_solver</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">Hu</span><span class="p">,</span> <span class="n">Hp</span><span class="p">,</span> <span class="n">amp_reg</span><span class="p">,</span> <span class="n">phase_reg</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">)</span>
+    <span class="mi">136</span> <span class="k">def</span><span class="w"> </span><span class="nf">dpc_tikhonov_solver</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">Hu</span><span class="p">,</span> <span class="n">Hp</span><span class="p">,</span> <span class="n">amp_reg</span><span class="o">=</span><span class="mf">5e-5</span><span class="p">,</span> <span class="n">phase_reg</span><span class="o">=</span><span class="mf">5e-5</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="mf">0.515</span><span class="p">):</span>
+<span class="o">--&gt;</span> <span class="mi">137</span>     <span class="n">Hu</span><span class="o">=</span><span class="n">Hu</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">imgs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">imgs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span><span class="n">imgs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#TODO</span>
+    <span class="mi">138</span>     <span class="n">Hp</span><span class="o">=</span><span class="n">Hp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">imgs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">imgs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span><span class="n">imgs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> 
+    <span class="mi">139</span>     <span class="n">AHA</span> <span class="o">=</span> <span class="p">[(</span><span class="n">Hu</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">Hu</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">amp_reg</span><span class="p">,</span> <span class="p">(</span><span class="n">Hu</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">Hp</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="mi">140</span>            <span class="p">(</span><span class="n">Hp</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">Hu</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">Hp</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">Hp</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">phase_reg</span><span class="p">]</span>
+
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">reshape</span> <span class="n">array</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">409600</span> <span class="n">into</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">320</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">320</span><span class="p">,</span><span class="mi">320</span><span class="p">)</span>
+
+
+<span class="err">```</span><span class="n">python</span>
+<span class="n">abs_baseline</span><span class="p">,</span> <span class="n">phase_baseline</span> <span class="o">=</span> <span class="n">dpc_utils</span><span class="o">.</span><span class="n">dpc_tikhonov_solver</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">Hu</span><span class="p">,</span> <span class="n">Hp</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">wavelength</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="reconstruction-via-neural-space-time-model">
+<h2>Reconstruction via neural space-time model<a class="headerlink" href="#reconstruction-via-neural-space-time-model" title="Link to this heading">#</a></h2>
+<section id="define-nstm-parameters">
+<h3>Define NSTM parameters<a class="headerlink" href="#define-nstm-parameters" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># model parameters</span>
+<span class="n">object_fine_hash_ratio</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">object_base_hash_ratio</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">motion_hash_ratio</span> <span class="o">=</span> <span class="mf">0.03</span>
+<span class="n">motion_hash_temporal</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">hash_param</span> <span class="o">=</span> <span class="n">HashParameters</span><span class="p">(</span><span class="n">bounding_box</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">param</span><span class="o">.</span><span class="n">dim_yx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="n">param</span><span class="o">.</span><span class="n">dim_yx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">]),</span>
+                                          <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">param</span><span class="o">.</span><span class="n">dim_yx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">dim_yx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">])),</span>
+                            <span class="n">n_levels</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">n_features_per_level</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">log2_hashmap_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+                            <span class="n">base_resolution</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dim_yx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">object_base_hash_ratio</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim_yx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">object_base_hash_ratio</span><span class="o">*</span><span class="mi">2</span><span class="p">]),</span>
+                            <span class="n">finest_resolution</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dim_yx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">object_fine_hash_ratio</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim_yx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">object_fine_hash_ratio</span><span class="o">*</span><span class="mi">2</span><span class="p">]))</span>
+<span class="n">hash_param_motion_spacetime</span> <span class="o">=</span> <span class="n">HashParameters</span><span class="p">(</span>
+    <span class="n">bounding_box</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">param</span><span class="o">.</span><span class="n">dim_yx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="o">.</span><span class="n">dim_yx</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">])),</span>
+    <span class="n">n_levels</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">n_features_per_level</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">log2_hashmap_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">base_resolution</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]),</span>
+    <span class="n">finest_resolution</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dim_yx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">object_fine_hash_ratio</span><span class="o">*</span><span class="n">motion_hash_ratio</span><span class="p">,</span> <span class="n">dim_yx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">object_fine_hash_ratio</span><span class="o">*</span><span class="n">motion_hash_ratio</span><span class="p">,</span> <span class="n">motion_hash_temporal</span><span class="p">])))</span>
+
+<span class="n">object_mlp_param</span> <span class="o">=</span> <span class="n">spacetime</span><span class="o">.</span><span class="n">MLPParameters</span><span class="p">(</span><span class="n">net_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">net_width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+                                           <span class="n">net_activation</span><span class="o">=</span><span class="n">nn</span><span class="o">.</span><span class="n">gelu</span><span class="p">,</span> <span class="n">skip_layer</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">motion_mlp_param</span> <span class="o">=</span> <span class="n">spacetime</span><span class="o">.</span><span class="n">MLPParameters</span><span class="p">(</span><span class="n">net_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">net_width</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                                           <span class="n">net_activation</span><span class="o">=</span><span class="n">nn</span><span class="o">.</span><span class="n">elu</span><span class="p">,</span> <span class="n">skip_layer</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="n">spacetime_param</span> <span class="o">=</span> <span class="n">spacetime</span><span class="o">.</span><span class="n">SpaceTimeParameters</span><span class="p">(</span><span class="n">motion_mlp_param</span><span class="o">=</span><span class="n">motion_mlp_param</span><span class="p">,</span>
+                                                 <span class="n">object_mlp_param</span><span class="o">=</span><span class="n">object_mlp_param</span><span class="p">,</span>
+                                                 <span class="n">motion_embedding</span><span class="o">=</span><span class="s1">&#39;hash_combined&#39;</span><span class="p">,</span>
+                                                 <span class="n">motion_embedding_param</span><span class="o">=</span><span class="n">hash_param_motion_spacetime</span><span class="p">,</span>
+                                                 <span class="n">object_embedding</span><span class="o">=</span><span class="s1">&#39;hash&#39;</span><span class="p">,</span> <span class="n">object_embedding_param</span><span class="o">=</span><span class="n">hash_param</span><span class="p">,</span>
+                                                 <span class="n">out_activation</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="data-loader">
+<h3>Data loader<a class="headerlink" href="#data-loader" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">pat_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">time_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">data_loader</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">data_utils</span><span class="o">.</span><span class="n">loader_from_numpy</span><span class="p">({</span><span class="s1">&#39;img&#39;</span><span class="p">:</span> <span class="n">img</span><span class="p">,</span> 
+                                               <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="n">time_norm</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+                                               <span class="s1">&#39;ind_pat&#39;</span><span class="p">:</span> <span class="n">pat_indices</span><span class="p">},</span> <span class="n">prefix_dim</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,),</span>
+                                              <span class="n">seed</span><span class="o">=</span><span class="mi">85472</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">sample_input_dict</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">data_loader</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">num_steps_per_epoch</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">data_loader</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="initialize-model">
+<h3>initialize model<a class="headerlink" href="#initialize-model" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">dpc_flow</span><span class="o">.</span><span class="n">DPCFlow</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">spacetime_param</span><span class="p">,</span> <span class="n">annealed_epoch</span><span class="o">=</span><span class="mi">4000</span><span class="p">)</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">variables</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_dict</span><span class="o">=</span><span class="n">sample_input_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="define-loss-function">
+<h3>Define loss function<a class="headerlink" href="#define-loss-function" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l2</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">Loss</span><span class="p">(</span><span class="n">dpc_flow</span><span class="o">.</span><span class="n">gen_loss_l2</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span> <span class="s1">&#39;l2&#39;</span><span class="p">)</span>
+<span class="n">reg_absorp</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">Loss</span><span class="p">(</span><span class="n">dpc_flow</span><span class="o">.</span><span class="n">gen_l2_reg_absorp</span><span class="p">(</span><span class="n">freq_space</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="s1">&#39;reg_l2_absorp&#39;</span><span class="p">,</span> <span class="n">has_intermediates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">reg_phase</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">Loss</span><span class="p">(</span><span class="n">dpc_flow</span><span class="o">.</span><span class="n">gen_l2_reg_phase</span><span class="p">(</span><span class="n">freq_space</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="s1">&#39;reg_l2_phase&#39;</span><span class="p">,</span> <span class="n">has_intermediates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">total_loss</span> <span class="o">=</span> <span class="n">l2</span>  <span class="o">+</span> <span class="n">reg_absorp</span> <span class="o">*</span> <span class="mf">1e-4</span> <span class="o">+</span> <span class="n">reg_phase</span><span class="o">*</span><span class="mf">1e-4</span>
+</pre></div>
+</div>
+</section>
+<section id="run-reconstruction">
+<h3>Run reconstruction<a class="headerlink" href="#run-reconstruction" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">save_path</span> <span class="o">=</span> <span class="s1">&#39;./checkpoint/DPC_c_elegans/&#39;</span>
+
+<span class="n">recon_param</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">reconstruction</span><span class="o">.</span><span class="n">ReconIterParameters</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span> <span class="n">n_epoch</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+                                                    <span class="n">keep_checkpoints</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+                                                    <span class="n">checkpoint_every</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+                                                    <span class="n">output_every</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">log_every</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">object_mlp_params</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">reconstruction</span><span class="o">.</span><span class="n">ReconVarParameters</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> 
+                                                  <span class="n">opt_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;b1&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">:</span> <span class="mf">0.99</span><span class="p">,</span> <span class="s1">&#39;eps&#39;</span><span class="p">:</span> <span class="mf">1e-15</span><span class="p">},</span>
+                                                  <span class="n">schedule</span><span class="o">=</span><span class="s1">&#39;exponential&#39;</span><span class="p">,</span>
+                                                  <span class="n">schedule_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;transition_steps&#39;</span><span class="p">:</span> <span class="mf">5e3</span><span class="p">,</span> <span class="s1">&#39;decay_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;transition_begin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                                                  <span class="n">update_every</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">motion_mlp_params</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">reconstruction</span><span class="o">.</span><span class="n">ReconVarParameters</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span>
+                                                     <span class="n">opt_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;b1&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">:</span> <span class="mf">0.99</span><span class="p">,</span> <span class="s1">&#39;eps&#39;</span><span class="p">:</span> <span class="mf">1e-15</span><span class="p">},</span>
+                                                     <span class="n">schedule</span><span class="o">=</span><span class="s1">&#39;exponential&#39;</span><span class="p">,</span>
+                                                     <span class="n">schedule_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;transition_steps&#39;</span><span class="p">:</span> <span class="mf">5e3</span><span class="p">,</span> <span class="s1">&#39;decay_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;transition_begin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                                                     <span class="n">update_every</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">var_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;spacetime&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;motion_mlp&#39;</span><span class="p">:</span> <span class="n">motion_mlp_params</span><span class="p">,</span> <span class="s1">&#39;object_mlp&#39;</span><span class="p">:</span> <span class="n">object_mlp_params</span><span class="p">,</span>
+                                       <span class="s1">&#39;motion_embedding&#39;</span><span class="p">:</span> <span class="n">motion_mlp_params</span><span class="p">,</span> <span class="s1">&#39;object_embedding&#39;</span><span class="p">:</span> <span class="n">object_mlp_params</span><span class="p">},}}</span>
+
+<span class="n">recon_variables</span><span class="p">,</span> <span class="n">recon</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">reconstruction</span><span class="o">.</span><span class="n">reconstruct_multivars_sgd</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">apply</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">var_params</span><span class="p">,</span>
+                                                                     <span class="n">data_loader</span><span class="p">,</span> <span class="n">total_loss</span><span class="p">,</span> <span class="n">recon_param</span><span class="p">,</span>
+                                                                     <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="n">recon_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">recon_variables</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">t</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span>
+                                <span class="n">method</span><span class="o">=</span><span class="k">lambda</span> <span class="n">module</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">module</span><span class="o">.</span><span class="n">spacetime</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">time_norm</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">)))])</span>
+
+</pre></div>
+</div>
+</section>
+<section id="visualize-the-reconstruction">
+<h3>Visualize the reconstruction<a class="headerlink" href="#visualize-the-reconstruction" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">margin</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">clim_</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">99</span><span class="p">))</span>
+<span class="n">clim_phase</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">70</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mf">99.99</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">():</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="n">clim_</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">))</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="n">clim_phase</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">))</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">abs_baseline</span><span class="p">[</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span> <span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clim_</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">))</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">phase_baseline</span><span class="p">[</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span> <span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="n">clim_phase</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">))</span>
+    
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;neural space-time model&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;conventional reconstruction&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;amplitude&#39;</span><span class="p">,</span>
+        <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
+        <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+        <span class="n">rotation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span>
+        <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">,</span>
+        <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
+        <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+        <span class="n">rotation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span>
+        <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">65</span><span class="p">,</span> <span class="mi">765</span><span class="p">])</span>
+    <span class="p">[[</span><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axe</span><span class="p">]</span> <span class="k">for</span> <span class="n">axe</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">]</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    
+<span class="n">init</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">updateFrame</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">interact</span><span class="p">(</span><span class="n">updateFrame</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="temporal-interpolation">
+<h2>Temporal interpolation<a class="headerlink" href="#temporal-interpolation" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recon_t_dense</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">recon_variables</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">t</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span>
+                                <span class="n">method</span><span class="o">=</span><span class="k">lambda</span> <span class="n">module</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">module</span><span class="o">.</span><span class="n">spacetime</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">frames</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="n">margin</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">frame_number_interp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">clim_</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">99</span><span class="p">))</span>
+<span class="n">clim_phase</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">70</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mf">99.99</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">():</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="n">clim_</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">))</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">recon_t</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="n">clim_phase</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">))</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">abs_baseline</span><span class="p">[</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span> <span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clim_</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">))</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">phase_baseline</span><span class="p">[</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span> <span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="n">clim_phase</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">))</span>
+    
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;neural space-time model&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;conventional reconstruction&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;amplitude&#39;</span><span class="p">,</span>
+        <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
+        <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+        <span class="n">rotation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span>
+        <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">,</span>
+        <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
+        <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+        <span class="n">rotation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span>
+        <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+    <span class="n">f</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">65</span><span class="p">,</span> <span class="mi">765</span><span class="p">])</span>
+
+    <span class="c1"># text</span>
+    <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">105.5</span><span class="p">,</span> <span class="mf">55.6</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;frame </span><span class="si">{</span><span class="mi">0</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="p">))</span>
+
+    <span class="c1"># color bar</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">location</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">cbar_phase</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">location</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+    
+    <span class="p">[[</span><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axe</span><span class="p">]</span> <span class="k">for</span> <span class="n">axe</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">]</span>
+
+<span class="n">init</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">updateFrameVideo</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;frame </span><span class="si">{:0.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frame_number_interp</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">recon_t_dense</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">frames</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">recon_t_dense</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">frames</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">abs_baseline</span><span class="p">[</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span> <span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">])</span>
+    <span class="n">frames</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">phase_baseline</span><span class="p">[</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span> <span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">])</span>
+
+<span class="n">interact</span><span class="p">(</span><span class="n">updateFrameVideo</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">99</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">#</a></h2>
+<p>&#64;article{cao2024neural,
+title={Neural space-time model for dynamic scene recovery in multi-shot computational imaging systems},
+author={Cao, Ruiming and Divekar, Nikita and Nu{~n}ez, James and Upadhyayula, Srigokul and Waller, Laura},
+journal={bioRxiv},
+pages={2024–01},
+year={2024},
+publisher={Cold Spring Harbor Laboratory}
+}</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/Chapter09_Neural_SpaceTime"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Neural space–time model for dynamic multi-shot imaging</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2.Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">3.The Core Idea</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">3.1 Inputs and Outputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-structure-fig-1b">3.2 Network Structure (Fig. 1b)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-and-self-supervised-loss">3.3 Forward Model and Self-Supervised Loss</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-contribution">The Contribution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data">Neural space-time model example on differential phase contrast microscopy (DPC) data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-images">Visualize images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpc-transfer-function">DPC transfer function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-reconstruction">Baseline reconstruction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reconstruction-via-neural-space-time-model">Reconstruction via neural space-time model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-nstm-parameters">Define NSTM parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-loader">Data loader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-model">initialize model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-loss-function">Define loss function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-reconstruction">Run reconstruction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-the-reconstruction">Visualize the reconstruction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#temporal-interpolation">Temporal interpolation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
