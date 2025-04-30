@@ -144,7 +144,7 @@ def dpc_tikhonov_solver(imgs, Hu, Hp, amp_reg=5e-5, phase_reg=5e-5, wavelength=0
 ```
 
 
-/home/xqgao/2025/MIT/code/NeRF_optics/nstm-main/nstm/dpc_utils.py
+../../../../code/NeRF_optics/nstm-main/nstm/dpc_utils.py
 非常棒的问题！你的理解已经非常接近了，现在我们来一步步厘清你提到的几个关键词之间的 **线性代数和物理背景**：
 
 ---
@@ -240,10 +240,10 @@ x = (A^H A + \lambda I)^{-1} A^H y
 把s弄成了(1,5,1,512,512)后：
 发生异常: ValueError
 operands could not be broadcast together with shapes (1,5,1,512,512) (1,1,1,5,1) 
-  File "/home/xqgao/2025/MIT/code/NeRF_optics/nstm-main/nstm/dpc_utils.py", line 117, in gen_transfer_func
+  File "../../../../code/NeRF_optics/nstm-main/nstm/dpc_utils.py", line 117, in gen_transfer_func
     Hp = 1j * 2 * np.fft.ifft2(1j * M.imag, axes=(-2, -1)) / DC[:, np.newaxis, np.newaxis] / wavelength
          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  File "/home/xqgao/2025/MIT/code/NeRF_optics/nstm-main/examples/DPC.py", line 113, in <module>
+  File "../../../../code/NeRF_optics/nstm-main/examples/DPC.py", line 113, in <module>
     Hu, Hp = dpc_utils.gen_transfer_func(list_source=s, pupil=pupil, wavelength=param.wavelength, shifted_out=False)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ValueError: operands could not be broadcast together with shapes (1,5,1,512,512) (1,1,1,5,1) 
