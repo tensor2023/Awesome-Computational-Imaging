@@ -7,7 +7,7 @@ Corresponding code: ../../../../code/Inv/score_prior-main/demos/2d_posterior_sam
 
 To tackle more complex inverse problems that require expressive image priors, this paper proposes using score-based diffusion models as principled priors. It demonstrates the method on challenging tasks—including black hole imaging—showing accurate posterior sampling without heuristic tuning.
 
-## 2.Background
+## 2. Background
 
 **Inverse problems** in imaging, such as denoising or deblurring, are ill-posed: many images may explain the same observation. To resolve ambiguity, a *prior* on the image is needed. Classical priors like total variation or Gaussian models are limited in expressiveness.
 

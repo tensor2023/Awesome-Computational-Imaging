@@ -6,7 +6,9 @@ Github Repo:https://github.com/Xinjie-Q/GaussianImage,
 Corresponding code: ../../../../code/GS/ContinuousSR-main/demo.py
 
 ## 1. Highlights
-TODO
+
+Fast end-to-end arbitrary-scale super-resolution via 2D Gaussian modeling.
+
 ## 2. Background
 
 Although GaussianImage(https://xingtongge.github.io/GaussianImage-page/) is an efficient image representation and compression method using 2D Gaussian Splatting with up to 2000 FPS rendering speed, it cannot perform arbitrary-scale super-resolution because it lacks an end-to-end inference mechanism and requires overfitting each image individually.

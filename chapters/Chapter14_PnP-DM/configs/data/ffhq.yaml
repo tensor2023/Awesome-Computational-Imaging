@@ -1,0 +1,3 @@
+name: ffhq
+head: 100
+root: ../../../../Datasets/BSDS300/images/train

@@ -7,9 +7,9 @@ Corresponding Code: ../../../../code/NeRF/siren-master/explore_siren.ipynb
 
 This paper proposes SIREN, a novel method that uses **continuous coordinates** as input instead of discrete meshes to represent images, enabling **arbitrary-resolution sampling** and **super-resolution image reconstruction**.
 
- For example, traditional meshes can only retrieve colors at integer coordinates, whereas **SIREN** allows querying at any real-valued coordinate such as (3.45, 4.98). 
- 
- SIREN based on **periodic activation functions**, along with a **principled initialization scheme** to ensure stable training of deep networks. They demonstrate **high-fidelity representations** across images, videos, audio, and 3D shapes, and further show that SIRENs can **solve partial differential equations (PDEs)** directly from derivative supervision. In addition, they combine SIRENs with **hypernetworks** to learn priors over implicit function spaces, enabling tasks such as **sparse image inpainting**.
+For example, traditional meshes can only retrieve colors at integer coordinates, whereas **SIREN** allows querying at any real-valued coordinate such as (3.45, 4.98). 
+
+SIREN based on **periodic activation functions**, along with a **principled initialization scheme** to ensure stable training of deep networks. They demonstrate **high-fidelity representations** across images, videos, audio, and 3D shapes, and further show that SIRENs can **solve partial differential equations (PDEs)** directly from derivative supervision. In addition, they combine SIRENs with **hypernetworks** to learn priors over implicit function spaces, enabling tasks such as **sparse image inpainting**.
 
 
 ## 2. Background

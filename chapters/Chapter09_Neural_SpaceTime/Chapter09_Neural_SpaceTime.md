@@ -3,7 +3,11 @@
 Github Repo: https://github.com/rmcao/nstm, 
 Corresponding code: ../../../../code/NeRF_optics/nstm-main/examples/notebook-DPC.ipynb
 
-## 2.Background
+## 1. Highlights
+
+NSTM is the **first self-supervised framework** to jointly learn per-pixel motion and scene content from raw multi-shot measurements. It supports **any multi-shot system** with a differentiable forward model, including DPC, 3D SIM, and DiffuserCam. Also it enables **motion-aware reconstruction** that resolves artifacts in dynamic scenes, improving biological interpretability.n.
+
+## 2. Background
 
 Structured Illumination Microscopy (SIM) is a super-resolution imaging technique that breaks the diffraction limit. Traditional SIM achieves resolution enhancement by combining multiple images taken under varying illumination patterns. However, this leads to **slow acquisition speed** and **motion artifacts** when the sample moves during imaging. These methods have significantly expanded our ability to resolve biological structures, achieving breakthroughs in **super-resolution** [1], **phase retrieval** [2], and **video reconstruction from single images** [3].
 
@@ -71,13 +75,6 @@ $$
 This loss is backpropagated through both the forward model and the two networks. In this way, **the motion and the scene are jointly learned from scratch**, using only the raw measurements as supervision.
 
 
-## The Contribution
-
-- NSTM is the **first self-supervised framework** to jointly learn per-pixel motion and scene content from raw multi-shot measurements.
-- It supports **any multi-shot system** with a differentiable forward model, including DPC, 3D SIM, and DiffuserCam.
-- It enables **motion-aware reconstruction** that resolves artifacts in dynamic scenes, improving biological interpretability.
-- The system uses a **coarse-to-fine training strategy** to prevent the motion and scene networks from interfering with each other during optimization.
-- NSTM can even synthesize **intermediate timepoints** by querying the trained networks, enabling high-frame-rate interpolation.
 
 ## References
 

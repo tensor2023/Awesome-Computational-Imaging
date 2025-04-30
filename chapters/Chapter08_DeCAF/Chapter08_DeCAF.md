@@ -4,6 +4,9 @@
 
 Github Repo: https://github.com/wustl-cig/DeCAF, 
 Corresponding code: ../../../../code/NeRF_optics/DeCAF-master/predict.py
+## 1. Highlights:
+
+Like FPM_INR, DeCAF uses an **implicit neural representation (INR)** to model a continuous 3D refractive index (RI) field without relying on voxel grids and reconstructs the RI volume **directly from intensity-only 2D measurements**, using the physics-based **IDT forward model** for supervision.
 
 ## 2. Background
 
