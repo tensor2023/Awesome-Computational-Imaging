@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter11_DPS/Chapter11_DPS';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -218,6 +220,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter11_DPS/Chapter11_DPS.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter11_DPS/Chapter11_DPS.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -372,7 +438,7 @@ Corresponding code: ../../../../code/Inv/diffusion-posterior-sampling-main/sampl
 <p>However, these models are typically trained <strong>unconditionally</strong> or <strong>conditionally</strong> using label information or prompts (e.g., text). When applied to inverse problems like deblurring, inpainting, or super-resolution, these models face the challenge that:</p>
 <ul class="simple">
 <li><p>The model is <strong>not aware</strong> of how the measurements (e.g., blurry or masked images) were generated.</p></li>
-<li><p>There is <strong>no direct way to sample from the posterior distribution</strong> $p(x|y)$, where $y$ is the observed measurement.</p></li>
+<li><p>There is <strong>no direct way to sample from the posterior distribution</strong> <span class="math notranslate nohighlight">\(p(x|y)\)</span>, where <span class="math notranslate nohighlight">\(y\)</span> is the observed measurement.</p></li>
 </ul>
 <p>Existing methods either retrain models with known measurement models (which is expensive and specific), or apply test-time optimization (which is slow and sometimes unstable).
 <img alt="image.png" src="../../_images/image10.png" /></p>
@@ -382,11 +448,11 @@ Corresponding code: ../../../../code/Inv/diffusion-posterior-sampling-main/sampl
 <p>This paper introduces <strong>Diffusion Posterior Sampling (DPS)</strong>, a general framework that combines the strength of diffusion models with classical Bayesian inference to solve <strong>arbitrary noisy inverse problems</strong>, without requiring retraining.</p>
 <section id="goal">
 <h2>3.1 Goal<a class="headerlink" href="#goal" title="Link to this heading">#</a></h2>
-<p>We want to sample from the <strong>posterior distribution</strong> $p(x|y)$, where:</p>
+<p>We want to sample from the <strong>posterior distribution</strong> <span class="math notranslate nohighlight">\(p(x|y)\)</span>, where:</p>
 <ul class="simple">
-<li><p>$x$ is the clean data we want to recover,</p></li>
-<li><p>$y$ is the observed measurement (e.g., blurred, compressed, masked image),</p></li>
-<li><p>and $y = A(x) + n$, where $A$ is a known forward operator and $n$ is noise.</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span> is the clean data we want to recover,</p></li>
+<li><p><span class="math notranslate nohighlight">\(y\)</span> is the observed measurement (e.g., blurred, compressed, masked image),</p></li>
+<li><p>and <span class="math notranslate nohighlight">\(y = A(x) + n\)</span>, where <span class="math notranslate nohighlight">\(A\)</span> is a known forward operator and <span class="math notranslate nohighlight">\(n\)</span> is noise.</p></li>
 </ul>
 </section>
 <section id="posterior-sampling-formulation">
@@ -397,23 +463,23 @@ Corresponding code: ../../../../code/Inv/diffusion-posterior-sampling-main/sampl
 </div>
 <p>Here:</p>
 <ul class="simple">
-<li><p>$p(x)$ is the learned <strong>prior</strong> from the diffusion model.</p></li>
-<li><p>$p(y|x)$ comes from the <strong>measurement model</strong> $A$.</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(x)\)</span> is the learned <strong>prior</strong> from the diffusion model.</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(y|x)\)</span> comes from the <strong>measurement model</strong> <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
 </ul>
 <p>In the standard diffusion setup, the <strong>reverse process</strong> is modeled as:</p>
 <div class="highlight-math notranslate"><div class="highlight"><pre><span></span>p_\theta(x_{t-1}|x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))
 </pre></div>
 </div>
-<p>But to condition this process on $y$, DPS adds a correction based on the measurement log-likelihood $\nabla_{x_t} \log p(y|x_t)$.</p>
+<p>But to condition this process on <span class="math notranslate nohighlight">\(y\)</span>, DPS adds a correction based on the measurement log-likelihood <span class="math notranslate nohighlight">\(\nabla_{x_t} \log p(y|x_t)\)</span>.</p>
 </section>
 <section id="dps-sampling-rule">
 <h2>3.3 DPS Sampling Rule<a class="headerlink" href="#dps-sampling-rule" title="Link to this heading">#</a></h2>
-<p>At each step $t$, given a sample $x_t$, we update:</p>
+<p>At each step <span class="math notranslate nohighlight">\(t\)</span>, given a sample <span class="math notranslate nohighlight">\(x_t\)</span>, we update:</p>
 <div class="highlight-math notranslate"><div class="highlight"><pre><span></span>x_t \leftarrow x_t + \eta_t \nabla_{x_t} \log p(y|x_t)
 </pre></div>
 </div>
-<p>where $\eta_t$ is a step-size schedule.</p>
-<p>This gradient is computed by defining a likelihood (based on the known forward model $A$):</p>
+<p>where <span class="math notranslate nohighlight">\(\eta_t\)</span> is a step-size schedule.</p>
+<p>This gradient is computed by defining a likelihood (based on the known forward model <span class="math notranslate nohighlight">\(A\)</span>):</p>
 <div class="highlight-math notranslate"><div class="highlight"><pre><span></span>\log p(y|x) = -\| A(x) - y \|^2 / (2 \sigma^2)
 </pre></div>
 </div>
@@ -421,7 +487,7 @@ Corresponding code: ../../../../code/Inv/diffusion-posterior-sampling-main/sampl
 <div class="highlight-math notranslate"><div class="highlight"><pre><span></span>x_t \leftarrow x_t + \eta_t \nabla_{x_t} \left[ -\| A(x_t) - y \|^2 \right]
 </pre></div>
 </div>
-<p>This allows us to <strong>plug in arbitrary forward models $A$</strong>, such as:</p>
+<p>This allows us to <strong>plug in arbitrary forward models <span class="math notranslate nohighlight">\(A\)</span></strong>, such as:</p>
 <ul class="simple">
 <li><p>masking (for inpainting),</p></li>
 <li><p>blurring (for deblurring),</p></li>
@@ -439,9 +505,9 @@ without retraining the diffusion model.</p></li>
 <h2>Code Explanation — DPS<a class="headerlink" href="#code-explanation-dps" title="Link to this heading">#</a></h2>
 <p>This function implements <strong>sampling using a pretrained diffusion model</strong>, but with a key twist: it performs <strong>posterior-guided inference</strong> by incorporating measurement consistency.</p>
 <blockquote>
-<div><p>In contrast to standard diffusion models, which generate samples unconditionally (or conditionally on high-level information like text), <strong>DPS (Diffusion Posterior Sampling)</strong> adds a <em>gradient-based correction</em> at each denoising step to ensure that the output is consistent with an observed measurement $y = A(x) + n$.</p>
+<div><p>In contrast to standard diffusion models, which generate samples unconditionally (or conditionally on high-level information like text), <strong>DPS (Diffusion Posterior Sampling)</strong> adds a <em>gradient-based correction</em> at each denoising step to ensure that the output is consistent with an observed measurement <span class="math notranslate nohighlight">\(y = A(x) + n\)</span>.</p>
 </div></blockquote>
-<p>This is particularly useful for <strong>solving inverse problems</strong>, where we don’t just want to generate “realistic” images — we want to generate images that <strong>match what we observed</strong> under a known forward model $A$.</p>
+<p>This is particularly useful for <strong>solving inverse problems</strong>, where we don’t just want to generate “realistic” images — we want to generate images that <strong>match what we observed</strong> under a known forward model <span class="math notranslate nohighlight">\(A\)</span>.</p>
 </section>
 <section id="function-breakdown-p-sample-loop">
 <h2>🔧 Function Breakdown: <code class="docutils literal notranslate"><span class="pre">p_sample_loop()</span></code><a class="headerlink" href="#function-breakdown-p-sample-loop" title="Link to this heading">#</a></h2>
@@ -458,7 +524,7 @@ without retraining the diffusion model.</p></li>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Loop through all timesteps from $T$ down to 1.</p></li>
+<li><p>Loop through all timesteps from <span class="math notranslate nohighlight">\(T\)</span> down to 1.</p></li>
 <li><p>Like in standard DDPM, the input at each step <code class="docutils literal notranslate"><span class="pre">x_t</span></code> requires gradients to allow gradient-based correction.</p></li>
 </ul>
 </section>
@@ -469,8 +535,8 @@ without retraining the diffusion model.</p></li>
 </div>
 <p>This step computes the standard <strong>reverse diffusion prediction</strong>, producing:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">out['sample']</span></code>: the denoised sample $x_{t-1}$</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">out['pred_xstart']</span></code>: estimated clean image $x_0$</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">out['sample']</span></code>: the denoised sample <span class="math notranslate nohighlight">\(x_{t-1}\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">out['pred_xstart']</span></code>: estimated clean image <span class="math notranslate nohighlight">\(x_0\)</span></p></li>
 </ul>
 <blockquote>
 <div><p>🧠 This is identical to what a regular diffusion model does.</p>
@@ -490,7 +556,7 @@ without retraining the diffusion model.</p></li>
 </div>
 <p>This is where <strong>DPS differs from standard diffusion</strong>:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">measurement_cond_fn</span></code> uses the <strong>forward model $A$</strong> and the current output to compute a <strong>gradient correction</strong> that pulls <code class="docutils literal notranslate"><span class="pre">img</span></code> closer to satisfying $A(x) ≈ y$.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurement_cond_fn</span></code> uses the <strong>forward model <span class="math notranslate nohighlight">\(A\)</span></strong> and the current output to compute a <strong>gradient correction</strong> that pulls <code class="docutils literal notranslate"><span class="pre">img</span></code> closer to satisfying <span class="math notranslate nohighlight">\(A(x) ≈ y\)</span>.</p></li>
 <li><p>The update may look like:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_t</span> <span class="err">←</span> <span class="n">x_t</span> <span class="o">+</span> <span class="n">η_t</span> <span class="err">∇</span><span class="n">ₓ</span> <span class="n">log</span> <span class="n">p</span><span class="p">(</span><span class="n">y</span> <span class="o">|</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>

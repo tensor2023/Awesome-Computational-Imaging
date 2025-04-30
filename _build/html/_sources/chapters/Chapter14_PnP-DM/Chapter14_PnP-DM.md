@@ -7,7 +7,7 @@ Corresponding code: ../../../../code/PnP/PnP-DM-public-master/posterior_sample.p
 
 While traditional guided diffusion heuristically guides generation toward observations, **PnP-DM is a principled method that rigorously samples from the true posterior \( p(x|y) \)**, making it a fully Bayesian alternative with no approximations to the likelihood.
 The **prior step** handles $p(x)$, which is entirely determined by the diffusion model.
-## 2.Background
+## 2. Background
 
 Inverse problems are central to computational imaging.
 In recent years, **diffusion models (DMs)** have emerged as powerful generative models that can learn rich and high-dimensional image distributions from data [Ho et al., 2020; Song et al., 2021]. These models enable denoising-based sampling by reversing a noise-injection (diffusion) process. This has sparked interest in using DMs as **priors** for inverse problems.

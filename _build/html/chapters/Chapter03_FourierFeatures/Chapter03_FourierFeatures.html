@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter03_FourierFeatures/Chapter03_FourierFeatures';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -218,6 +220,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter03_FourierFeatures/Chapter03_FourierFeatures.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter03_FourierFeatures/Chapter03_FourierFeatures.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -355,7 +421,7 @@ document.write(`
 </section>
 <section id="background">
 <h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
-<p>In recent years, <strong>coordinate-based multilayer perceptrons (MLPs)</strong> have emerged as a powerful representation for continuous signals in computer vision and graphics. These MLPs take spatial coordinates (e.g., 2D $(x, y)$ or 3D $(x, y, z)$) as inputs and output corresponding signal values, such as color, density, or occupancy. This method offers compactness and is well-suited for gradient-based learning, leading to impressive applications like NeRF (Mildenhall et al., 2020) and Occupancy Networks (Mescheder et al., 2019).
+<p>In recent years, <strong>coordinate-based multilayer perceptrons (MLPs)</strong> have emerged as a powerful representation for continuous signals in computer vision and graphics. These MLPs take spatial coordinates (e.g., 2D <span class="math notranslate nohighlight">\((x, y)\)</span> or 3D <span class="math notranslate nohighlight">\((x, y, z)\)</span>) as inputs and output corresponding signal values, such as color, density, or occupancy. This method offers compactness and is well-suited for gradient-based learning, leading to impressive applications like NeRF (Mildenhall et al., 2020) and Occupancy Networks (Mescheder et al., 2019).
 <img alt="image.png" src="../../_images/image2.png" />
 However, a key limitation of standard MLPs is their <strong>spectral bias</strong>: they favor learning low-frequency functions and struggle to capture high-frequency details, a challenge described in several studies such as Rahaman et al. (2019) and Basri et al. (2020).</p>
 <p>To address this, the authors introduce <strong>Fourier feature mappings</strong>, inspired by <strong>random Fourier features</strong> from kernel theory (Rahimi &amp; Recht, 2007). By transforming the input coordinates via sinusoidal functions before passing them to the MLP, they effectively modify the network’s <strong>Neural Tangent Kernel (NTK)</strong> to become stationary and tunable, allowing the network to learn high-frequency components more efficiently.</p>
@@ -367,16 +433,17 @@ Imagine you slightly change the network’s output at one input—how does that 
 <h1>3. The Core Idea<a class="headerlink" href="#the-core-idea" title="Link to this heading">#</a></h1>
 <p>This paper builds on the theory of the Neural Tangent Kernel (NTK) by projecting input coordinates into a high-dimensional space, making the network more sensitive to high-frequency details. The projected features must still preserve the original structure of the input, which is where <strong>kernel approximation</strong> comes into play.</p>
 <p>The projection is defined as:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \gamma(\mathbf{v}) = \left[
 a_1 \cos(2\pi \mathbf{b}_1^T \mathbf{v}),\ a_1 \sin(2\pi \mathbf{b}_1^T \mathbf{v}),\ \dots,\ a_m \cos(2\pi \mathbf{b}_m^T \mathbf{v}),\ a_m \sin(2\pi \mathbf{b}_m^T \mathbf{v})
 \right]^T
-$$</p>
-<p>Here, $\mathbf{v} \in \mathbb{R}^d$ is the input coordinate, and each $\mathbf{b}_i \in \mathbb{R}^d$ is a randomly sampled frequency vector from a Gaussian distribution. The function $\gamma(\mathbf{v})$ maps $\mathbf{v}$ into a $2m$-dimensional space using sinusoidal components.</p>
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\mathbf{v} \in \mathbb{R}^d\)</span> is the input coordinate, and each <span class="math notranslate nohighlight">\(\mathbf{b}_i \in \mathbb{R}^d\)</span> is a randomly sampled frequency vector from a Gaussian distribution. The function <span class="math notranslate nohighlight">\(\gamma(\mathbf{v})\)</span> maps <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> into a <span class="math notranslate nohighlight">\(2m\)</span>-dimensional space using sinusoidal components.</p>
 <p>As for kernel approximation, a classic example of a kernel is the <strong>Gaussian kernel</strong>, which can be thought of as a smooth, blurry function: the closer two inputs are, the more similar they are treated. This “blurring” effect encodes locality, allowing the model to emphasize nearby relationships while gradually ignoring distant ones. To efficiently approximate such kernels, the paper adopts Random Fourier Features (RFF). RFF is a method for mapping inputs into a feature space where the inner product approximates a shift-invariant kernel function, like the Gaussian. By sampling random frequencies from a specific distribution and applying sine and cosine functions, RFF enables the network to capture both low and high-frequency patterns without requiring expensive kernel matrix computations.</p>
 <p><a href="https://colab.research.google.com/github/tancik/fourier-feature-networks/blob/master/Demo.ipynb" target="_parent"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 </section>
-<section id="demo">
+<section class="tex2jax_ignore mathjax_ignore" id="demo">
 <h1>Demo<a class="headerlink" href="#demo" title="Link to this heading">#</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">imageio</span><span class="o">-</span><span class="n">ffmpeg</span>
 </pre></div>
@@ -429,17 +496,18 @@ Successfully installed imageio-ffmpeg-0.6.0
 <p><img alt="png" src="../../_images/Chapter03_FourierFeatures_8_1.png" /></p>
 </section>
 </section>
-<section id="model-and-training-code">
+<section class="tex2jax_ignore mathjax_ignore" id="model-and-training-code">
 <h1>Model and training code<a class="headerlink" href="#model-and-training-code" title="Link to this heading">#</a></h1>
-<p>Our model is a coordinate-based multilayer perceptron. In this example, for each input image coordinate $(x,y)$, the model predicts the associated color $(r,g,b)$.</p>
+<p>Our model is a coordinate-based multilayer perceptron. In this example, for each input image coordinate <span class="math notranslate nohighlight">\((x,y)\)</span>, the model predicts the associated color <span class="math notranslate nohighlight">\((r,g,b)\)</span>.</p>
 <p><img alt="Network diagram" src="https://user-images.githubusercontent.com/3310961/85066930-ad444580-b164-11ea-9cc0-17494679e71f.png" /></p>
 <p><code class="docutils literal notranslate"><span class="pre">input_mapping</span></code> corresponds to the equation:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \gamma(\mathbf{v}) = \left[
 a_1 \cos(2\pi \mathbf{b}_1^T \mathbf{v}),\ a_1 \sin(2\pi \mathbf{b}_1^T \mathbf{v}),\ \dots,\ a_m \cos(2\pi \mathbf{b}_m^T \mathbf{v}),\ a_m \sin(2\pi \mathbf{b}_m^T \mathbf{v})
 \right]^T
-$$</p>
-<p>Here, the input coordinate $x$ (denoted as $\mathbf{v}$ in the paper) is projected onto a set of randomly sampled frequency vectors $B = [\mathbf{b}_1, \dots, \mathbf{b}_m]$ using $x &#64; B^T$. The result is multiplied by $2\pi$ to match the standard Fourier basis. Applying $\sin$ and $\cos$ to each projection captures both phase and amplitude information. Concatenating these values yields a $2m$-dimensional feature vector that encodes rich frequency content, allowing the network to model high-frequency variations more effectively.</p>
+\]</div>
+<p>Here, the input coordinate <span class="math notranslate nohighlight">\(x\)</span> (denoted as <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> in the paper) is projected onto a set of randomly sampled frequency vectors <span class="math notranslate nohighlight">\(B = [\mathbf{b}_1, \dots, \mathbf{b}_m]\)</span> using <span class="math notranslate nohighlight">\(x &#64; B^T\)</span>. The result is multiplied by <span class="math notranslate nohighlight">\(2\pi\)</span> to match the standard Fourier basis. Applying <span class="math notranslate nohighlight">\(\sin\)</span> and <span class="math notranslate nohighlight">\(\cos\)</span> to each projection captures both phase and amplitude information. Concatenating these values yields a <span class="math notranslate nohighlight">\(2m\)</span>-dimensional feature vector that encodes rich frequency content, allowing the network to model high-frequency variations more effectively.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fourier feature mapping</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">input_mapping</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
   <span class="k">if</span> <span class="n">B</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -500,18 +568,18 @@ $$</p>
 </div>
 <section id="train-networks-with-different-input-mappings">
 <h2>Train networks with different input mappings<a class="headerlink" href="#train-networks-with-different-input-mappings" title="Link to this heading">#</a></h2>
-<p>We compare the following mappings $\gamma (\mathbf{v})$.</p>
+<p>We compare the following mappings <span class="math notranslate nohighlight">\(\gamma (\mathbf{v})\)</span>.</p>
 <ul class="simple">
-<li><p>No mapping: $\gamma(\mathbf{v})= \mathbf{v}$.</p></li>
-<li><p>Basic mapping: $\gamma(\mathbf{v})=\left[ \cos(2 \pi \mathbf{v}),\sin(2 \pi \mathbf{v}) \right]^\mathrm{T}$.</p></li>
+<li><p>No mapping: <span class="math notranslate nohighlight">\(\gamma(\mathbf{v})= \mathbf{v}\)</span>.</p></li>
+<li><p>Basic mapping: <span class="math notranslate nohighlight">\(\gamma(\mathbf{v})=\left[ \cos(2 \pi \mathbf{v}),\sin(2 \pi \mathbf{v}) \right]^\mathrm{T}\)</span>.</p></li>
 </ul>
 <!-- - Positional encoding: $\gamma(\mathbf{v})=\left[ \ldots, \cos(2 \pi \sigma^{j/m} \mathbf{v}),\sin(2 \pi \sigma^{j/m} \mathbf{v}), \ldots \right]^\mathrm{T}$ for $j = 0, \ldots, m-1$.  -->
 <ul class="simple">
-<li><p>Gaussian Fourier feature mapping: $\gamma(\mathbf{v})= \left[ \cos(2 \pi \mathbf B \mathbf{v}), \sin(2 \pi \mathbf B \mathbf{v}) \right]^\mathrm{T}$,
-where each entry in $\mathbf B \in \mathbb R^{m \times d}$ is sampled from $\mathcal N(0,\sigma^2)$</p></li>
+<li><p>Gaussian Fourier feature mapping: <span class="math notranslate nohighlight">\(\gamma(\mathbf{v})= \left[ \cos(2 \pi \mathbf B \mathbf{v}), \sin(2 \pi \mathbf B \mathbf{v}) \right]^\mathrm{T}\)</span>,
+where each entry in <span class="math notranslate nohighlight">\(\mathbf B \in \mathbb R^{m \times d}\)</span> is sampled from <span class="math notranslate nohighlight">\(\mathcal N(0,\sigma^2)\)</span></p></li>
 </ul>
-<p>Why are the frequencies in $B$ sampled randomly from a Gaussian distribution?</p>
-<p>According to the theory of Random Fourier Features, any shift-invariant kernel (like the Gaussian kernel) can be approximated by sampling frequency vectors $\mathbf{b}_i$ from the Fourier transform of that kernel. For the Gaussian kernel, this distribution is itself Gaussian. Random sampling ensures broad frequency coverage without manually choosing which frequencies to use. As long as enough samples are drawn, the resulting sine and cosine features will approximate the kernel function well—no training required.</p>
+<p>Why are the frequencies in <span class="math notranslate nohighlight">\(B\)</span> sampled randomly from a Gaussian distribution?</p>
+<p>According to the theory of Random Fourier Features, any shift-invariant kernel (like the Gaussian kernel) can be approximated by sampling frequency vectors <span class="math notranslate nohighlight">\(\mathbf{b}_i\)</span> from the Fourier transform of that kernel. For the Gaussian kernel, this distribution is itself Gaussian. Random sampling ensures broad frequency coverage without manually choosing which frequencies to use. As long as enough samples are drawn, the resulting sine and cosine features will approximate the kernel function well—no training required.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">network_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-4</span>
 <span class="n">iters</span> <span class="o">=</span> <span class="mi">2000</span>

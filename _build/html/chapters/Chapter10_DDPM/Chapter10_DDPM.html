@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter10_DDPM/Chapter10_DDPM';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -218,6 +220,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter10_DDPM/Chapter10_DDPM.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter10_DDPM/Chapter10_DDPM.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -354,7 +420,7 @@ Corresponding code: ../../../../code/Inv/denoising-diffusion-pytorch-main/demo.p
 <p>Diffusion Probabilistic Models (DPMs), introduced by Sohl-Dickstein et al. [4], offer a conceptually simple alternative. A DPM gradually corrupts data with Gaussian noise and then learns to reverse this process using a neural network. While theoretically elegant, early diffusion models were not competitive in sample quality.
 <img alt="image.png" src="../../_images/image9.png" /></p>
 </section>
-<section id="the-core-idea">
+<section class="tex2jax_ignore mathjax_ignore" id="the-core-idea">
 <h1>The Core Idea<a class="headerlink" href="#the-core-idea" title="Link to this heading">#</a></h1>
 <p>This paper by <strong>Ho et al. (2020)</strong> [5] proposes a new formulation of diffusion probabilistic models that significantly improves their generation quality. The model consists of two processes:</p>
 <section id="forward-process-diffusion">
@@ -379,23 +445,27 @@ We define the accumulated product of noise schedule as:
 $$
 \bar{\alpha}_t = \prod_{s=1}^t (1 - \beta_s)
 $$ -->
-<p>The forward process gradually adds Gaussian noise to the original data $x_0$, forming a sequence of increasingly noisy images $x_1, x_2, \dots, x_T$.</p>
+<p>The forward process gradually adds Gaussian noise to the original data <span class="math notranslate nohighlight">\(x_0\)</span>, forming a sequence of increasingly noisy images <span class="math notranslate nohighlight">\(x_1, x_2, \dots, x_T\)</span>.</p>
 <p>This is defined as a fixed Markov process:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 q(x_{1:T} | x_0) := \prod_{t=1}^T q(x_t | x_{t-1}), \quad q(x_t | x_{t-1}) = \mathcal{N}(\sqrt{1 - \beta_t}x_{t-1}, \beta_t I)
-$$</p>
-<p>Using a closed-form derivation, we can sample $x_t$ directly from $x_0$ without simulating all intermediate steps:</p>
-<p>$$
+\]</div>
+<p>Using a closed-form derivation, we can sample <span class="math notranslate nohighlight">\(x_t\)</span> directly from <span class="math notranslate nohighlight">\(x_0\)</span> without simulating all intermediate steps:</p>
+<div class="math notranslate nohighlight">
+\[
 q(x_t | x_0) = \mathcal{N}(\sqrt{\bar{\alpha}_t}x_0, (1 - \bar{\alpha}_t)I)
-$$</p>
+\]</div>
 <p>where the cumulative noise scale is:</p>
-<p>$$
-\bar{\alpha}<em>t = \prod</em>{s=1}^t (1 - \beta_s)
-$$</p>
-<p>This means we can generate a noisy version of the image at any timestep $t$ using:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
+\bar{\alpha}_t = \prod_{s=1}^t (1 - \beta_s)
+\]</div>
+<p>This means we can generate a noisy version of the image at any timestep <span class="math notranslate nohighlight">\(t\)</span> using:</p>
+<div class="math notranslate nohighlight">
+\[
 x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsilon, \quad \varepsilon \sim \mathcal{N}(0, I)
-$$</p>
+\]</div>
 <hr class="docutils" />
 </section>
 <section id="code-q-sample-implementation">
@@ -415,15 +485,16 @@ $$</p>
 <section id="code-explanation">
 <h2>🔍 Code Explanation<a class="headerlink" href="#code-explanation" title="Link to this heading">#</a></h2>
 <p>This directly corresponds to the equation:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsilon
-$$</p>
+\]</div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">x_start</span></code> is $x_0$, the original clean image.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x_start</span></code> is <span class="math notranslate nohighlight">\(x_0\)</span>, the original clean image.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">t</span></code> is the timestep.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">noise</span></code> is sampled from $\mathcal{N}(0, I)$ if not provided.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">self.sqrt_alphas_cumprod[t]</span></code> is precomputed $\sqrt{\bar{\alpha}_t}$.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">self.sqrt_one_minus_alphas_cumprod[t]</span></code> is precomputed $\sqrt{1 - \bar{\alpha}_t}$.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">noise</span></code> is sampled from <span class="math notranslate nohighlight">\(\mathcal{N}(0, I)\)</span> if not provided.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.sqrt_alphas_cumprod[t]</span></code> is precomputed <span class="math notranslate nohighlight">\(\sqrt{\bar{\alpha}_t}\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.sqrt_one_minus_alphas_cumprod[t]</span></code> is precomputed <span class="math notranslate nohighlight">\(\sqrt{1 - \bar{\alpha}_t}\)</span>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">extract(...)</span></code> applies the appropriate scalar to every image in the batch.</p></li>
 </ul>
 <p>This function is used during training to corrupt the original image and teach the model how to denoise it.</p>
@@ -448,14 +519,16 @@ This resembles denoising score matching and simplifies training using standard s
 <section id="reverse-process-denoising">
 <h2>2. Reverse Process (Denoising)<a class="headerlink" href="#reverse-process-denoising" title="Link to this heading">#</a></h2>
 <p>The reverse process is trained to undo the diffusion:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 p_\theta(x_{0:T}) := p(x_T) \prod_{t=1}^T p_\theta(x_{t-1} | x_t), \quad p_\theta(x_{t-1} | x_t) = \mathcal{N}(\mu_\theta(x_t, t), \Sigma_\theta(x_t, t))
-$$</p>
-<p>Instead of predicting $\mu_\theta$ directly, the authors propose to predict the noise $\varepsilon$ that was added in the forward process.</p>
+\]</div>
+<p>Instead of predicting <span class="math notranslate nohighlight">\(\mu_\theta\)</span> directly, the authors propose to predict the noise <span class="math notranslate nohighlight">\(\varepsilon\)</span> that was added in the forward process.</p>
 <p>Using this trick, the training loss becomes:</p>
-<p>$$
-L_{\text{simple}}(\theta) = \mathbb{E}<em>{t,x_0,\varepsilon} \left[ \left| \varepsilon - \varepsilon</em>\theta\left(\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\varepsilon, t\right) \right|^2 \right]
-$$</p>
+<div class="math notranslate nohighlight">
+\[
+L_{\text{simple}}(\theta) = \mathbb{E}_{t,x_0,\varepsilon} \left[ \left\| \varepsilon - \varepsilon_\theta\left(\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\varepsilon, t\right) \right\|^2 \right]
+\]</div>
 <p>This resembles denoising score matching and simplifies training using standard stochastic gradient descent.</p>
 <hr class="docutils" />
 </section>
@@ -471,8 +544,8 @@ $$</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Sample random timestep $t$.</p></li>
-<li><p>Normalize $x_0$ to $[-1, 1]$.</p></li>
+<li><p>Sample random timestep <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p>Normalize <span class="math notranslate nohighlight">\(x_0\)</span> to <span class="math notranslate nohighlight">\([-1, 1]\)</span>.</p></li>
 <li><p>Compute loss using p_losses().</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">p_losses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset_noise_strength</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -509,16 +582,17 @@ $$</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Add noise to $x_0$ to get $x_t$.</p></li>
-<li><p>Predict $\varepsilon$ (or $x_0$, or $v$) from $x_t$ using the network.</p></li>
+<li><p>Add noise to <span class="math notranslate nohighlight">\(x_0\)</span> to get <span class="math notranslate nohighlight">\(x_t\)</span>.</p></li>
+<li><p>Predict <span class="math notranslate nohighlight">\(\varepsilon\)</span> (or <span class="math notranslate nohighlight">\(x_0\)</span>, or <span class="math notranslate nohighlight">\(v\)</span>) from <span class="math notranslate nohighlight">\(x_t\)</span> using the network.</p></li>
 <li><p>Compute MSE loss between prediction and target.</p></li>
 <li><p>Weight loss by timestep and return the average.</p></li>
 </ul>
 <p>This is a direct implementation of the loss:</p>
-<p>$$
-\left| \varepsilon - \varepsilon_\theta\left(x_t, t\right) \right|^2
-$$</p>
-<p>where $x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsilon$.</p>
+<div class="math notranslate nohighlight">
+\[
+\left\| \varepsilon - \varepsilon_\theta\left(x_t, t\right) \right\|^2
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsilon\)</span>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
 ## Contributions
 

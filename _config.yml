@@ -9,5 +9,20 @@ parse:
     - colon_fence
     - deflist
     - html_image
+    - dollarmath
+    - amsmath
 
-html_theme: sphinx_book_theme
+repository:
+  url: https://github.com/tensor2023/Awesome-Computational-Imaging
+  path_to_book: compimg_book
+  branch: master  # 或你构建书籍时所在的分支
+
+html:
+  favicon: images/favicon.ico
+  use_repository_button: true
+  use_edit_page_button: true
+  use_issues_button: true
+  extra_navbar: |
+    <p>Made by Xueqing Gao</p>
+  searchbar_position: sidebar  # ✅ 搜索栏在侧边
+

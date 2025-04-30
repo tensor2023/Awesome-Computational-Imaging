@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter02_NeRF/Chapter02_NeRF';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -213,6 +215,70 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter02_NeRF/Chapter02_NeRF.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter02_NeRF/Chapter02_NeRF.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
 
 
 
@@ -377,18 +443,20 @@ Code: https://github.com/bmild/nerf, https://github.com/yenchenlin/nerf-pytorch<
 </div></blockquote>
 <p>Specifically:</p>
 <ul class="simple">
-<li><p><strong>Input</strong>: a 5D coordinate $(x, y, z, \theta, \phi)$, or a 3D position $x$ and 2D viewing direction $d$.</p></li>
-<li><p><strong>Output</strong>: the volume density $\sigma$ and RGB color $c=(r,g,b)$ at that point and direction.</p></li>
+<li><p><strong>Input</strong>: a 5D coordinate <span class="math notranslate nohighlight">\((x, y, z, \theta, \phi)\)</span>, or a 3D position <span class="math notranslate nohighlight">\(x\)</span> and 2D viewing direction <span class="math notranslate nohighlight">\(d\)</span>.</p></li>
+<li><p><strong>Output</strong>: the volume density <span class="math notranslate nohighlight">\(\sigma\)</span> and RGB color <span class="math notranslate nohighlight">\(c=(r,g,b)\)</span> at that point and direction.</p></li>
 </ul>
 <p>To render a novel view, NeRF traces rays from the virtual camera, samples 3D points along each ray, queries the network, and integrates their contributions using volume rendering.</p>
 <p>The rendering equation is:</p>
-<p>$$
-C(r) = \int_{t_n}^{t_f} T(t) , \sigma(r(t)) , c(r(t), d) , dt
-$$</p>
-<p>where transmittance $T(t)$ is:</p>
-<p>$$
-T(t) = \exp\left( -\int_{t_n}^{t} \sigma(r(s)), ds \right)
-$$</p>
+<div class="math notranslate nohighlight">
+\[
+C(r) = \int_{t_n}^{t_f} T(t) \, \sigma(r(t)) \, c(r(t), d) \, dt
+\]</div>
+<p>where transmittance <span class="math notranslate nohighlight">\(T(t)\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+T(t) = \exp\left( -\int_{t_n}^{t} \sigma(r(s))\, ds \right)
+\]</div>
 <p>The integral is numerically estimated using stratified sampling and quadrature.</p>
 <p>Further improvements include:</p>
 <ul class="simple">

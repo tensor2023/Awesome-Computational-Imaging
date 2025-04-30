@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter14_PnP-DM/Chapter14_PnP-DM';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -218,6 +220,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter14_PnP-DM/Chapter14_PnP-DM.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter14_PnP-DM/Chapter14_PnP-DM.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -322,7 +388,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Principled Probabilistic Imaging using Diffusion Models as Plug-and-Play Priors</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2.Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">3. The Core Idea</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-posterior-sampling-to-gibbs-sampling">3.1 From Posterior Sampling to Gibbs Sampling</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#likelihood-step">3.1.1 Likelihood Step</a></li>
@@ -366,17 +432,18 @@ Corresponding code: ../../../../code/PnP/PnP-DM-public-master/posterior_sample.p
 <section id="highlights">
 <h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
 <p>While traditional guided diffusion heuristically guides generation toward observations, <strong>PnP-DM is a principled method that rigorously samples from the true posterior ( p(x|y) )</strong>, making it a fully Bayesian alternative with no approximations to the likelihood.
-The <strong>prior step</strong> handles $p(x)$, which is entirely determined by the diffusion model.</p>
+The <strong>prior step</strong> handles <span class="math notranslate nohighlight">\(p(x)\)</span>, which is entirely determined by the diffusion model.</p>
 </section>
 <section id="background">
-<h1>2.Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
 <p>Inverse problems are central to computational imaging.
 In recent years, <strong>diffusion models (DMs)</strong> have emerged as powerful generative models that can learn rich and high-dimensional image distributions from data [Ho et al., 2020; Song et al., 2021]. These models enable denoising-based sampling by reversing a noise-injection (diffusion) process. This has sparked interest in using DMs as <strong>priors</strong> for inverse problems.</p>
-<p>However, existing approaches suffer from a key limitation: they either make <strong>simplifying assumptions</strong> that break the Bayesian formulation or resort to <strong>heuristic guidance</strong> that lacks theoretical grounding. For example, some methods approximate the intractable posterior score $\nabla \log p_t(x_t|y)$ using:</p>
-<p>$$
+<p>However, existing approaches suffer from a key limitation: they either make <strong>simplifying assumptions</strong> that break the Bayesian formulation or resort to <strong>heuristic guidance</strong> that lacks theoretical grounding. For example, some methods approximate the intractable posterior score <span class="math notranslate nohighlight">\(\nabla \log p_t(x_t|y)\)</span> using:</p>
+<div class="math notranslate nohighlight">
+\[
 \nabla \log p_t(x_t|y) \approx \nabla \log p_t(y|x_t) + \nabla \log p_t(x_t)
-$$</p>
-<p>But this is only exact under a Gaussian prior, which is too simplistic for real images. Other methods bypass this issue entirely by treating $y$ as a conditioning signal, leading to empirically strong but theoretically ungrounded solutions.</p>
+\]</div>
+<p>But this is only exact under a Gaussian prior, which is too simplistic for real images. Other methods bypass this issue entirely by treating <span class="math notranslate nohighlight">\(y\)</span> as a conditioning signal, leading to empirically strong but theoretically ungrounded solutions.</p>
 <p><strong>This paper addresses these issues by proposing a principled and theoretically sound method for posterior sampling with DMs as priors.</strong></p>
 <p>Specifically, the authors introduce a <strong>Plug-and-Play Diffusion Model (PnP-DM)</strong> framework built on the <strong>Split Gibbs Sampler (SGS)</strong>.This allows the method to handle both linear and <strong>nonlinear</strong>, even <strong>severely ill-posed</strong> inverse problems (e.g., black hole imaging), while offering accurate <strong>uncertainty quantification</strong>.</p>
 </section>
@@ -386,78 +453,89 @@ $$</p>
 <section id="from-posterior-sampling-to-gibbs-sampling">
 <h2>3.1 From Posterior Sampling to Gibbs Sampling<a class="headerlink" href="#from-posterior-sampling-to-gibbs-sampling" title="Link to this heading">#</a></h2>
 <p>The target is to sample from the posterior distribution:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 p(x|y) \propto p(y|x)p(x) = \exp(-f(x; y) - g(x))
-$$</p>
+\]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p>$f(x; y) := -\log p(y|x)$ is the <strong>likelihood potential</strong></p></li>
-<li><p>$g(x) := -\log p(x)$ is the <strong>prior potential</strong></p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x; y) := -\log p(y|x)\)</span> is the <strong>likelihood potential</strong></p></li>
+<li><p><span class="math notranslate nohighlight">\(g(x) := -\log p(x)\)</span> is the <strong>prior potential</strong></p></li>
 </ul>
-<p>Directly sampling from this posterior is hard. So the authors introduce an auxiliary variable $z$ and define a joint distribution:</p>
-<p>$$
-\pi(x, z) \propto \exp\left(-f(z; y) - g(x) - \frac{1}{2\rho^2} |x - z|^2 \right)
-$$</p>
+<p>Directly sampling from this posterior is hard. So the authors introduce an auxiliary variable <span class="math notranslate nohighlight">\(z\)</span> and define a joint distribution:</p>
+<div class="math notranslate nohighlight">
+\[
+\pi(x, z) \propto \exp\left(-f(z; y) - g(x) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
+\]</div>
 <p>This leads to a <strong>Gibbs sampler</strong> that alternates between:
 <img alt="image.png" src="../../_images/image13.png" /></p>
 <ul class="simple">
-<li><p><strong>Likelihood step</strong>: sample $z$ from $\pi(z|x)$ (red arrow in the Figure)</p></li>
-<li><p><strong>Prior step</strong>: sample $x$ from $\pi(x|z)$ (blue arrow in the Figure)</p></li>
+<li><p><strong>Likelihood step</strong>: sample <span class="math notranslate nohighlight">\(z\)</span> from <span class="math notranslate nohighlight">\(\pi(z|x)\)</span> (red arrow in the Figure)</p></li>
+<li><p><strong>Prior step</strong>: sample <span class="math notranslate nohighlight">\(x\)</span> from <span class="math notranslate nohighlight">\(\pi(x|z)\)</span> (blue arrow in the Figure)</p></li>
 </ul>
-<p>As $\rho \to 0$, the marginal of $\pi(x, z)$ over $x$ converges to $p(x|y)$.</p>
+<p>As <span class="math notranslate nohighlight">\(\rho \to 0\)</span>, the marginal of <span class="math notranslate nohighlight">\(\pi(x, z)\)</span> over <span class="math notranslate nohighlight">\(x\)</span> converges to <span class="math notranslate nohighlight">\(p(x|y)\)</span>.</p>
 <section id="likelihood-step">
 <h3>3.1.1 Likelihood Step<a class="headerlink" href="#likelihood-step" title="Link to this heading">#</a></h3>
-<p>In the likelihood step, we need to sample $z$ from the conditional distribution $\pi(z|x)$, which incorporates the observation $y$. This step enforces <strong>data consistency</strong>—i.e., it makes sure that the sample is plausible under the observed measurements.</p>
+<p>In the likelihood step, we need to sample <span class="math notranslate nohighlight">\(z\)</span> from the conditional distribution <span class="math notranslate nohighlight">\(\pi(z|x)\)</span>, which incorporates the observation <span class="math notranslate nohighlight">\(y\)</span>. This step enforces <strong>data consistency</strong>—i.e., it makes sure that the sample is plausible under the observed measurements.</p>
 </section>
 <section id="case-1-linear-forward-model-gaussian-noise">
 <h3>3.1.1.1 Case 1: Linear Forward Model + Gaussian Noise<a class="headerlink" href="#case-1-linear-forward-model-gaussian-noise" title="Link to this heading">#</a></h3>
-<p>Suppose the forward model is <strong>linear</strong>, i.e., $A(x) = Ax$, and the noise is Gaussian: $n \sim \mathcal{N}(0, \Sigma)$. Then the observation model is:</p>
-<p>$$
+<p>Suppose the forward model is <strong>linear</strong>, i.e., <span class="math notranslate nohighlight">\(A(x) = Ax\)</span>, and the noise is Gaussian: <span class="math notranslate nohighlight">\(n \sim \mathcal{N}(0, \Sigma)\)</span>. Then the observation model is:</p>
+<div class="math notranslate nohighlight">
+\[
 y = Ax + n
-$$</p>
+\]</div>
 <p>The likelihood is therefore a Gaussian:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 p(y|x) = \mathcal{N}(Ax, \Sigma)
-$$</p>
+\]</div>
 <p>Taking the negative log, the likelihood potential becomes:</p>
-<p>$$
-f(x; y) = -\log p(y|x) = \frac{1}{2} | y - Ax |^2_\Sigma
-$$</p>
-<p>where $|v|^2_\Sigma := v^\top \Sigma^{-1} v$ is the Mahalanobis norm.</p>
+<div class="math notranslate nohighlight">
+\[
+f(x; y) = -\log p(y|x) = \frac{1}{2} \| y - Ax \|^2_\Sigma
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\|v\|^2_\Sigma := v^\top \Sigma^{-1} v\)</span> is the Mahalanobis norm.</p>
 <p>Now recall the joint distribution:</p>
-<p>$$
-\pi(z|x) \propto \exp\left( -f(z; y) - \frac{1}{2\rho^2} |x - z|^2 \right)
-$$</p>
+<div class="math notranslate nohighlight">
+\[
+\pi(z|x) \propto \exp\left( -f(z; y) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
+\]</div>
 <p>This is the product of two Gaussians:</p>
 <ul class="simple">
-<li><p>One centered at $z \approx A^{-1} y$</p></li>
-<li><p>One centered at $z \approx x$</p></li>
+<li><p>One centered at <span class="math notranslate nohighlight">\(z \approx A^{-1} y\)</span></p></li>
+<li><p>One centered at <span class="math notranslate nohighlight">\(z \approx x\)</span></p></li>
 </ul>
-<p>Combining two Gaussians gives another Gaussian. Therefore, $\pi(z|x)$ is Gaussian:</p>
-<p>$$
+<p>Combining two Gaussians gives another Gaussian. Therefore, <span class="math notranslate nohighlight">\(\pi(z|x)\)</span> is Gaussian:</p>
+<div class="math notranslate nohighlight">
+\[
 \pi(z|x) = \mathcal{N}(m(x), \Lambda^{-1})
-$$</p>
+\]</div>
 <p>with:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \Lambda = A^\top \Sigma^{-1} A + \frac{1}{\rho^2} I
-$$</p>
-<p>$$
+\]</div>
+<div class="math notranslate nohighlight">
+\[
 m(x) = \Lambda^{-1} \left( A^\top \Sigma^{-1} y + \frac{1}{\rho^2} x \right)
-$$</p>
-<p>So, in the linear + Gaussian case, we can directly draw $z$ from this distribution using standard Gaussian sampling.</p>
+\]</div>
+<p>So, in the linear + Gaussian case, we can directly draw <span class="math notranslate nohighlight">\(z\)</span> from this distribution using standard Gaussian sampling.</p>
 </section>
 <section id="case-2-nonlinear-forward-model">
 <h3>3.1.1.2 Case 2: Nonlinear Forward Model<a class="headerlink" href="#case-2-nonlinear-forward-model" title="Link to this heading">#</a></h3>
-<p>If the forward model $A(\cdot)$ is <strong>nonlinear</strong>, or the noise is <strong>non-Gaussian</strong>, then the distribution $\pi(z|x)$ is no longer Gaussian and no closed-form exists.</p>
+<p>If the forward model <span class="math notranslate nohighlight">\(A(\cdot)\)</span> is <strong>nonlinear</strong>, or the noise is <strong>non-Gaussian</strong>, then the distribution <span class="math notranslate nohighlight">\(\pi(z|x)\)</span> is no longer Gaussian and no closed-form exists.</p>
 <p>But we can still compute the <strong>unnormalized log-probability</strong>:</p>
-<p>$$
-\log \pi(z|x) = -f(z; y) - \frac{1}{2\rho^2} |x - z|^2 + \text{const}
-$$</p>
-<p>As long as $f(z; y)$ is differentiable, we can sample from this distribution using <strong>Langevin dynamics</strong>:</p>
-<p>$$
-dz_t = \nabla \log \pi(z_t|x) , dt + \sqrt{2} , dw_t
-$$</p>
-<p>This stochastic differential equation (SDE) gradually moves $z_t$ toward regions of high probability.</p>
+<div class="math notranslate nohighlight">
+\[
+\log \pi(z|x) = -f(z; y) - \frac{1}{2\rho^2} \|x - z\|^2 + \text{const}
+\]</div>
+<p>As long as <span class="math notranslate nohighlight">\(f(z; y)\)</span> is differentiable, we can sample from this distribution using <strong>Langevin dynamics</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+dz_t = \nabla \log \pi(z_t|x) \, dt + \sqrt{2} \, dw_t
+\]</div>
+<p>This stochastic differential equation (SDE) gradually moves <span class="math notranslate nohighlight">\(z_t\)</span> toward regions of high probability.</p>
 <p>In practice, we discretize this SDE using Euler steps:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">x</span>
 <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
@@ -470,29 +548,31 @@ $$</p>
 <section id="prior-step-sampling-via-diffusion-models">
 <h3>3.1.2 Prior Step: Sampling via Diffusion Models<a class="headerlink" href="#prior-step-sampling-via-diffusion-models" title="Link to this heading">#</a></h3>
 <p>This is the heart of the method. The prior step corresponds to sampling:</p>
-<p>$$
-\pi(x|z) \propto \exp\left(-g(x) - \frac{1}{2\rho^2} |x - z|^2 \right)
-$$</p>
-<p>This is a <strong>Bayesian denoising</strong> problem: observe $z = x + \text{Gaussian noise}$, infer $x$ using the prior $p(x) \propto \exp(-g(x))$.</p>
+<div class="math notranslate nohighlight">
+\[
+\pi(x|z) \propto \exp\left(-g(x) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
+\]</div>
+<p>This is a <strong>Bayesian denoising</strong> problem: observe <span class="math notranslate nohighlight">\(z = x + \text{Gaussian noise}\)</span>, infer <span class="math notranslate nohighlight">\(x\)</span> using the prior <span class="math notranslate nohighlight">\(p(x) \propto \exp(-g(x))\)</span>.</p>
 </section>
 </section>
 <section id="edm-formulation">
 <h2>3.2 EDM Formulation<a class="headerlink" href="#edm-formulation" title="Link to this heading">#</a></h2>
 <p>Diffusion models in the <strong>EDM framework</strong> solve the denoising problem via the following reverse SDE:</p>
-<p>$$
-d x_t = \left[ \frac{\dot{s}(t)}{s(t)} x_t - 2 s(t)^2 \dot{\sigma}(t)\sigma(t) \nabla \log p\left( \frac{x_t}{s(t)}; \sigma(t) \right) \right] dt + s(t) \sqrt{2 \dot{\sigma}(t) \sigma(t)} , d\bar{w}_t
-$$</p>
+<div class="math notranslate nohighlight">
+\[
+d x_t = \left[ \frac{\dot{s}(t)}{s(t)} x_t - 2 s(t)^2 \dot{\sigma}(t)\sigma(t) \nabla \log p\left( \frac{x_t}{s(t)}; \sigma(t) \right) \right] dt + s(t) \sqrt{2 \dot{\sigma}(t) \sigma(t)} \, d\bar{w}_t
+\]</div>
 <p>Key components:</p>
 <ul class="simple">
-<li><p>$s(t)$ and $\sigma(t)$: scaling and noise schedules</p></li>
-<li><p>$x_t / s(t) \sim p(x; \sigma(t))$: mollified distribution by Gaussian noise</p></li>
-<li><p>$x_0$ is the final clean sample</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(t)\)</span> and <span class="math notranslate nohighlight">\(\sigma(t)\)</span>: scaling and noise schedules</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_t / s(t) \sim p(x; \sigma(t))\)</span>: mollified distribution by Gaussian noise</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_0\)</span> is the final clean sample</p></li>
 </ul>
 <p>To apply this to the prior step:</p>
 <ol class="arabic simple">
-<li><p>Set $\sigma(t^*) = \rho$</p></li>
-<li><p>Initialize $x_{t^<em>} = s(t^</em>) z$</p></li>
-<li><p>Solve the reverse SDE backward to $t = 0$</p></li>
+<li><p>Set <span class="math notranslate nohighlight">\(\sigma(t^*) = \rho\)</span></p></li>
+<li><p>Initialize <span class="math notranslate nohighlight">\(x_{t^*} = s(t^*) z\)</span></p></li>
+<li><p>Solve the reverse SDE backward to <span class="math notranslate nohighlight">\(t = 0\)</span></p></li>
 </ol>
 <p>This allows the use of <strong>any pretrained DM</strong> that fits the EDM interface, without retraining or modifying the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -821,13 +901,14 @@ $$</p>
 <section id="key-mathematical-structure">
 <h3>Key Mathematical Structure<a class="headerlink" href="#key-mathematical-structure" title="Link to this heading">#</a></h3>
 <p>The algorithm targets the following joint distribution:</p>
-<p>$$
-\pi(x, z) \propto \exp\left( -f(z; y) - g(x) - \frac{1}{2\rho^2} |x - z|^2 \right)
-$$</p>
+<div class="math notranslate nohighlight">
+\[
+\pi(x, z) \propto \exp\left( -f(z; y) - g(x) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
+\]</div>
 <p>We alternate between:</p>
 <ul class="simple">
-<li><p><strong>Likelihood step</strong>: sample $z \sim \pi(z|x)$</p></li>
-<li><p><strong>Prior step</strong>: sample $x \sim \pi(x|z)$</p></li>
+<li><p><strong>Likelihood step</strong>: sample <span class="math notranslate nohighlight">\(z \sim \pi(z|x)\)</span></p></li>
+<li><p><strong>Prior step</strong>: sample <span class="math notranslate nohighlight">\(x \sim \pi(x|z)\)</span></p></li>
 </ul>
 <p>The <code class="docutils literal notranslate"><span class="pre">PnPEDM</span></code> class performs this alternating procedure over multiple iterations.</p>
 </section>
@@ -837,7 +918,7 @@ $$</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">gt</span><span class="p">,</span> <span class="n">y_n</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This initializes $x^{(0)}$, usually using a naive pseudoinverse or other simple method based on $y_n$.</p>
+<p>This initializes <span class="math notranslate nohighlight">\(x^{(0)}\)</span>, usually using a naive pseudoinverse or other simple method based on <span class="math notranslate nohighlight">\(y_n\)</span>.</p>
 </section>
 <hr class="docutils" />
 <section id="likelihood-step-data-consistency">
@@ -846,11 +927,12 @@ $$</p>
 </pre></div>
 </div>
 <p>This approximates sampling from:</p>
-<p>$$
-\pi(z|x) \propto \exp\left( -f(z; y) - \frac{1}{2\rho^2} |x - z|^2 \right)
-$$</p>
+<div class="math notranslate nohighlight">
+\[
+\pi(z|x) \propto \exp\left( -f(z; y) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
+\]</div>
 <p>If the forward model is linear with Gaussian noise, this corresponds to sampling from a known Gaussian. If not, this operator may internally use gradient-based methods (e.g. Langevin).</p>
-<p>This step ensures $z$ is consistent with measurement $y$.</p>
+<p>This step ensures <span class="math notranslate nohighlight">\(z\)</span> is consistent with measurement <span class="math notranslate nohighlight">\(y\)</span>.</p>
 </section>
 <hr class="docutils" />
 <section id="prior-step-diffusion-denoising">
@@ -859,14 +941,15 @@ $$</p>
 </pre></div>
 </div>
 <p>This corresponds to sampling from:</p>
-<p>$$
-\pi(x|z) \propto \exp\left( -g(x) - \frac{1}{2\rho^2} |x - z|^2 \right)
-$$</p>
+<div class="math notranslate nohighlight">
+\[
+\pi(x|z) \propto \exp\left( -g(x) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
+\]</div>
 <p>This is equivalent to a <strong>Bayesian denoising problem</strong>, where:</p>
 <ul class="simple">
-<li><p>The noisy observation is $z$</p></li>
-<li><p>The noise level is $\rho$</p></li>
-<li><p>The prior $p(x) \propto \exp(-g(x))$ is modeled by a <strong>pretrained diffusion model</strong></p></li>
+<li><p>The noisy observation is <span class="math notranslate nohighlight">\(z\)</span></p></li>
+<li><p>The noise level is <span class="math notranslate nohighlight">\(\rho\)</span></p></li>
+<li><p>The prior <span class="math notranslate nohighlight">\(p(x) \propto \exp(-g(x))\)</span> is modeled by a <strong>pretrained diffusion model</strong></p></li>
 </ul>
 <p>The EDM framework provides a unified reverse-time SDE solver to sample from this distribution.</p>
 </section>
@@ -877,7 +960,7 @@ $$</p>
 <span class="n">rho_iter</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rho_iter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rho_min</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This gradually reduces the noise level $\rho$, similar to simulated annealing. It improves convergence and helps escape local minima in ill-posed problems.</p>
+<p>This gradually reduces the noise level <span class="math notranslate nohighlight">\(\rho\)</span>, similar to simulated annealing. It improves convergence and helps escape local minima in ill-posed problems.</p>
 </section>
 <hr class="docutils" />
 <section id="sample-collection">
@@ -886,16 +969,16 @@ $$</p>
     <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>After the burn-in phase, $x$ samples are stored to approximate the posterior distribution $p(x|y)$.</p>
+<p>After the burn-in phase, <span class="math notranslate nohighlight">\(x\)</span> samples are stored to approximate the posterior distribution <span class="math notranslate nohighlight">\(p(x|y)\)</span>.</p>
 </section>
 <hr class="docutils" />
 <section id="metrics-and-visualization">
 <h3>6. <strong>Metrics and Visualization</strong><a class="headerlink" href="#metrics-and-visualization" title="Link to this heading">#</a></h3>
 <p>The method logs PSNR, SSIM, LPIPS over iterations, and visualizes:</p>
 <ul class="simple">
-<li><p>Denoised samples $x$</p></li>
-<li><p>Data-consistent samples $z$</p></li>
-<li><p>Ground truth $gt$</p></li>
+<li><p>Denoised samples <span class="math notranslate nohighlight">\(x\)</span></p></li>
+<li><p>Data-consistent samples <span class="math notranslate nohighlight">\(z\)</span></p></li>
+<li><p>Ground truth <span class="math notranslate nohighlight">\(gt\)</span></p></li>
 </ul>
 <p>This helps track convergence and sample quality.</p>
 </section>
@@ -961,7 +1044,7 @@ $$</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Principled Probabilistic Imaging using Diffusion Models as Plug-and-Play Priors</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2.Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-idea">3. The Core Idea</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-posterior-sampling-to-gibbs-sampling">3.1 From Posterior Sampling to Gibbs Sampling</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#likelihood-step">3.1.1 Likelihood Step</a></li>

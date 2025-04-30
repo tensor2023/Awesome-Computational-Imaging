@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter04_3D_Gaussian_Splatting/Chapter04_3D_Gaussian_Splatting';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -218,6 +220,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter04_3D_Gaussian_Splatting/Chapter04_3D_Gaussian_Splatting.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter04_3D_Gaussian_Splatting/Chapter04_3D_Gaussian_Splatting.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -374,32 +440,37 @@ Instead of voxel grids or MLPs, the authors represent scenes using a set of <str
 </section>
 <section id="the-core-idea">
 <h1>3.The Core Idea<a class="headerlink" href="#the-core-idea" title="Link to this heading">#</a></h1>
-<p>A <strong>3D Gaussian</strong> can be defined in Euclidean space by its center $\mu \in \mathbb{R}^3$ and covariance matrix $\Sigma \in \mathbb{R}^{3 \times 3}$:</p>
-<p>$$
+<p>A <strong>3D Gaussian</strong> can be defined in Euclidean space by its center <span class="math notranslate nohighlight">\(\mu \in \mathbb{R}^3\)</span> and covariance matrix <span class="math notranslate nohighlight">\(\Sigma \in \mathbb{R}^{3 \times 3}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
 G(\mathbf{x}) = e^{ -\frac{1}{2} (\mathbf{x} - \mu)^T \Sigma^{-1} (\mathbf{x} - \mu) }
-$$</p>
-<p>This Gaussian defines a soft ellipsoidal shape, whose geometry is governed by $\Sigma$. Instead of optimizing $\Sigma$ directly, which may break symmetry or positive semi-definiteness, it is factored as:</p>
-<p>$$
+\]</div>
+<p>This Gaussian defines a soft ellipsoidal shape, whose geometry is governed by <span class="math notranslate nohighlight">\(\Sigma\)</span>. Instead of optimizing <span class="math notranslate nohighlight">\(\Sigma\)</span> directly, which may break symmetry or positive semi-definiteness, it is factored as:</p>
+<div class="math notranslate nohighlight">
+\[
 \Sigma = R S S^T R^T
-$$</p>
-<p>where $R$ is a rotation matrix (often represented via a quaternion) and $S$ is a diagonal scaling matrix. This ellipsoidal representation supports anisotropy and remains physically valid during optimization.</p>
-<p>To <strong>project</strong> the 3D Gaussian onto the 2D image plane (i.e., rasterization), the covariance is transformed by the Jacobian $J$ of the camera projection and world-to-camera transformation $W$:</p>
-<p>$$
-\Sigma’ = J W \Sigma W^T J^T
-$$</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(R\)</span> is a rotation matrix (often represented via a quaternion) and <span class="math notranslate nohighlight">\(S\)</span> is a diagonal scaling matrix. This ellipsoidal representation supports anisotropy and remains physically valid during optimization.</p>
+<p>To <strong>project</strong> the 3D Gaussian onto the 2D image plane (i.e., rasterization), the covariance is transformed by the Jacobian <span class="math notranslate nohighlight">\(J\)</span> of the camera projection and world-to-camera transformation <span class="math notranslate nohighlight">\(W\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\Sigma' = J W \Sigma W^T J^T
+\]</div>
 <p>This results in a 2D Gaussian splat, whose shape adapts to the viewing angle, allowing tile-based sorting and fast alpha blending.</p>
-<p>The <strong>appearance</strong> of each point is encoded using <strong>Spherical Harmonics (SH)</strong> up to degree $L$. This allows compact modeling of view-dependent color:</p>
-<p>$$
+<p>The <strong>appearance</strong> of each point is encoded using <strong>Spherical Harmonics (SH)</strong> up to degree <span class="math notranslate nohighlight">\(L\)</span>. This allows compact modeling of view-dependent color:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{c}(\mathbf{v}) = \sum_{l=0}^{L} \sum_{m=-l}^{l} c_{lm} Y_{lm}(\mathbf{v})
-$$</p>
-<p>where $Y_{lm}$ are SH basis functions and $c_{lm}$ the learned coefficients per Gaussian.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(Y_{lm}\)</span> are SH basis functions and <span class="math notranslate nohighlight">\(c_{lm}\)</span> the learned coefficients per Gaussian.</p>
 <p>For rendering, an alpha-blended formulation similar to volumetric raymarching is used:</p>
-<p>$$
-C = \sum_{i=1}^{N} T_i \alpha_i \mathbf{c}<em>i, \quad \text{with } \alpha_i = 1 - \exp(-\sigma_i \delta_i), \quad T_i = \prod</em>{j=1}^{i-1} (1 - \alpha_j)
-$$</p>
+<div class="math notranslate nohighlight">
+\[
+C = \sum_{i=1}^{N} T_i \alpha_i \mathbf{c}_i, \quad \text{with } \alpha_i = 1 - \exp(-\sigma_i \delta_i), \quad T_i = \prod_{j=1}^{i-1} (1 - \alpha_j)
+\]</div>
 <p>This equation is implemented efficiently by sorting Gaussians in tiles, blending front-to-back. Unlike NeRF, no ray marching is needed.</p>
 <p><img alt="image.png" src="../../_images/image3.png" />
-Optimization is performed on position $\mu$, rotation $R$, scale $S$, opacity $\alpha$, and SH coefficients $c_{lm}$. To avoid the overhead of autodiff on custom CUDA rasterizers, gradients are manually derived.</p>
+Optimization is performed on position <span class="math notranslate nohighlight">\(\mu\)</span>, rotation <span class="math notranslate nohighlight">\(R\)</span>, scale <span class="math notranslate nohighlight">\(S\)</span>, opacity <span class="math notranslate nohighlight">\(\alpha\)</span>, and SH coefficients <span class="math notranslate nohighlight">\(c_{lm}\)</span>. To avoid the overhead of autodiff on custom CUDA rasterizers, gradients are manually derived.</p>
 <p>The pipeline begins with SfM points. Each is initialized as a Gaussian. During training, densification adds more Gaussians by cloning or splitting. Gaussians are pruned or merged using view-space statistics.</p>
 <p>Antialiasing is inherently supported through the smooth falloff of each Gaussian splat in screen space. There is no hard surface discontinuity, and resolution-independence is naturally achieved through continuous alpha blending.</p>
 <p>This model leads to a fast and differentiable pipeline for radiance field rendering, achieving real-time frame rates with state-of-the-art quality.</p>

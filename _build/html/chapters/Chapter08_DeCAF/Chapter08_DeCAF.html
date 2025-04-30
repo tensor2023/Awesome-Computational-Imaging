@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter08_DeCAF/Chapter08_DeCAF';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -218,6 +220,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter08_DeCAF/Chapter08_DeCAF.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter08_DeCAF/Chapter08_DeCAF.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -321,6 +387,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights:</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-idea-of-decaf">3. Core Idea of DeCAF</a></li>
 </ul>
@@ -348,35 +415,43 @@ document.write(`
 <p>Github Repo: https://github.com/wustl-cig/DeCAF,
 Corresponding code: ../../../../code/NeRF_optics/DeCAF-master/predict.py</p>
 </section>
+<section id="highlights">
+<h1>1. Highlights:<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
+<p>Like FPM_INR, DeCAF uses an <strong>implicit neural representation (INR)</strong> to model a continuous 3D refractive index (RI) field without relying on voxel grids and reconstructs the RI volume <strong>directly from intensity-only 2D measurements</strong>, using the physics-based <strong>IDT forward model</strong> for supervision.</p>
+</section>
 <section id="background">
 <h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
 <p>Imaging biological samples without labeling or staining is crucial in biophotonics and quantitative phase imaging. One core technique, <strong>Intensity Diffraction Tomography (IDT)</strong>, reconstructs the 3D <strong>Refractive Index (RI)</strong> distribution of a sample by capturing 2D intensity images under varied illuminations.</p>
-<p>In IDT, the input consists of a series of 2D intensity-only measurements acquired by illuminating the sample from multiple angles using an LED array. These measurements capture how the sample scatters light but lack any phase information. The goal is to reconstruct a 3D complex-valued RI volume, where each spatial location $(x, y, z)$ has a real part representing optical phase delay and an imaginary part corresponding to absorption.</p>
-<p>This task is fundamentally challenging due to two key limitations: First, cameras only record intensity $I = |E|^2$, not the optical field $E$ itself, leading to a loss of phase information. Second, because illumination angles are restricted to a narrow range, the 3D Fourier space is undersampled along the axial ($z$) direction—a phenomenon known as the missing-cone problem—which causes artefacts and axial blur in the reconstruction.</p>
+<p>In IDT, the input consists of a series of 2D intensity-only measurements acquired by illuminating the sample from multiple angles using an LED array. These measurements capture how the sample scatters light but lack any phase information. The goal is to reconstruct a 3D complex-valued RI volume, where each spatial location <span class="math notranslate nohighlight">\((x, y, z)\)</span> has a real part representing optical phase delay and an imaginary part corresponding to absorption.</p>
+<p>This task is fundamentally challenging due to two key limitations: First, cameras only record intensity <span class="math notranslate nohighlight">\(I = |E|^2\)</span>, not the optical field <span class="math notranslate nohighlight">\(E\)</span> itself, leading to a loss of phase information. Second, because illumination angles are restricted to a narrow range, the 3D Fourier space is undersampled along the axial (<span class="math notranslate nohighlight">\(z\)</span>) direction—a phenomenon known as the missing-cone problem—which causes artefacts and axial blur in the reconstruction.</p>
 <p>Understanding what goes in (2D intensities) and what comes out (3D RI map) is essential because it frames IDT as an <strong>inverse problem</strong>. This guides how models are designed: the forward model predicts measurable intensities from a hypothetical RI volume, and learning aims to find an RI that best explains the actual measurements. Without knowing this input-output relationship, it’s impossible to justify or optimize any computational reconstruction method.</p>
 <section id="core-idea-of-decaf">
 <h2>3. Core Idea of DeCAF<a class="headerlink" href="#core-idea-of-decaf" title="Link to this heading">#</a></h2>
 <p><img alt="image.png" src="../../_images/image7.png" />
 DeCAF is a self-supervised reconstruction method that learns a <strong>continuous 3D refractive index (RI) volume</strong> directly from <strong>intensity-only 2D images</strong> captured under multiple illuminations. It requires no ground-truth RI maps.</p>
-<p><strong>Input:</strong> a set of intensity measurements $y_\rho$ (2D images)<br />
-<strong>Output:</strong> a continuous complex-valued RI field $n(x, y, z)$<br />
-<strong>Forward model:</strong> a linear IDT model approximated as $y_\rho \approx A_\rho \Delta \epsilon$ (Eq. (3) in paper), where $\Delta \epsilon$ is the complex permittivity contrast</p>
-<p>DeCAF represents the RI field using a <strong>coordinate-based MLP</strong> $M_\phi$, which takes spatial coordinates $(x, y, z)$ and predicts the corresponding $\Delta \epsilon_{\text{re}}, \Delta \epsilon_{\text{im}}$:</p>
-<p>$$
+<p><strong>Input:</strong> a set of intensity measurements <span class="math notranslate nohighlight">\(y_\rho\)</span> (2D images)<br />
+<strong>Output:</strong> a continuous complex-valued RI field <span class="math notranslate nohighlight">\(n(x, y, z)\)</span><br />
+<strong>Forward model:</strong> a linear IDT model approximated as <span class="math notranslate nohighlight">\(y_\rho \approx A_\rho \Delta \epsilon\)</span> (Eq. (3) in paper), where <span class="math notranslate nohighlight">\(\Delta \epsilon\)</span> is the complex permittivity contrast</p>
+<p>DeCAF represents the RI field using a <strong>coordinate-based MLP</strong> <span class="math notranslate nohighlight">\(M_\phi\)</span>, which takes spatial coordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span> and predicts the corresponding <span class="math notranslate nohighlight">\(\Delta \epsilon_{\text{re}}, \Delta \epsilon_{\text{im}}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
 (x, y, z) \xrightarrow{M_\phi} \Delta \epsilon
-$$</p>
-<p>From $\Delta \epsilon$, the RI values are derived via (Eq. (4)):</p>
-<p>$$
+\]</div>
+<p>From <span class="math notranslate nohighlight">\(\Delta \epsilon\)</span>, the RI values are derived via (Eq. (4)):</p>
+<div class="math notranslate nohighlight">
+\[
 n_{\text{re}} = \sqrt{\frac{1}{2} \left( n_0^2 + \Delta \epsilon_{\text{re}} + \sqrt{(n_0^2 + \Delta \epsilon_{\text{re}})^2 + \Delta \epsilon_{\text{im}}^2} \right)}
-$$</p>
-<p>$$
+\]</div>
+<div class="math notranslate nohighlight">
+\[
 n_{\text{im}} = \frac{\Delta \epsilon_{\text{im}}}{2 \cdot n_{\text{re}}}
-$$</p>
+\]</div>
 <p><strong>Training objective</strong> (Eq. (1)):<br />
-Find $\phi^*$ to minimize the measurement loss and regularization:</p>
-<p>$$
-\phi^* = \arg\min_\phi \left{ \mathcal{L}(F(M_\phi(c)), y_\rho) + \mathcal{R}(M_\phi(c)) \right}
-$$</p>
+Find <span class="math notranslate nohighlight">\(\phi^*\)</span> to minimize the measurement loss and regularization:</p>
+<div class="math notranslate nohighlight">
+\[
+\phi^* = \arg\min_\phi \left\{ \mathcal{L}(F(M_\phi(c)), y_\rho) + \mathcal{R}(M_\phi(c)) \right\}
+\]</div>
 <p>This setup makes DeCAF a test-time trained <strong>implicit neural representation (INR)</strong> method — the MLP serves as both the model and regularizer, optimized per sample using only the physical forward model.</p>
 </section>
 </section>
@@ -496,7 +571,7 @@ Appending path: ../../../../code/NeRF_optics/DeCAF-master
 </pre></div>
 </div>
 </section>
-<section id="loading-files">
+<section class="tex2jax_ignore mathjax_ignore" id="loading-files">
 <h1>Loading files<a class="headerlink" href="#loading-files" title="Link to this heading">#</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;../../../../code/NeRF_optics/DeCAF-master/datasets/Celegans_head/Celegans_head.mat&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
 
@@ -509,7 +584,7 @@ Using equal padding
 </pre></div>
 </div>
 </section>
-<section id="inference">
+<section class="tex2jax_ignore mathjax_ignore" id="inference">
 <h1>Inference<a class="headerlink" href="#inference" title="Link to this heading">#</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
 
@@ -609,7 +684,7 @@ Prediction saved to ../../../../code/NeRF_optics/DeCAF-master/datasets/Celegans_
 </pre></div>
 </div>
 </section>
-<section id="visualization">
+<section class="tex2jax_ignore mathjax_ignore" id="visualization">
 <h1>Visualization<a class="headerlink" href="#visualization" title="Link to this heading">#</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ab</span> <span class="o">=</span> <span class="n">recon</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">ph</span> <span class="o">=</span> <span class="n">recon</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
@@ -736,6 +811,7 @@ IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights:</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-idea-of-decaf">3. Core Idea of DeCAF</a></li>
 </ul>

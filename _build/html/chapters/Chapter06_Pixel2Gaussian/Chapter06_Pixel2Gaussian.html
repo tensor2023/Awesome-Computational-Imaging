@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -218,6 +220,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -355,13 +421,13 @@ Corresponding code: ../../../../code/GS/ContinuousSR-main/demo.py</p>
 </section>
 <section id="highlights">
 <h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
-<p>TODO</p>
+<p>Fast end-to-end arbitrary-scale super-resolution via 2D Gaussian modeling.</p>
 </section>
 <section id="background">
 <h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
 <p>Although GaussianImage(https://xingtongge.github.io/GaussianImage-page/) is an efficient image representation and compression method using 2D Gaussian Splatting with up to 2000 FPS rendering speed, it cannot perform arbitrary-scale super-resolution because it lacks an end-to-end inference mechanism and requires overfitting each image individually.</p>
 <p>Super-resolution (SR) aims to recover a high-resolution (HR) image from its low-resolution (LR) counterpart. Traditional SR methods focus on fixed integer scales like ×2, ×3, or ×4, which limits flexibility in real applications.</p>
-<p>To solve this, <strong>Arbitrary-Scale Super-Resolution (ASSR)</strong> was proposed. A landmark method, <strong>LIIF</strong> [Chen et al., 2021], introduces <em>implicit neural representation (INR)</em> to map coordinates to RGB values via an MLP. Given any continuous coordinate $(x, y)$, the network outputs the corresponding color, enabling continuous upscaling.</p>
+<p>To solve this, <strong>Arbitrary-Scale Super-Resolution (ASSR)</strong> was proposed. A landmark method, <strong>LIIF</strong> [Chen et al., 2021], introduces <em>implicit neural representation (INR)</em> to map coordinates to RGB values via an MLP. Given any continuous coordinate <span class="math notranslate nohighlight">\((x, y)\)</span>, the network outputs the corresponding color, enabling continuous upscaling.</p>
 <p>However, such INR-based methods suffer from:</p>
 <ul class="simple">
 <li><p>Inefficiency: each pixel requires repeated querying and decoding.</p></li>
@@ -375,28 +441,31 @@ Corresponding code: ../../../../code/GS/ContinuousSR-main/demo.py</p>
 <p><img alt="image-2.png" src="../../_images/image-2.png" />
 This paper proposes a fundamentally new idea:<br />
 Instead of <strong>learning a function to query pixels</strong>, learn to <strong>explicitly construct a continuous image field</strong>, represented by a set of 2D <strong>Gaussian kernels</strong>.</p>
-<p>Each kernel is parameterized by its spatial position $\mu$, covariance matrix $\Sigma$, and RGB color $c_{rgb}$. The reconstructed image is the sum of $N$ such Gaussians:</p>
-<p>$$
+<p>Each kernel is parameterized by its spatial position <span class="math notranslate nohighlight">\(\mu\)</span>, covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span>, and RGB color <span class="math notranslate nohighlight">\(c_{rgb}\)</span>. The reconstructed image is the sum of <span class="math notranslate nohighlight">\(N\)</span> such Gaussians:</p>
+<div class="math notranslate nohighlight">
+\[
 f_c(x, y) = \sum_{i=1}^N G_i(x, y)
-$$</p>
-<p>Each Gaussian kernel $G_i$ is defined as:</p>
-<p>$$
+\]</div>
+<p>Each Gaussian kernel <span class="math notranslate nohighlight">\(G_i\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
 G_i(x, y, c_{rgb}, \Sigma) = c_{rgb} \cdot \frac{1}{2\pi |\Sigma|} \exp \left( -\frac{1}{2} d^T \Sigma^{-1} d \right)
-$$</p>
-<p>where $d = \begin{bmatrix} x - \mu_x \ y - \mu_y \end{bmatrix}$.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(d = \begin{bmatrix} x - \mu_x \\ y - \mu_y \end{bmatrix}\)</span>.</p>
 <p>The covariance matrix is:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \Sigma = \begin{bmatrix}
-\sigma_x^2 &amp; \rho \sigma_x \sigma_y \
+\sigma_x^2 &amp; \rho \sigma_x \sigma_y \\
 \rho \sigma_x \sigma_y &amp; \sigma_y^2
 \end{bmatrix}
-$$</p>
+\end{split}\]</div>
 <section id="why-not-directly-predict-gaussians-from-lr">
 <h2>2.1 Why not directly predict Gaussians from LR?<a class="headerlink" href="#why-not-directly-predict-gaussians-from-lr" title="Link to this heading">#</a></h2>
-<p>Directly predicting Gaussian parameters ($\mu$, $\Sigma$) from a low-resolution image is highly challenging due to the nature of the Gaussian space:</p>
+<p>Directly predicting Gaussian parameters (<span class="math notranslate nohighlight">\(\mu\)</span>, <span class="math notranslate nohighlight">\(\Sigma\)</span>) from a low-resolution image is highly challenging due to the nature of the Gaussian space:</p>
 <ul class="simple">
 <li><p>The space is <strong>high-dimensional and sensitive</strong>.</p></li>
-<li><p>Even small errors in $\mu$ (position) or $\Sigma$ (covariance) can cause significant visual distortions.</p></li>
+<li><p>Even small errors in <span class="math notranslate nohighlight">\(\mu\)</span> (position) or <span class="math notranslate nohighlight">\(\Sigma\)</span> (covariance) can cause significant visual distortions.</p></li>
 <li><p>Direct optimization easily gets stuck in poor local minima.</p></li>
 </ul>
 <p>To overcome this, the authors propose three key components:</p>
@@ -404,29 +473,31 @@ $$</p>
 <h3>2.1.1 <strong>Deep Gaussian Prior (DGP)</strong><a class="headerlink" href="#deep-gaussian-prior-dgp" title="Link to this heading">#</a></h3>
 <p>The authors analyze 40,000 natural images and discover that the covariance parameters of Gaussian kernels follow a compact and roughly Gaussian-distributed range:</p>
 <ul class="simple">
-<li><p>$\sigma_x^2 \in [0, 2.4]$, $\sigma_y^2 \in [0, 2.2]$, $\rho \in [-0.9, 1.5]$</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_x^2 \in [0, 2.4]\)</span>, <span class="math notranslate nohighlight">\(\sigma_y^2 \in [0, 2.2]\)</span>, <span class="math notranslate nohighlight">\(\rho \in [-0.9, 1.5]\)</span></p></li>
 </ul>
 <p>This prior, called <strong>Deep Gaussian Prior (DGP)</strong>, serves as a statistical guideline for efficient parameter estimation.</p>
 <p><img alt="image.png" src="../../_images/image5.png" /></p>
 </section>
 <section id="dgp-driven-covariance-weighting-ddcw">
 <h3>2.1.2 <strong>DGP-Driven Covariance Weighting (DDCW)</strong><a class="headerlink" href="#dgp-driven-covariance-weighting-ddcw" title="Link to this heading">#</a></h3>
-<p>Rather than directly predicting the full covariance matrix $\Sigma$, the model:</p>
+<p>Rather than directly predicting the full covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span>, the model:</p>
 <ul class="simple">
-<li><p>Samples $N$ candidate Gaussian covariances from the DGP distribution;</p></li>
-<li><p>Learns a set of weights $w_i$ to form the final kernel as a weighted combination:</p></li>
+<li><p>Samples <span class="math notranslate nohighlight">\(N\)</span> candidate Gaussian covariances from the DGP distribution;</p></li>
+<li><p>Learns a set of weights <span class="math notranslate nohighlight">\(w_i\)</span> to form the final kernel as a weighted combination:</p></li>
 </ul>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 G_{\text{target}} = \sum_{i=1}^N w_i \cdot G_i
-$$</p>
+\]</div>
 <p>This drastically reduces the optimization complexity by converting regression into a soft selection problem.</p>
 </section>
 <section id="adaptive-position-drifting-apd">
 <h3>2.1.3 <strong>Adaptive Position Drifting (APD)</strong><a class="headerlink" href="#adaptive-position-drifting-apd" title="Link to this heading">#</a></h3>
 <p>To avoid rigid Gaussian placements at LR grid centers, the model learns <strong>dynamic position offsets</strong> from LR image features:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 P_{\text{final}} = P_{\text{init}} + \tanh(\text{MLP}(F_{LR}))
-$$</p>
+\]</div>
 <p>This enables the model to adaptively shift Gaussians toward textured or edge-rich regions, improving structural accuracy and expressiveness.</p>
 <p>Together, DGP, DDCW, and APD allow robust, efficient modeling of Gaussian fields from LR images while avoiding the instability of naive direct prediction.</p>
 </section>
@@ -448,7 +519,7 @@ $$</p>
 [3] Cao et al. “CiaoSR: Continuous Implicit Attention-in-Attention Network for ASSR.” CVPR, 2023.<br />
 [4] Zhang et al. “GaussianImage: High-Fidelity 2D Gaussian Splatting for SR.” ECCV, 2024.</p>
 </section>
-<section id="demo">
+<section class="tex2jax_ignore mathjax_ignore" id="demo">
 <h1>Demo<a class="headerlink" href="#demo" title="Link to this heading">#</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
 

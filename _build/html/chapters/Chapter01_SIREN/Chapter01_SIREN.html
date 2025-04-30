@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter01_SIREN/Chapter01_SIREN';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -218,6 +220,70 @@
 
 
 
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter01_SIREN/Chapter01_SIREN.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter01_SIREN/Chapter01_SIREN.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-download-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
@@ -373,12 +439,13 @@ Corresponding Code: ../../../../code/NeRF/siren-master/explore_siren.ipynb</p>
 Traditional representations are typically discrete, such as pixel grids for images or voxel grids for 3D shapes.<br />
 However, these discrete formats suffer from issues like high memory usage, limited resolution, and difficulty in computing derivatives.</p>
 <p>Recently, <strong>implicit neural representations (INRs)</strong> have emerged as a powerful alternative.<br />
-Instead of storing signals explicitly, they use neural networks to map coordinates $x$ (e.g., spatial or spatiotemporal) directly to signal values $\Phi(x)$.</p>
-<p>For example, in many physical problems, we aim to learn a function $\Phi$ that satisfies:</p>
-<p>$$
+Instead of storing signals explicitly, they use neural networks to map coordinates <span class="math notranslate nohighlight">\(x\)</span> (e.g., spatial or spatiotemporal) directly to signal values <span class="math notranslate nohighlight">\(\Phi(x)\)</span>.</p>
+<p>For example, in many physical problems, we aim to learn a function <span class="math notranslate nohighlight">\(\Phi\)</span> that satisfies:</p>
+<div class="math notranslate nohighlight">
+\[
 F(x, \Phi(x), \nabla_x \Phi(x), \nabla^2_x \Phi(x), \ldots) = 0
 \tag{1}
-$$</p>
+\]</div>
 <p>This includes problems in physics, imaging, graphics, and differential equations.</p>
 <p>Most existing INR methods are built on ReLU-based MLPs. While these can fit low-frequency components, they <strong>struggle with high-frequency signals</strong> and <strong>fail to represent higher-order derivatives</strong> well — which are essential for many physical systems.</p>
 <hr class="docutils" />
@@ -386,33 +453,36 @@ $$</p>
 <section id="the-core-idea">
 <h1>3. The Core Idea<a class="headerlink" href="#the-core-idea" title="Link to this heading">#</a></h1>
 <p>This paper introduces <strong>SIREN (Sinusoidal Representation Networks)</strong>, a neural network architecture that uses the sine function as its activation:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \phi_i(x_i) = \sin(W_i x_i + b_i)
-$$</p>
+\]</div>
 <p>A full SIREN network is:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \Phi(x) = W_n \cdot (\phi_{n-1} \circ \phi_{n-2} \circ \cdots \circ \phi_0)(x) + b_n
 \tag{4}
-$$</p>
+\]</div>
 <p>The key advantage is that <strong>any derivative of a sine is also a sine or cosine</strong>, which preserves expressiveness through derivatives.<br />
 This makes SIREN particularly powerful for modeling natural signals <strong>and</strong> their derivatives — such as gradients and Laplacians.</p>
 <p>They define a general optimization objective to solve constraint problems of the form:
-$$
+$<span class="math notranslate nohighlight">\(
 \begin{aligned}
-&amp; \text{Find } \Phi(x) \text{ such that} \
-&amp; C_m\left(a(x), \Phi(x), \nabla \Phi(x), \ldots\right) = 0, \
+&amp; \text{Find } \Phi(x) \text{ such that} \\
+&amp; C_m\left(a(x), \Phi(x), \nabla \Phi(x), \ldots\right) = 0, \\
 &amp; \forall x \in \Omega_m,\quad m=1,\ldots,M
 \end{aligned}
-$$</p>
+\)</span>$</p>
 <p>The corresponding loss function is:</p>
-<p>$$
-\mathcal{L} = \int_\Omega \sum_{m=1}^M \mathbf{1}_{\Omega_m}(x) \left| C_m(a(x), \Phi(x), \nabla \Phi(x), \ldots) \right| dx
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L} = \int_\Omega \sum_{m=1}^M \mathbf{1}_{\Omega_m}(x) \left\| C_m(a(x), \Phi(x), \nabla \Phi(x), \ldots) \right\| dx
 \tag{3}
-$$</p>
+\]</div>
 <p>The authors further propose a <strong>principled initialization scheme</strong> for SIREN:</p>
 <ul class="simple">
-<li><p>Weights $W_i$ are sampled from $U\left(-\sqrt{\frac{6}{n}}, \sqrt{\frac{6}{n}}\right)$</p></li>
-<li><p>The first layer uses a higher frequency $\omega_0 = 30$ to match the spectrum of natural signals</p></li>
+<li><p>Weights <span class="math notranslate nohighlight">\(W_i\)</span> are sampled from <span class="math notranslate nohighlight">\(U\left(-\sqrt{\frac{6}{n}}, \sqrt{\frac{6}{n}}\right)\)</span></p></li>
+<li><p>The first layer uses a higher frequency <span class="math notranslate nohighlight">\(\omega_0 = 30\)</span> to match the spectrum of natural signals</p></li>
 </ul>
 <p>This ensures stability in training and allows SIRENs to scale deeper without vanishing or exploding gradients.</p>
 <hr class="docutils" />
@@ -427,7 +497,7 @@ $$</p>
 <li><p>David Ha et al., <em>Hypernetworks</em>, ICLR 2017</p></li>
 </ol>
 </section>
-<section id="siren-explained-and-reproduced-theory-code-and-practice">
+<section class="tex2jax_ignore mathjax_ignore" id="siren-explained-and-reproduced-theory-code-and-practice">
 <h1>SIREN Explained and Reproduced: Theory, Code, and Practice<a class="headerlink" href="#siren-explained-and-reproduced-theory-code-and-practice" title="Link to this heading">#</a></h1>
 <p>My implementation is based on the streamlined version of SIREN provided in the official Colab notebook: <a class="reference external" href="https://vsitzmann.github.io/siren">Implicit Neural Activations with Periodic Activation Functions</a>, with modifications and additional explanations to better integrate theoretical insights from the paper.</p>
 <p><strong>Make sure that you have enabled the GPU under Edit -&gt; Notebook Settings!</strong></p>
@@ -506,14 +576,14 @@ $$</p>
     
 </pre></div>
 </div>
-<p>For a 256×256 image, each pixel corresponds to a 2D coordinate, so the input <code class="docutils literal notranslate"><span class="pre">coords</span></code> has shape $(1, 65536, 2)$. After passing through the network, the output shape becomes $(1, 65536, 1)$, representing the predicted signal (e.g., color or intensity) at each coordinate.</p>
-<p>In each <code class="docutils literal notranslate"><span class="pre">SineLayer</span></code>, the input first goes through a linear transformation and is then scaled by $\omega_0$ before applying the sine activation. The $\omega_0$ controls the frequency of the sine function: a larger $\omega_0$ enables the network to capture higher-frequency details in the data.</p>
+<p>For a 256×256 image, each pixel corresponds to a 2D coordinate, so the input <code class="docutils literal notranslate"><span class="pre">coords</span></code> has shape <span class="math notranslate nohighlight">\((1, 65536, 2)\)</span>. After passing through the network, the output shape becomes <span class="math notranslate nohighlight">\((1, 65536, 1)\)</span>, representing the predicted signal (e.g., color or intensity) at each coordinate.</p>
+<p>In each <code class="docutils literal notranslate"><span class="pre">SineLayer</span></code>, the input first goes through a linear transformation and is then scaled by <span class="math notranslate nohighlight">\(\omega_0\)</span> before applying the sine activation. The <span class="math notranslate nohighlight">\(\omega_0\)</span> controls the frequency of the sine function: a larger <span class="math notranslate nohighlight">\(\omega_0\)</span> enables the network to capture higher-frequency details in the data.</p>
 <section id="notes-on-input-coordinates-omega-and-activation">
 <h2>Notes on Input Coordinates, Omega, and Activation<a class="headerlink" href="#notes-on-input-coordinates-omega-and-activation" title="Link to this heading">#</a></h2>
-<p>In each <code class="docutils literal notranslate"><span class="pre">SineLayer</span></code>, the activation is defined as <code class="docutils literal notranslate"><span class="pre">torch.sin(self.omega_0</span> <span class="pre">*</span> <span class="pre">self.linear(input))</span></code>. The input <code class="docutils literal notranslate"><span class="pre">coords</span></code> are sampled from $[-1, 1]$. The frequency factor $\omega_0$ scales the output of the linear layer before applying the sine function:</p>
+<p>In each <code class="docutils literal notranslate"><span class="pre">SineLayer</span></code>, the activation is defined as <code class="docutils literal notranslate"><span class="pre">torch.sin(self.omega_0</span> <span class="pre">*</span> <span class="pre">self.linear(input))</span></code>. The input <code class="docutils literal notranslate"><span class="pre">coords</span></code> are sampled from <span class="math notranslate nohighlight">\([-1, 1]\)</span>. The frequency factor <span class="math notranslate nohighlight">\(\omega_0\)</span> scales the output of the linear layer before applying the sine function:</p>
 <ul class="simple">
-<li><p>A <strong>larger</strong> $\omega_0$ amplifies the pre-activation values, meaning a small change in the input coordinate leads to a large change in the sine input, resulting in rapid oscillations. This makes the network highly sensitive to fine, high-frequency features.</p></li>
-<li><p>A <strong>smaller</strong> $\omega_0$ causes smoother oscillations, favoring the modeling of low-frequency, slowly varying structures.</p></li>
+<li><p>A <strong>larger</strong> <span class="math notranslate nohighlight">\(\omega_0\)</span> amplifies the pre-activation values, meaning a small change in the input coordinate leads to a large change in the sine input, resulting in rapid oscillations. This makes the network highly sensitive to fine, high-frequency features.</p></li>
+<li><p>A <strong>smaller</strong> <span class="math notranslate nohighlight">\(\omega_0\)</span> causes smoother oscillations, favoring the modeling of low-frequency, slowly varying structures.</p></li>
 </ul>
 <p>Here, <code class="docutils literal notranslate"><span class="pre">torch.sin</span></code> serves as the activation function, introducing periodic nonlinearity after each linear transformation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Siren</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -600,7 +670,7 @@ $$</p>
 </div>
 </section>
 </section>
-<section id="experiments">
+<section class="tex2jax_ignore mathjax_ignore" id="experiments">
 <h1>Experiments<a class="headerlink" href="#experiments" title="Link to this heading">#</a></h1>
 <p>For the image fitting and poisson experiments, we’ll use the classic cameraman image.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_cameraman_tensor</span><span class="p">(</span><span class="n">sidelength</span><span class="p">):</span>
@@ -618,10 +688,10 @@ $$</p>
 <section id="fitting-an-image">
 <h2>Fitting an image<a class="headerlink" href="#fitting-an-image" title="Link to this heading">#</a></h2>
 <p>First, let’s simply fit that image!</p>
-<p>We seek to parameterize a greyscale image $f(x)$ with pixel coordinates $x$ with a SIREN $\Phi(x)$.</p>
-<p>That is we seek the function $\Phi$ such that:
-$\mathcal{L}=\int_{\Omega} \lVert \Phi(\mathbf{x}) - f(\mathbf{x}) \rVert\mathrm{d}\mathbf{x}$
-is minimized, in which $\Omega$ is the domain of the image.</p>
+<p>We seek to parameterize a greyscale image <span class="math notranslate nohighlight">\(f(x)\)</span> with pixel coordinates <span class="math notranslate nohighlight">\(x\)</span> with a SIREN <span class="math notranslate nohighlight">\(\Phi(x)\)</span>.</p>
+<p>That is we seek the function <span class="math notranslate nohighlight">\(\Phi\)</span> such that:
+<span class="math notranslate nohighlight">\(\mathcal{L}=\int_{\Omega} \lVert \Phi(\mathbf{x}) - f(\mathbf{x}) \rVert\mathrm{d}\mathbf{x}\)</span>
+is minimized, in which <span class="math notranslate nohighlight">\(\Omega\)</span> is the domain of the image.</p>
 <p>We write a little datast that does nothing except calculating per-pixel coordinates:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ImageFitting</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sidelength</span><span class="p">):</span>
@@ -727,8 +797,8 @@ is minimized, in which $\Omega$ is the domain of the image.</p>
 <section id="fitting-an-audio-signal">
 <h2>Fitting an audio signal<a class="headerlink" href="#fitting-an-audio-signal" title="Link to this heading">#</a></h2>
 <p><a id='section_2'></a></p>
-<p>Here, we’ll use Siren to parameterize an audio signal - i.e., we seek to parameterize an audio waverform $f(t)$  at time points $t$ by a SIREN $\Phi$.</p>
-<p>That is we seek the function $\Phi$ such that:  $\mathcal{L}\int_\Omega \lVert \Phi(t) - f(t) \rVert \mathrm{d}t$  is minimized, in which  $\Omega$  is the domain of the waveform.</p>
+<p>Here, we’ll use Siren to parameterize an audio signal - i.e., we seek to parameterize an audio waverform <span class="math notranslate nohighlight">\(f(t)\)</span>  at time points <span class="math notranslate nohighlight">\(t\)</span> by a SIREN <span class="math notranslate nohighlight">\(\Phi\)</span>.</p>
+<p>That is we seek the function <span class="math notranslate nohighlight">\(\Phi\)</span> such that:  <span class="math notranslate nohighlight">\(\mathcal{L}\int_\Omega \lVert \Phi(t) - f(t) \rVert \mathrm{d}t\)</span>  is minimized, in which  <span class="math notranslate nohighlight">\(\Omega\)</span>  is the domain of the waveform.</p>
 <p>For the audio, we’ll use the bach sonata:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.io.wavfile</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wavfile</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
@@ -759,7 +829,7 @@ is minimized, in which $\Omega$ is the domain of the image.</p>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">timepoints</span><span class="p">,</span> <span class="n">amplitude</span>
 </pre></div>
 </div>
-<p>Let’s instantiate the Siren. As this audio signal has a much higer spatial frequency on the range of -1 to 1, we increase the $\omega_0$ in the first layer of siren.</p>
+<p>Let’s instantiate the Siren. As this audio signal has a much higer spatial frequency on the range of -1 to 1, we increase the <span class="math notranslate nohighlight">\(\omega_0\)</span> in the first layer of siren.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bach_audio</span> <span class="o">=</span> <span class="n">AudioFile</span><span class="p">(</span><span class="s1">&#39;gt_bach.wav&#39;</span><span class="p">)</span>
 
 <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">bach_audio</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -814,9 +884,9 @@ is minimized, in which $\Omega$ is the domain of the image.</p>
 <section id="solving-poisson-s-equation">
 <h2>Solving Poisson’s equation<a class="headerlink" href="#solving-poisson-s-equation" title="Link to this heading">#</a></h2>
 <p>Now, let’s make it a bit harder. Let’s say we want to reconstruct an image but we only have access to its gradients!</p>
-<p>That is, we now seek the function $\Phi$ such that:
-$\mathcal{L}=\int_{\Omega} \lVert \nabla\Phi(\mathbf{x}) - \nabla f(\mathbf{x}) \rVert\mathrm{d}\mathbf{x}$
-is minimized, in which $\Omega$ is the domain of the image.</p>
+<p>That is, we now seek the function <span class="math notranslate nohighlight">\(\Phi\)</span> such that:
+<span class="math notranslate nohighlight">\(\mathcal{L}=\int_{\Omega} \lVert \nabla\Phi(\mathbf{x}) - \nabla f(\mathbf{x}) \rVert\mathrm{d}\mathbf{x}\)</span>
+is minimized, in which <span class="math notranslate nohighlight">\(\Omega\)</span> is the domain of the image.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.ndimage</span>
     
 <span class="k">class</span><span class="w"> </span><span class="nc">PoissonEqn</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
