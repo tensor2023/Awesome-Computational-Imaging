@@ -57,19 +57,19 @@ git commit -m "🔖 Save current files before deploy" || echo "⚠️ No changes
 
 
 
-# echo "✅ All .md and *_files copied to $BOOK_DIR/chapters"
+echo "✅ All .md and *_files copied to $BOOK_DIR/chapters"
 
-# # === 3. 确保 intro.md 存在 ===
-# if [[ ! -s "$BOOK_DIR/intro.md" ]]; then
-#     echo "# $REPO_NAME" > "$BOOK_DIR/intro.md"
-#     echo "✅ Auto-generated intro.md"
-# fi
+# === 3. 确保 intro.md 存在 ===
+if [[ ! -s "$BOOK_DIR/intro.md" ]]; then
+    echo "# $REPO_NAME" > "$BOOK_DIR/intro.md"
+    echo "✅ Auto-generated intro.md"
+fi
 
-# # === 4. 检查 TOC 文件是否存在 ===
-# if [[ ! -f "$TOC_FILE" ]]; then
-#     echo "❌ Error: _toc.yml not found at $TOC_FILE"
-#     exit 1
-# fi
+# === 4. 检查 TOC 文件是否存在 ===
+if [[ ! -f "$TOC_FILE" ]]; then
+    echo "❌ Error: _toc.yml not found at $TOC_FILE"
+    exit 1
+fi
 
 # === 5. 生成 HTML 页面 ===
 echo "🧹 Cleaning old build..."

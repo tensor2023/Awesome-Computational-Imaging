@@ -25,7 +25,7 @@ Traditional reconstruction methods, like Tikhonov regularization or deep CNNs tr
 
 This paper proposes **DeCAF** — a novel **Neural Field-based** method that learns a continuous representation of the 3D complex refractive index from intensity-only measurements **without requiring any ground-truth RI maps**.
 
-The core idea is to represent the RI volume using a **coordinate-based MLP** that maps spatial coordinates $(x, y, z)$ to complex-valued permittivity contrast $\Delta \epsilon = \Delta \epsilon_{\text{re}} + j \Delta \epsilon_{\text{im}}$, from which refractive index is derived.
+The Core Idea is to represent the RI volume using a **coordinate-based MLP** that maps spatial coordinates $(x, y, z)$ to complex-valued permittivity contrast $\Delta \epsilon = \Delta \epsilon_{\text{re}} + j \Delta \epsilon_{\text{im}}$, from which refractive index is derived.
 
 ### Mathematical Formulation:
 

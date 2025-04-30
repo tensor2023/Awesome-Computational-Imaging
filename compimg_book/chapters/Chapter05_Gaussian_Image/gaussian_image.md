@@ -20,7 +20,7 @@ Notable methods like SIREN [1] and WIRE [2] show impressive results in terms of 
 
 To address some of these issues, grid-based INRs like I-NGP [3] and NeuRBF [4] use multi-resolution feature grids to speed up training, but they still require large memory and are not suitable for real-time deployment.
 
-Recently, 3D Gaussian Splatting [5] has been proposed in the context of 3D scene reconstruction, providing fast and visually high-quality rendering by explicitly modeling 3D Gaussians. This work inspires the core idea of **GaussianImage**, which brings this approach to **2D image representation and compression**.
+Recently, 3D Gaussian Splatting [5] has been proposed in the context of 3D scene reconstruction, providing fast and visually high-quality rendering by explicitly modeling 3D Gaussians. This work inspires The Core Idea of **GaussianImage**, which brings this approach to **2D image representation and compression**.
 
 ---
 

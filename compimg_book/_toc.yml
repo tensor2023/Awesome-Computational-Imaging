@@ -1,135 +1,59 @@
 format: jb-book
 root: index.md
-#只影响网站目录结构，不管你本地的实际文件夹
+
 parts:
   - caption: Chapter01_SIREN
     chapters:
-      - file: chapters/Chapter01_SIREN/explore_siren
-        title: Explore SIREN
-      - file: chapters/Chapter01_SIREN/README
-        title: Overview
-      - file: chapters/Chapter01_SIREN/SIREN
-        title: SIREN Core
-      - file: chapters/Chapter01_SIREN/siren_notes
-        title: SIREN Notes
+      - file: Chapter01_SIREN/Chapter01_SIREN
 
   - caption: Chapter02_NeRF
     chapters:
-      - file: chapters/Chapter02_NeRF/nerf
-        title: NeRF
-      - file: chapters/Chapter02_NeRF/nerf_notes
-        title: NeRF Notes
-      - file: chapters/Chapter02_NeRF/nerf_render_only
-        title: NeRF Render Only
-      - file: chapters/Chapter02_NeRF/README
-        title: Overview
+      - file: Chapter02_NeRF/Chapter02_NeRF
 
   - caption: Chapter03_FourierFeatures
     chapters:
-      - file: chapters/Chapter03_FourierFeatures/fourier_features
-        title: Fourier Features
-      - file: chapters/Chapter03_FourierFeatures/fourier_features_merged
-        title: Merged Fourier Features
-      - file: chapters/Chapter03_FourierFeatures/fourier_features_notes
-        title: Notes
-      - file: chapters/Chapter03_FourierFeatures/README
-        title: Overview
+      - file: Chapter03_FourierFeatures/Chapter03_FourierFeatures
 
   - caption: Chapter04_3D_Gaussian_Splatting
     chapters:
-      - file: chapters/Chapter04_3D_Gaussian_Splatting/3DGS
-        title: 3D Gaussian Splatting
-      - file: chapters/Chapter04_3D_Gaussian_Splatting/3DGS_merged
-        title: Merged 3DGS
-      - file: chapters/Chapter04_3D_Gaussian_Splatting/notes
-        title: Notes
-      - file: chapters/Chapter04_3D_Gaussian_Splatting/README
-        title: Overview
+      - file: Chapter04_3D_Gaussian_Splatting/Chapter04_3D_Gaussian_Splatting
 
   - caption: Chapter05_Gaussian_Image
     chapters:
-      - file: chapters/Chapter05_Gaussian_Image/gaussian_image
-        title: Gaussian Image
-      - file: chapters/Chapter05_Gaussian_Image/notes
-        title: Notes
-      - file: chapters/Chapter05_Gaussian_Image/README
-        title: Overview
+      - file: Chapter05_Gaussian_Image/Chapter05_Gaussian_Image
 
   - caption: Chapter06_Pixel2Gaussian
     chapters:
-      - file: chapters/Chapter06_Pixel2Gaussian/notes
-        title: Notes
-      - file: chapters/Chapter06_Pixel2Gaussian/pixel2gaussian
-        title: Pixel2Gaussian
-      - file: chapters/Chapter06_Pixel2Gaussian/README
-        title: Overview
+      - file: Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian
 
   - caption: Chapter07_FPM_INR
     chapters:
-      - file: chapters/Chapter07_FPM_INR/fpm_inr
-        title: FPM-INR
-      - file: chapters/Chapter07_FPM_INR/notes
-        title: Notes
-      - file: chapters/Chapter07_FPM_INR/README
-        title: Overview
+      - file: Chapter07_FPM_INR/Chapter07_FPM_INR
 
   - caption: Chapter08_DeCAF
     chapters:
-      - file: chapters/Chapter08_DeCAF/decaf
-        title: DeCAF
-      - file: chapters/Chapter08_DeCAF/notes
-        title: Notes
-      - file: chapters/Chapter08_DeCAF/README
-        title: Overview
+      - file: Chapter08_DeCAF/Chapter08_DeCAF
 
   - caption: Chapter09_Neural_SpaceTime
     chapters:
-      - file: chapters/Chapter09_Neural_SpaceTime/neural_spacetime
-        title: Neural SpaceTime
-      - file: chapters/Chapter09_Neural_SpaceTime/notes
-        title: Notes
-      - file: chapters/Chapter09_Neural_SpaceTime/README
-        title: Overview
+      - file: Chapter09_Neural_SpaceTime/Chapter09_Neural_SpaceTime
 
   - caption: Chapter10_DDPM
     chapters:
-      - file: chapters/Chapter10_DDPM/ddpm_blog_intro
-        title: DDPM Intro
-      - file: chapters/Chapter10_DDPM/notes
-        title: Notes
-      - file: chapters/Chapter10_DDPM/README
-        title: Overview
+      - file: Chapter10_DDPM/Chapter10_DDPM
 
-  - caption: Chapter10_DPS
+  - caption: Chapter11_DPS
     chapters:
-      - file: chapters/Chapter10_DPS/DPS
-        title: DPS
-      - file: chapters/Chapter10_DPS/notes
-        title: Notes
-      - file: chapters/Chapter10_DPS/README
-        title: Overview
+      - file: Chapter11_DPS/Chapter11_DPS
 
-  - caption: Chapter11_ScoreDiffusion
+  - caption: Chapter12_ScoreDiffusion
     chapters:
-      - file: chapters/Chapter11_ScoreDiffusion/notes
-        title: Notes
-      - file: chapters/Chapter11_ScoreDiffusion/README
-        title: Overview
+      - file: Chapter12_ScoreDiffusion/Chapter12_ScoreDiffusion
 
-  - caption: Chapter12_PlugAndPlay
+  - caption: Chapter13_PlugAndPlay
     chapters:
-      - file: chapters/Chapter12_PlugAndPlay/notes
-        title: Notes
-      - file: chapters/Chapter12_PlugAndPlay/Plug-and-Play_Priors_Intro
-        title: Plug-and-Play Priors Intro
-      - file: chapters/Chapter12_PlugAndPlay/PnP-HQS
-        title: PnP-HQS
-      - file: chapters/Chapter12_PlugAndPlay/README
-        title: Overview
+      - file: Chapter13_PlugAndPlay/Chapter13_PlugAndPlay
 
-  - caption: Chapter13_PnP-DM
+  - caption: Chapter14_PnP-DM
     chapters:
-      - file: chapters/Chapter13_PnP-DM/notes
-        title: Notes
-      - file: chapters/Chapter13_PnP-DM/README
-        title: Overview
+      - file: Chapter14_PnP-DM/Chapter14_PnP-DM

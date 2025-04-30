@@ -33,7 +33,7 @@ This mapping allows an MLP to represent functions with **higher frequency conten
 In this blog, we will explore:
 
 1. **Background** on coordinate-based MLPs and spectral bias  
-2. **The core idea** of Fourier feature mappings and their theoretical basis via NTK  
+2. **The Core Idea** of Fourier feature mappings and their theoretical basis via NTK  
 3. **The contributions** of this paper to the graphics and vision community
 
 ---
