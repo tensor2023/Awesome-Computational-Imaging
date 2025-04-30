@@ -27,7 +27,7 @@ To address these limitations, this paper introduces a new framework called **FPM
 
 ## 2. The Core Idea
 
-The core idea behind **FPM-INR** is to parameterize a 3D image stack using a small neural network and a low-rank feature volume, then optimize both by fitting a physical forward model that simulates how FPM images are generated.
+The Core Idea behind **FPM-INR** is to parameterize a 3D image stack using a small neural network and a low-rank feature volume, then optimize both by fitting a physical forward model that simulates how FPM images are generated.
 
 ### Forward Model
 
