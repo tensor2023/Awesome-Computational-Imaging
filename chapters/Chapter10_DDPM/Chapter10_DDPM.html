@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -171,7 +171,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../index.html">
-                    Contents
+                    Awesome Computational Imaging
                 </a>
             </li>
         </ul>
@@ -237,6 +237,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter10_DDPM</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">From Paper to Code: Understanding and Reproducing “Denoising Diffusion Probabilistic Models”</a></li>
+
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Chapter11_DPS</span></p>
@@ -485,8 +486,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-forward-and-p-losses-for-training">🧪 Code: <code class="docutils literal notranslate"><span class="pre">forward()</span></code> and <code class="docutils literal notranslate"><span class="pre">p_losses()</span></code> for Training</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributions">Contributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
 </li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">Demo</a></li>
 </ul>
 
             </nav>
@@ -677,64 +681,60 @@ L_{\text{simple}}(\theta) = \mathbb{E}_{t,x_0,\varepsilon} \left[ \left\| \varep
 \left\| \varepsilon - \varepsilon_\theta\left(x_t, t\right) \right\|^2
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsilon\)</span>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-## Contributions
+</section>
+</section>
+<section id="contributions">
+<h2>Contributions<a class="headerlink" href="#contributions" title="Link to this heading">#</a></h2>
+<p>The main contributions of this paper are:</p>
+<ol class="arabic simple">
+<li><p>Noise Prediction Parameterization: Instead of predicting the denoised image, the model predicts the noise added during diffusion, making training more stable and effective.</p></li>
+<li><p>Simplified Training Objective: The authors propose a training loss that is simple to implement and closely related to denoising score matching.</p></li>
+<li><p>High-Quality Image Synthesis: The model achieves state-of-the-art results on datasets like CIFAR-10 and LSUN, outperforming many GAN-based models.</p></li>
+<li><p>Progressive Sampling Interpretation: The sampling process can be viewed as a form of progressive decoding, providing a new perspective on how diffusion models generate data.</p></li>
+</ol>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<p>[1] Goodfellow et al., 2014. <em>Generative Adversarial Networks (GANs)</em><br />
+[2] Kingma and Welling, 2013. <em>Auto-Encoding Variational Bayes</em><br />
+[3] Dinh et al., 2016. <em>Real NVP</em><br />
+[4] Sohl-Dickstein et al., 2015. <em>Deep Unsupervised Learning using Nonequilibrium Thermodynamics</em><br />
+[5] Ho et al., 2020. <em>Denoising Diffusion Probabilistic Models</em></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="demo">
+<h1>Demo<a class="headerlink" href="#demo" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current working directory:&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+<span class="n">target_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;../../../code/Inv/denoising-diffusion-pytorch-main&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Appending path:&quot;</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
 
-The main contributions of this paper are:
+<span class="c1">#An example of a diffusion model</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">denoising_diffusion_pytorch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Unet</span><span class="p">,</span> <span class="n">GaussianDiffusion</span>
 
-1. Noise Prediction Parameterization: Instead of predicting the denoised image, the model predicts the noise added during diffusion, making training more stable and effective.
+<span class="n">model</span> <span class="o">=</span> <span class="n">Unet</span><span class="p">(</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="n">dim_mults</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+    <span class="n">flash_attn</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span>
 
-2. Simplified Training Objective: The authors propose a training loss that is simple to implement and closely related to denoising score matching.
+<span class="n">diffusion</span> <span class="o">=</span> <span class="n">GaussianDiffusion</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">image_size</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="n">timesteps</span> <span class="o">=</span> <span class="mi">1000</span>    <span class="c1"># number of steps</span>
+<span class="p">)</span>
 
-3. High-Quality Image Synthesis: The model achieves state-of-the-art results on datasets like CIFAR-10 and LSUN, outperforming many GAN-based models.
+<span class="n">training_images</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span> <span class="c1"># images are normalized from 0 to 1</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">diffusion</span><span class="p">(</span><span class="n">training_images</span><span class="p">)</span>
+<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 
-4. Progressive Sampling Interpretation: The sampling process can be viewed as a form of progressive decoding, providing a new perspective on how diffusion models generate data.
+<span class="c1"># after a lot of training</span>
 
-
-## References
-
-[1] Goodfellow et al., 2014. *Generative Adversarial Networks (GANs)*  
-[2] Kingma and Welling, 2013. *Auto-Encoding Variational Bayes*  
-[3] Dinh et al., 2016. *Real NVP*  
-[4] Sohl-Dickstein et al., 2015. *Deep Unsupervised Learning using Nonequilibrium Thermodynamics*  
-[5] Ho et al., 2020. *Denoising Diffusion Probabilistic Models*
-
-
-# Demo
-
-
-```python
-import os
-import sys
-print(&quot;Current working directory:&quot;, os.getcwd())
-target_path = os.path.abspath(os.path.join(os.getcwd(), &quot;../../../code/Inv/denoising-diffusion-pytorch-main&quot;))
-print(&quot;Appending path:&quot;, target_path)
-sys.path.insert(0, target_path)
-
-#An example of a diffusion model
-import torch
-from denoising_diffusion_pytorch import Unet, GaussianDiffusion
-
-model = Unet(
-    dim = 64,
-    dim_mults = (1, 2, 4, 8),
-    flash_attn = True
-)
-
-diffusion = GaussianDiffusion(
-    model,
-    image_size = 128,
-    timesteps = 1000    # number of steps
-)
-
-training_images = torch.rand(8, 3, 128, 128) # images are normalized from 0 to 1
-loss = diffusion(training_images)
-loss.backward()
-
-# after a lot of training
-
-sampled_images = diffusion.sample(batch_size = 4)
-sampled_images.shape # (4, 3, 128, 128)
+<span class="n">sampled_images</span> <span class="o">=</span> <span class="n">diffusion</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">sampled_images</span><span class="o">.</span><span class="n">shape</span> <span class="c1"># (4, 3, 128, 128)</span>
 </pre></div>
 </div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Current working directory: /home/xqgao/2025/MIT/Awesome-Computational-Imaging/chapters/Chapter10_DDPM
@@ -756,8 +756,6 @@ sampling loop time step:   0%|          | 0/1000 [00:00&lt;?, ?it/s]
 torch.Size([4, 3, 128, 128])
 </pre></div>
 </div>
-</section>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -834,8 +832,11 @@ torch.Size([4, 3, 128, 128])
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-forward-and-p-losses-for-training">🧪 Code: <code class="docutils literal notranslate"><span class="pre">forward()</span></code> and <code class="docutils literal notranslate"><span class="pre">p_losses()</span></code> for Training</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributions">Contributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
 </li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">Demo</a></li>
 </ul>
 
   </nav></div>

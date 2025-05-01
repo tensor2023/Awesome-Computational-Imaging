@@ -197,7 +197,7 @@ $$
 $$
 
 where $x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsilon$.
-```
+
 
 ## Contributions
 
