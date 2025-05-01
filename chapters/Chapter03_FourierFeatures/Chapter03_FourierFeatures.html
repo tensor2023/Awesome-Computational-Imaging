@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains &#8212; Awesome Computational Imaging</title>
+    <title>From Paper to Code: Understanding and Reproducing “Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains” &#8212; Awesome Computational Imaging</title>
   
   
   
@@ -376,7 +376,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains</h1>
+    <h1>From Paper to Code: Understanding and Reproducing “Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains”</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,11 +386,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">Demo</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">From Paper to Code: Understanding and Reproducing “Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-reading-notes">Paper Reading Notes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#code-reproduction-with-explanation-train-and-test">Code Reproduction with Explanation: Train and Test</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-data">Set up data</a></li>
 </ul>
 </li>
@@ -411,27 +414,31 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="fourier-features-let-networks-learn-high-frequency-functions-in-low-dimensional-domains">
-<h1>Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains<a class="headerlink" href="#fourier-features-let-networks-learn-high-frequency-functions-in-low-dimensional-domains" title="Link to this heading">#</a></h1>
-<p><img alt="image.png" src="../../_images/image2.png" /></p>
+  <section id="from-paper-to-code-understanding-and-reproducing-fourier-features-let-networks-learn-high-frequency-functions-in-low-dimensional-domains">
+<h1>From Paper to Code: Understanding and Reproducing “Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains”<a class="headerlink" href="#from-paper-to-code-understanding-and-reproducing-fourier-features-let-networks-learn-high-frequency-functions-in-low-dimensional-domains" title="Link to this heading">#</a></h1>
+<p><img alt="image.png" src="../../_images/image2.png" />
+Code: <a class="reference external" href="https://bmild.github.io/fourfeat/">GitHub Repository</a>
+Source Code in My Repo: ../../../../code/NeRF/fourier-feature-networks-master/fourier-feature-networks-master/demo.py</p>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="paper-reading-notes">
+<h1>Paper Reading Notes<a class="headerlink" href="#paper-reading-notes" title="Link to this heading">#</a></h1>
 <section id="highlights">
-<h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
+<h2>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
 <p>Based on Neural Tangent Kernel(NTK) theory and Random Fourier Features (RFF), this paper maps input coordinates into a high-dimensional Fourier space to help neural networks capture high-frequency details, rather than just learning smooth, low-frequency patterns. The method is implemented in JAX for efficient kernel-level analysis and training.</p>
 </section>
 <section id="background">
-<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
-<p>In recent years, <strong>coordinate-based multilayer perceptrons (MLPs)</strong> have emerged as a powerful representation for continuous signals in computer vision and graphics. These MLPs take spatial coordinates (e.g., 2D <span class="math notranslate nohighlight">\((x, y)\)</span> or 3D <span class="math notranslate nohighlight">\((x, y, z)\)</span>) as inputs and output corresponding signal values, such as color, density, or occupancy. This method offers compactness and is well-suited for gradient-based learning, leading to impressive applications like NeRF (Mildenhall et al., 2020) and Occupancy Networks (Mescheder et al., 2019).
+<h2>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>In recent years, coordinate-based multilayer perceptrons (MLPs) have emerged as a powerful representation for continuous signals in computer vision and graphics. These MLPs take spatial coordinates (e.g., 2D <span class="math notranslate nohighlight">\((x, y)\)</span> or 3D <span class="math notranslate nohighlight">\((x, y, z)\)</span>) as inputs and output corresponding signal values, such as color, density, or occupancy. This method offers compactness and is well-suited for gradient-based learning, leading to impressive applications like NeRF (Mildenhall et al., 2020) and Occupancy Networks (Mescheder et al., 2019).
 <img alt="image.png" src="../../_images/image2.png" />
-However, a key limitation of standard MLPs is their <strong>spectral bias</strong>: they favor learning low-frequency functions and struggle to capture high-frequency details, a challenge described in several studies such as Rahaman et al. (2019) and Basri et al. (2020).</p>
-<p>To address this, the authors introduce <strong>Fourier feature mappings</strong>, inspired by <strong>random Fourier features</strong> from kernel theory (Rahimi &amp; Recht, 2007). By transforming the input coordinates via sinusoidal functions before passing them to the MLP, they effectively modify the network’s <strong>Neural Tangent Kernel (NTK)</strong> to become stationary and tunable, allowing the network to learn high-frequency components more efficiently.</p>
+However, a key limitation of standard MLPs is their spectral bias: they favor learning low-frequency functions and struggle to capture high-frequency details, a challenge described in several studies such as Rahaman et al. (2019) and Basri et al. (2020).</p>
+<p>To address this, the authors introduce Fourier feature mappings, inspired by random Fourier features from kernel theory (Rahimi &amp; Recht, 2007). By transforming the input coordinates via sinusoidal functions before passing them to the MLP, they effectively modify the network’s Neural Tangent Kernel (NTK) to become stationary and tunable, allowing the network to learn high-frequency components more efficiently.</p>
 <p>About NKT: https://www.inference.vc/neural-tangent-kernels-some-intuition-for-kernel-gradient-descent/
-When the width of a neural network tends to infinity, its training dynamics converge to those of a <strong>kernel regression</strong> model—specifically, one defined by the NTK. In this limit, the network behaves like a fixed linear model, and its entire training process can be understood analytically.
+When the width of a neural network tends to infinity, its training dynamics converge to those of a kernel regression model—specifically, one defined by the NTK. In this limit, the network behaves like a fixed linear model, and its entire training process can be understood analytically.
 Imagine you slightly change the network’s output at one input—how does that affect the output at another input? NTK quantifies this interaction. Mathematically, it’s the inner product of the gradients of the network’s output with respect to its parameters, taken at two different inputs.</p>
 </section>
 <section id="method-overview">
-<h1>3. Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h1>
-<p>This paper builds on the theory of the Neural Tangent Kernel (NTK) by projecting input coordinates into a high-dimensional space, making the network more sensitive to high-frequency details. The projected features must still preserve the original structure of the input, which is where <strong>kernel approximation</strong> comes into play.</p>
+<h2>3. Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h2>
+<p>This paper builds on the theory of the Neural Tangent Kernel (NTK) by projecting input coordinates into a high-dimensional space, making the network more sensitive to high-frequency details. The projected features must still preserve the original structure of the input, which is where kernel approximation comes into play.</p>
 <p>The projection is defined as:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -440,11 +447,12 @@ a_1 \cos(2\pi \mathbf{b}_1^T \mathbf{v}),\ a_1 \sin(2\pi \mathbf{b}_1^T \mathbf{
 \right]^T
 \]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\mathbf{v} \in \mathbb{R}^d\)</span> is the input coordinate, and each <span class="math notranslate nohighlight">\(\mathbf{b}_i \in \mathbb{R}^d\)</span> is a randomly sampled frequency vector from a Gaussian distribution. The function <span class="math notranslate nohighlight">\(\gamma(\mathbf{v})\)</span> maps <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> into a <span class="math notranslate nohighlight">\(2m\)</span>-dimensional space using sinusoidal components.</p>
-<p>As for kernel approximation, a classic example of a kernel is the <strong>Gaussian kernel</strong>, which can be thought of as a smooth, blurry function: the closer two inputs are, the more similar they are treated. This “blurring” effect encodes locality, allowing the model to emphasize nearby relationships while gradually ignoring distant ones. To efficiently approximate such kernels, the paper adopts Random Fourier Features (RFF). RFF is a method for mapping inputs into a feature space where the inner product approximates a shift-invariant kernel function, like the Gaussian. By sampling random frequencies from a specific distribution and applying sine and cosine functions, RFF enables the network to capture both low and high-frequency patterns without requiring expensive kernel matrix computations.</p>
+<p>As for kernel approximation, a classic example of a kernel is the Gaussian kernel, which can be thought of as a smooth, blurry function: the closer two inputs are, the more similar they are treated. This “blurring” effect encodes locality, allowing the model to emphasize nearby relationships while gradually ignoring distant ones. To efficiently approximate such kernels, the paper adopts Random Fourier Features (RFF). RFF is a method for mapping inputs into a feature space where the inner product approximates a shift-invariant kernel function, like the Gaussian. By sampling random frequencies from a specific distribution and applying sine and cosine functions, RFF enables the network to capture both low and high-frequency patterns without requiring expensive kernel matrix computations.</p>
 <p><a href="https://colab.research.google.com/github/tancik/fourier-feature-networks/blob/master/Demo.ipynb" target="_parent"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="demo">
-<h1>Demo<a class="headerlink" href="#demo" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="code-reproduction-with-explanation-train-and-test">
+<h1>Code Reproduction with Explanation: Train and Test<a class="headerlink" href="#code-reproduction-with-explanation-train-and-test" title="Link to this heading">#</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">imageio</span><span class="o">-</span><span class="n">ffmpeg</span>
 </pre></div>
 </div>
@@ -534,7 +542,7 @@ a_1 \cos(2\pi \mathbf{b}_1^T \mathbf{v}),\ a_1 \sin(2\pi \mathbf{b}_1^T \mathbf{
     <span class="n">init_fn</span><span class="p">,</span> <span class="n">apply_fn</span> <span class="o">=</span> <span class="n">make_network</span><span class="p">(</span><span class="o">*</span><span class="n">network_size</span><span class="p">)</span>
 
     <span class="n">model_pred</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">apply_fn</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">input_mapping</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">B</span><span class="p">)))</span>
-    <span class="n">model_loss</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">model_pred</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">model_loss</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">model_pred</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>  <span class="mi">2</span><span class="p">))</span>
     <span class="n">model_psnr</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">model_loss</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)))</span>
     <span class="n">model_grad_loss</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">grad</span><span class="p">(</span><span class="n">model_loss</span><span class="p">)(</span><span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
 
@@ -600,40 +608,6 @@ where each entry in <span class="math notranslate nohighlight">\(\mathbf B \in \
 <span class="n">outputs</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">B_dict</span><span class="p">):</span>
   <span class="n">outputs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">network_size</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iters</span><span class="p">,</span> <span class="n">B_dict</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
-
-ImportError                               Traceback (most recent call last)
-
-Cell In[5], line 19
-     17 # This should take about 2-3 minutes
-     18 outputs = {}
----&gt; 19 for k in tqdm(B_dict):
-     20   outputs[k] = train_model(network_size, learning_rate, iters, B_dict[k], train_data, test_data)
-
-
-File ~/anaconda3/envs/inr/lib/python3.12/site-packages/tqdm/notebook.py:234, in tqdm_notebook.__init__(self, *args, **kwargs)
-    232 unit_scale = 1 if self.unit_scale is True else self.unit_scale or 1
-    233 total = self.total * unit_scale if self.total else self.total
---&gt; 234 self.container = self.status_printer(self.fp, total, self.desc, self.ncols)
-    235 self.container.pbar = proxy(self)
-    236 self.displayed = False
-
-
-File ~/anaconda3/envs/inr/lib/python3.12/site-packages/tqdm/notebook.py:108, in tqdm_notebook.status_printer(_, total, desc, ncols)
-     99 # Fallback to text bar if there&#39;s no total
-    100 # DEPRECATED: replaced with an &#39;info&#39; style bar
-    101 # if not total:
-   (...)    105 
-    106 # Prepare IPython progress bar
-    107 if IProgress is None:  # #187 #451 #558 #872
---&gt; 108     raise ImportError(WARN_NOIPYW)
-    109 if total:
-    110     pbar = IProgress(min=0, max=total)
-
-
-ImportError: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
 </pre></div>
 </div>
 </section>
@@ -755,11 +729,14 @@ ImportError: IProgress not found. Please update jupyter and ipywidgets. See http
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">Demo</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">From Paper to Code: Understanding and Reproducing “Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-reading-notes">Paper Reading Notes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#code-reproduction-with-explanation-train-and-test">Code Reproduction with Explanation: Train and Test</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-data">Set up data</a></li>
 </ul>
 </li>

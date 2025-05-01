@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS &#8212; Awesome Computational Imaging</title>
+    <title>From Paper to Code: Understanding and Reproducing “DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS” &#8212; Awesome Computational Imaging</title>
   
   
   
@@ -376,7 +376,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS</h1>
+    <h1>From Paper to Code: Understanding and Reproducing “DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS”</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,27 +386,28 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">3.1 Goal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#posterior-sampling-formulation">3.2 Posterior sampling formulation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dps-sampling-rule">3.3 DPS Sampling Rule</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">From Paper to Code: Understanding and Reproducing “DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-reading-notes">Paper Reading Notes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">3.1 Goal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posterior-sampling-formulation">3.2 Posterior sampling formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dps-sampling-rule">3.3 DPS Sampling Rule</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-explanation-dps">Code Explanation — DPS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#code-reproduction-with-explanation-inference-via-dps-using-a-pretrained-dpm">Code Reproduction with Explanation: Inference via DPS using a Pretrained DPM</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-breakdown-p-sample-loop">🔧 Function Breakdown: <code class="docutils literal notranslate"><span class="pre">p_sample_loop()</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-loop-reverse-time-sampling">🔁 Main Loop: Reverse-Time Sampling</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diffusion-step">🎯 1. Standard Diffusion Step</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-measurement-based-guidance-key-difference">📡 2. Add Measurement-Based Guidance (Key Difference!)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detach-and-proceed">🧼 3. Detach and Proceed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-visualization">📊 4. Optional Visualization</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#return-final-result">✅ Return Final Result</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-loop-reverse-time-sampling">Main Loop: Reverse-Time Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diffusion-step">1. Standard Diffusion Step</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-measurement-based-guidance-key-difference">2. Add Measurement-Based Guidance (Key Difference!)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detach-and-proceed">3. Detach and Proceed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-visualization">4. Optional Visualization</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-differences-from-standard-diffusion-models">🧠 Summary of Differences from Standard Diffusion Models</a></li>
 </ul>
 </li>
 </ul>
@@ -421,34 +422,36 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="diffusion-posterior-sampling-for-general-noisy-inverse-problems">
-<h1>DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS<a class="headerlink" href="#diffusion-posterior-sampling-for-general-noisy-inverse-problems" title="Link to this heading">#</a></h1>
+  <section id="from-paper-to-code-understanding-and-reproducing-diffusion-posterior-sampling-for-general-noisy-inverse-problems">
+<h1>From Paper to Code: Understanding and Reproducing “DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS”<a class="headerlink" href="#from-paper-to-code-understanding-and-reproducing-diffusion-posterior-sampling-for-general-noisy-inverse-problems" title="Link to this heading">#</a></h1>
 <p><img alt="image.png" src="../../_images/image10.png" />
 Published in International Conference on Learning Representations (ICLR), 2023<br />
-Code: GitHub Repository https: //github.com/DPS2022/diffusion-posterior-sampling,
+Code: <a class="reference external" href="https://github.com/DPS2022/diffusion-posterior-sampling">GitHub Repository</a>,
 Source Code in My Repo: ../../../../code/Inv/diffusion-posterior-sampling-main/sample_condition.py</p>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="paper-reading-notes">
+<h1>Paper Reading Notes<a class="headerlink" href="#paper-reading-notes" title="Link to this heading">#</a></h1>
 <section id="highlights">
-<h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
-<p>Propose a guided diffusion sampling method tailored for solving general noisy inverse problems.</p>
+<h2>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
+<p>Proposed a guided diffusion sampling method tailored for solving general noisy inverse problems.</p>
 </section>
 <section id="background">
-<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<h2>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
 <p>Diffusion models (DMs) have recently shown great success in high-quality image generation, thanks to their ability to model complex data distributions through a sequence of denoising steps. One representative framework is Denoising Diffusion Probabilistic Models (DDPMs) [1], which learn to reverse a fixed forward noising process.</p>
-<p>However, these models are typically trained <strong>unconditionally</strong> or <strong>conditionally</strong> using label information or prompts (e.g., text). When applied to inverse problems like deblurring, inpainting, or super-resolution, these models face the challenge that:</p>
+<p>However, these models are typically trained unconditionally or conditionally using label information or prompts (e.g., text). When applied to inverse problems like deblurring, inpainting, or super-resolution, these models face the challenge that:</p>
 <ul class="simple">
-<li><p>The model is <strong>not aware</strong> of how the measurements (e.g., blurry or masked images) were generated.</p></li>
-<li><p>There is <strong>no direct way to sample from the posterior distribution</strong> <span class="math notranslate nohighlight">\(p(x|y)\)</span>, where <span class="math notranslate nohighlight">\(y\)</span> is the observed measurement.</p></li>
+<li><p>The model is not aware of how the measurements (e.g., blurry or masked images) were generated.</p></li>
+<li><p>There is no direct way to sample from the posterior distribution <span class="math notranslate nohighlight">\(p(x|y)\)</span>, where <span class="math notranslate nohighlight">\(y\)</span> is the observed measurement.</p></li>
 </ul>
 <p>Existing methods either retrain models with known measurement models (which is expensive and specific), or apply test-time optimization (which is slow and sometimes unstable).
 <img alt="image.png" src="../../_images/image10.png" /></p>
 </section>
 <section id="method-overview">
-<h1>3. Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h1>
-<p>This paper introduces <strong>Diffusion Posterior Sampling (DPS)</strong>, a general framework that combines the strength of diffusion models with classical Bayesian inference to solve <strong>arbitrary noisy inverse problems</strong>, without requiring retraining.</p>
+<h2>3. Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h2>
+<p>This paper introduces Diffusion Posterior Sampling (DPS), a general framework that combines the strength of diffusion models with classical Bayesian inference to solve arbitrary noisy inverse problems, without requiring retraining.</p>
 <section id="goal">
-<h2>3.1 Goal<a class="headerlink" href="#goal" title="Link to this heading">#</a></h2>
-<p>We want to sample from the <strong>posterior distribution</strong> <span class="math notranslate nohighlight">\(p(x|y)\)</span>, where:</p>
+<h3>3.1 Goal<a class="headerlink" href="#goal" title="Link to this heading">#</a></h3>
+<p>We want to sample from the posterior distribution <span class="math notranslate nohighlight">\(p(x|y)\)</span>, where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(x\)</span> is the clean data we want to recover,</p></li>
 <li><p><span class="math notranslate nohighlight">\(y\)</span> is the observed measurement (e.g., blurred, compressed, masked image),</p></li>
@@ -456,24 +459,24 @@ Source Code in My Repo: ../../../../code/Inv/diffusion-posterior-sampling-main/s
 </ul>
 </section>
 <section id="posterior-sampling-formulation">
-<h2>3.2 Posterior sampling formulation<a class="headerlink" href="#posterior-sampling-formulation" title="Link to this heading">#</a></h2>
+<h3>3.2 Posterior sampling formulation<a class="headerlink" href="#posterior-sampling-formulation" title="Link to this heading">#</a></h3>
 <p>We apply Bayes’ theorem:</p>
 <div class="highlight-math notranslate"><div class="highlight"><pre><span></span>p(x|y) \propto p(y|x) \cdot p(x)
 </pre></div>
 </div>
 <p>Here:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(p(x)\)</span> is the learned <strong>prior</strong> from the diffusion model.</p></li>
-<li><p><span class="math notranslate nohighlight">\(p(y|x)\)</span> comes from the <strong>measurement model</strong> <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(x)\)</span> is the learned prior from the diffusion model.</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(y|x)\)</span> comes from the measurement model <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
 </ul>
-<p>In the standard diffusion setup, the <strong>reverse process</strong> is modeled as:</p>
+<p>In the standard diffusion setup, the reverse process is modeled as:</p>
 <div class="highlight-math notranslate"><div class="highlight"><pre><span></span>p_\theta(x_{t-1}|x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))
 </pre></div>
 </div>
 <p>But to condition this process on <span class="math notranslate nohighlight">\(y\)</span>, DPS adds a correction based on the measurement log-likelihood <span class="math notranslate nohighlight">\(\nabla_{x_t} \log p(y|x_t)\)</span>.</p>
 </section>
 <section id="dps-sampling-rule">
-<h2>3.3 DPS Sampling Rule<a class="headerlink" href="#dps-sampling-rule" title="Link to this heading">#</a></h2>
+<h3>3.3 DPS Sampling Rule<a class="headerlink" href="#dps-sampling-rule" title="Link to this heading">#</a></h3>
 <p>At each step <span class="math notranslate nohighlight">\(t\)</span>, given a sample <span class="math notranslate nohighlight">\(x_t\)</span>, we update:</p>
 <div class="highlight-math notranslate"><div class="highlight"><pre><span></span>x_t \leftarrow x_t + \eta_t \nabla_{x_t} \log p(y|x_t)
 </pre></div>
@@ -483,11 +486,11 @@ Source Code in My Repo: ../../../../code/Inv/diffusion-posterior-sampling-main/s
 <div class="highlight-math notranslate"><div class="highlight"><pre><span></span>\log p(y|x) = -\| A(x) - y \|^2 / (2 \sigma^2)
 </pre></div>
 </div>
-<p>So the final update is a <strong>guided sampling</strong>:</p>
+<p>So the final update is a guided sampling:</p>
 <div class="highlight-math notranslate"><div class="highlight"><pre><span></span>x_t \leftarrow x_t + \eta_t \nabla_{x_t} \left[ -\| A(x_t) - y \|^2 \right]
 </pre></div>
 </div>
-<p>This allows us to <strong>plug in arbitrary forward models <span class="math notranslate nohighlight">\(A\)</span></strong>, such as:</p>
+<p>This allows us to plug in arbitrary forward models <span class="math notranslate nohighlight">\(A\)</span>, such as:</p>
 <ul class="simple">
 <li><p>masking (for inpainting),</p></li>
 <li><p>blurring (for deblurring),</p></li>
@@ -497,26 +500,27 @@ without retraining the diffusion model.</p></li>
 </section>
 </section>
 <section id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <p>[1] Ho, J., Jain, A., &amp; Abbeel, P. (2020). Denoising diffusion probabilistic models. <em>NeurIPS</em><br />
 [2] Song, Y., &amp; Ermon, S. (2020). Score-based generative modeling through stochastic differential equations. <em>ICLR</em><br />
 [3] Song, J., Meng, C., &amp; Ermon, S. (2023). Diffusion Posterior Sampling for General Noisy Inverse Problems. <em>ICLR</em></p>
-<section id="code-explanation-dps">
-<h2>Code Explanation — DPS<a class="headerlink" href="#code-explanation-dps" title="Link to this heading">#</a></h2>
-<p>This function implements <strong>sampling using a pretrained diffusion model</strong>, but with a key twist: it performs <strong>posterior-guided inference</strong> by incorporating measurement consistency.</p>
-<blockquote>
-<div><p>In contrast to standard diffusion models, which generate samples unconditionally (or conditionally on high-level information like text), <strong>DPS (Diffusion Posterior Sampling)</strong> adds a <em>gradient-based correction</em> at each denoising step to ensure that the output is consistent with an observed measurement <span class="math notranslate nohighlight">\(y = A(x) + n\)</span>.</p>
-</div></blockquote>
-<p>This is particularly useful for <strong>solving inverse problems</strong>, where we don’t just want to generate “realistic” images — we want to generate images that <strong>match what we observed</strong> under a known forward model <span class="math notranslate nohighlight">\(A\)</span>.</p>
 </section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="code-reproduction-with-explanation-inference-via-dps-using-a-pretrained-dpm">
+<h1>Code Reproduction with Explanation: Inference via DPS using a Pretrained DPM<a class="headerlink" href="#code-reproduction-with-explanation-inference-via-dps-using-a-pretrained-dpm" title="Link to this heading">#</a></h1>
+<p>This function implements sampling using a pretrained diffusion model, but with a key twist: it performs posterior-guided inference by incorporating measurement consistency.</p>
+<blockquote>
+<div><p>In contrast to standard diffusion models, which generate samples unconditionally (or conditionally on high-level information like text), DPS (Diffusion Posterior Sampling) adds a <em>gradient-based correction</em> at each denoising step to ensure that the output is consistent with an observed measurement <span class="math notranslate nohighlight">\(y = A(x) + n\)</span>.</p>
+</div></blockquote>
+<p>This is particularly useful for solving inverse problems, where we don’t just want to generate “realistic” images — we want to generate images that match what we observed under a known forward model <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <section id="function-breakdown-p-sample-loop">
 <h2>🔧 Function Breakdown: <code class="docutils literal notranslate"><span class="pre">p_sample_loop()</span></code><a class="headerlink" href="#function-breakdown-p-sample-loop" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">p_sample_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">measurement</span><span class="p">,</span> <span class="n">measurement_cond_fn</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">save_root</span><span class="p">):</span>
 </pre></div>
 </div>
-<p>This function starts from <strong>pure noise</strong> <code class="docutils literal notranslate"><span class="pre">x_start</span></code> and iteratively denoises it to obtain a final reconstruction <code class="docutils literal notranslate"><span class="pre">img</span></code>, guided by both the diffusion model and the observed measurement <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<p>This function starts from pure noise <code class="docutils literal notranslate"><span class="pre">x_start</span></code> and iteratively denoises it to obtain a final reconstruction <code class="docutils literal notranslate"><span class="pre">img</span></code>, guided by both the diffusion model and the observed measurement <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
 <section id="main-loop-reverse-time-sampling">
-<h3>🔁 Main Loop: Reverse-Time Sampling<a class="headerlink" href="#main-loop-reverse-time-sampling" title="Link to this heading">#</a></h3>
+<h3>Main Loop: Reverse-Time Sampling<a class="headerlink" href="#main-loop-reverse-time-sampling" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_timesteps</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
     <span class="n">time</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">idx</span><span class="p">]</span> <span class="o">*</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
@@ -529,21 +533,21 @@ without retraining the diffusion model.</p></li>
 </ul>
 </section>
 <section id="standard-diffusion-step">
-<h3>🎯 1. Standard Diffusion Step<a class="headerlink" href="#standard-diffusion-step" title="Link to this heading">#</a></h3>
+<h3>1. Standard Diffusion Step<a class="headerlink" href="#standard-diffusion-step" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_sample</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">img</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">time</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This step computes the standard <strong>reverse diffusion prediction</strong>, producing:</p>
+<p>This step computes the standard reverse diffusion prediction, producing:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">out['sample']</span></code>: the denoised sample <span class="math notranslate nohighlight">\(x_{t-1}\)</span></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">out['pred_xstart']</span></code>: estimated clean image <span class="math notranslate nohighlight">\(x_0\)</span></p></li>
 </ul>
 <blockquote>
-<div><p>🧠 This is identical to what a regular diffusion model does.</p>
+<div><p>This is identical to what a regular diffusion model does.</p>
 </div></blockquote>
 </section>
 <section id="add-measurement-based-guidance-key-difference">
-<h3>📡 2. Add Measurement-Based Guidance (Key Difference!)<a class="headerlink" href="#add-measurement-based-guidance-key-difference" title="Link to this heading">#</a></h3>
+<h3>2. Add Measurement-Based Guidance (Key Difference!)<a class="headerlink" href="#add-measurement-based-guidance-key-difference" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">noisy_measurement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_sample</span><span class="p">(</span><span class="n">measurement</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">time</span><span class="p">)</span>
 <span class="n">img</span><span class="p">,</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">measurement_cond_fn</span><span class="p">(</span>
     <span class="n">x_t</span><span class="o">=</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">],</span>
@@ -554,9 +558,9 @@ without retraining the diffusion model.</p></li>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>This is where <strong>DPS differs from standard diffusion</strong>:</p>
+<p>This is where DPS differs from standard diffusion:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">measurement_cond_fn</span></code> uses the <strong>forward model <span class="math notranslate nohighlight">\(A\)</span></strong> and the current output to compute a <strong>gradient correction</strong> that pulls <code class="docutils literal notranslate"><span class="pre">img</span></code> closer to satisfying <span class="math notranslate nohighlight">\(A(x) ≈ y\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">measurement_cond_fn</span></code> uses the forward model <span class="math notranslate nohighlight">\(A\)</span> and the current output to compute a gradient correction that pulls <code class="docutils literal notranslate"><span class="pre">img</span></code> closer to satisfying <span class="math notranslate nohighlight">\(A(x) ≈ y\)</span>.</p></li>
 <li><p>The update may look like:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_t</span> <span class="err">←</span> <span class="n">x_t</span> <span class="o">+</span> <span class="n">η_t</span> <span class="err">∇</span><span class="n">ₓ</span> <span class="n">log</span> <span class="n">p</span><span class="p">(</span><span class="n">y</span> <span class="o">|</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
@@ -566,51 +570,59 @@ without retraining the diffusion model.</p></li>
 </ul>
 </section>
 <section id="detach-and-proceed">
-<h3>🧼 3. Detach and Proceed<a class="headerlink" href="#detach-and-proceed" title="Link to this heading">#</a></h3>
+<h3>3. Detach and Proceed<a class="headerlink" href="#detach-and-proceed" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">detach_</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Reset gradients before the next step. This makes sure each sampling step is independent.</p>
 </section>
 <section id="optional-visualization">
-<h3>📊 4. Optional Visualization<a class="headerlink" href="#optional-visualization" title="Link to this heading">#</a></h3>
+<h3>4. Optional Visualization<a class="headerlink" href="#optional-visualization" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">record</span> <span class="ow">and</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
     <span class="c1"># Save and show intermediate reconstruction</span>
 </pre></div>
 </div>
 <p>Every 100 steps, the current result is visualized and saved.</p>
-</section>
-<section id="return-final-result">
-<h3>✅ Return Final Result<a class="headerlink" href="#return-final-result" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="n">img</span>
 </pre></div>
 </div>
 <p>This is the final output after all denoising and measurement-based corrections.</p>
-</section>
-</section>
-<section id="summary-of-differences-from-standard-diffusion-models">
-<h2>🧠 Summary of Differences from Standard Diffusion Models<a class="headerlink" href="#summary-of-differences-from-standard-diffusion-models" title="Link to this heading">#</a></h2>
-<p>| Aspect | Standard Diffusion | DPS (This Function) |
-|–|–||
-| Guidance | No / weak (classifier-free) | Strong physical consistency (via ∇ log p(y|x)) |
-| Output goal | Any realistic image | Image that matches observation y |
-| Usage | Generation (text2img, etc.) | Solving inverse problems |
-| Gradient correction | None / optional | Always applied at every step |</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">load_yaml</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">transforms</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">guided_diffusion.condition_methods</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_conditioning_method</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">guided_diffusion.measurements</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_noise</span><span class="p">,</span> <span class="n">get_operator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">guided_diffusion.unet</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">guided_diffusion.gaussian_diffusion</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_sampler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data.dataloader</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_dataset</span><span class="p">,</span> <span class="n">get_dataloader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">util.img_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">clear_color</span><span class="p">,</span> <span class="n">mask_generator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">util.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_yaml</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">config</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--model_config&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../code/Inv/diffusion-posterior-sampling-main/configs/model_config.yaml&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the model configuration file&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--diffusion_config&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../code/Inv/diffusion-posterior-sampling-main/configs/diffusion_config.yaml&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the diffusion configuration file&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--task_config&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../code/Inv/diffusion-posterior-sampling-main/configs/super_resolution_config.yaml&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the task configuration file (default: {TASK-CONFIG})&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--model_config&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;/home/xqgao/2025/MIT/code/Inv/diffusion-posterior-sampling-main/configs/model_config.yaml&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the model configuration file&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--diffusion_config&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;/home/xqgao/2025/MIT/code/Inv/diffusion-posterior-sampling-main/configs/diffusion_config.yaml&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the diffusion configuration file&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--task_config&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;/home/xqgao/2025/MIT/code/Inv/diffusion-posterior-sampling-main/configs/super_resolution_config.yaml&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the task configuration file (default: {TASK-CONFIG})&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--gpu&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;GPU index to use (default: 0)&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--save_dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../code/Inv/diffusion-posterior-sampling-main/results&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Directory to save results (default: ./results)&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--save_dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;/home/xqgao/2025/MIT/code/Inv/diffusion-posterior-sampling-main/results&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Directory to save results (default: ./results)&#39;</span><span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
@@ -631,24 +643,24 @@ without retraining the diffusion model.</p></li>
     <span class="c1">#&quot;learn_sigma must be the same for model and diffusion configuartion.&quot;</span>
     
     <span class="c1"># Load model</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="o">**</span><span class="n">model_config</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">model_config</span><span class="p">)</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
     <span class="c1"># Prepare Operator and noise</span>
     <span class="n">measure_config</span> <span class="o">=</span> <span class="n">task_config</span><span class="p">[</span><span class="s1">&#39;measurement&#39;</span><span class="p">]</span>
-    <span class="n">operator</span> <span class="o">=</span> <span class="n">get_operator</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="o">**</span><span class="n">measure_config</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">])</span>
-    <span class="n">noiser</span> <span class="o">=</span> <span class="n">get_noise</span><span class="p">(</span><span class="o">**</span><span class="n">measure_config</span><span class="p">[</span><span class="s1">&#39;noise&#39;</span><span class="p">])</span>
+    <span class="n">operator</span> <span class="o">=</span> <span class="n">get_operator</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">measure_config</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">])</span>
+    <span class="n">noiser</span> <span class="o">=</span> <span class="n">get_noise</span><span class="p">(</span><span class="n">measure_config</span><span class="p">[</span><span class="s1">&#39;noise&#39;</span><span class="p">])</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Operation: </span><span class="si">{</span><span class="n">measure_config</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> / Noise: </span><span class="si">{</span><span class="n">measure_config</span><span class="p">[</span><span class="s1">&#39;noise&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1"># Prepare conditioning method</span>
     <span class="n">cond_config</span> <span class="o">=</span> <span class="n">task_config</span><span class="p">[</span><span class="s1">&#39;conditioning&#39;</span><span class="p">]</span>
-    <span class="n">cond_method</span> <span class="o">=</span> <span class="n">get_conditioning_method</span><span class="p">(</span><span class="n">cond_config</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">],</span> <span class="n">operator</span><span class="p">,</span> <span class="n">noiser</span><span class="p">,</span> <span class="o">**</span><span class="n">cond_config</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">])</span>
+    <span class="n">cond_method</span> <span class="o">=</span> <span class="n">get_conditioning_method</span><span class="p">(</span><span class="n">cond_config</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">],</span> <span class="n">operator</span><span class="p">,</span> <span class="n">noiser</span><span class="p">,</span> <span class="n">cond_config</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">])</span>
     <span class="n">measurement_cond_fn</span> <span class="o">=</span> <span class="n">cond_method</span><span class="o">.</span><span class="n">conditioning</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Conditioning method : </span><span class="si">{</span><span class="n">task_config</span><span class="p">[</span><span class="s1">&#39;conditioning&#39;</span><span class="p">][</span><span class="s1">&#39;method&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
    
     <span class="c1"># Load diffusion sampler</span>
-    <span class="n">sampler</span> <span class="o">=</span> <span class="n">create_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">diffusion_config</span><span class="p">)</span> 
+    <span class="n">sampler</span> <span class="o">=</span> <span class="n">create_sampler</span><span class="p">(</span><span class="n">diffusion_config</span><span class="p">)</span> 
     <span class="n">sample_fn</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">sampler</span><span class="o">.</span><span class="n">p_sample_loop</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">measurement_cond_fn</span><span class="o">=</span><span class="n">measurement_cond_fn</span><span class="p">)</span>
    
     <span class="c1"># Working directory</span>
@@ -661,13 +673,13 @@ without retraining the diffusion model.</p></li>
     <span class="n">data_config</span> <span class="o">=</span> <span class="n">task_config</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
     <span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
                                     <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))])</span>
-    <span class="n">dataset</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="o">**</span><span class="n">data_config</span><span class="p">,</span> <span class="n">transforms</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">data_config</span><span class="p">,</span> <span class="n">transforms</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
     <span class="n">loader</span> <span class="o">=</span> <span class="n">get_dataloader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># Exception) In case of inpainting, we need to generate a mask </span>
     <span class="k">if</span> <span class="n">measure_config</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;inpainting&#39;</span><span class="p">:</span>
         <span class="n">mask_gen</span> <span class="o">=</span> <span class="n">mask_generator</span><span class="p">(</span>
-           <span class="o">**</span><span class="n">measure_config</span><span class="p">[</span><span class="s1">&#39;mask_opt&#39;</span><span class="p">]</span>
+           <span class="n">measure_config</span><span class="p">[</span><span class="s1">&#39;mask_opt&#39;</span><span class="p">]</span>
         <span class="p">)</span>
         
     <span class="c1"># Do Inference</span>
@@ -705,6 +717,140 @@ without retraining the diffusion model.</p></li>
 
 </pre></div>
 </div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2025-04-20 16:39:31,573 [DPS] &gt;&gt; Device set to cuda:0.
+/home/xqgao/2025/MIT/code/Inv/diffusion-posterior-sampling-main/guided_diffusion/unet.py:88: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don&#39;t have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(th.load(model_path, map_location=&#39;cpu&#39;))
+2025-04-20 16:39:34,294 [DPS] &gt;&gt; Operation: super_resolution / Noise: gaussian
+2025-04-20 16:39:34,296 [DPS] &gt;&gt; Conditioning method : ps
+2025-04-20 16:39:34,338 [DPS] &gt;&gt; Inference for image 0
+ 10%|▉         | 97/1000 [00:06&lt;00:41, 21.99it/s, distance=22.3]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_1.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 20%|█▉        | 198/1000 [00:10&lt;00:36, 22.17it/s, distance=17.6]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_3.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 30%|██▉       | 297/1000 [00:15&lt;00:31, 22.25it/s, distance=16]  
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_5.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 40%|███▉      | 399/1000 [00:20&lt;00:27, 21.94it/s, distance=14.2]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_7.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 50%|████▉     | 498/1000 [00:24&lt;00:23, 21.76it/s, distance=13.3]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_9.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 60%|█████▉    | 597/1000 [00:29&lt;00:18, 22.08it/s, distance=12.5]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_11.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 70%|██████▉   | 699/1000 [00:34&lt;00:13, 22.06it/s, distance=12]  
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_13.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 80%|███████▉  | 798/1000 [00:38&lt;00:09, 22.17it/s, distance=11.6]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_15.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 90%|████████▉ | 899/1000 [00:43&lt;00:04, 22.15it/s, distance=11.1]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_17.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>100%|█████████▉| 997/1000 [00:48&lt;00:00, 21.94it/s, distance=10.3]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_19.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:48&lt;00:00, 20.56it/s, distance=10.3]
+2025-04-20 16:40:23,072 [DPS] &gt;&gt; Inference for image 1
+ 10%|▉         | 99/1000 [00:04&lt;00:40, 22.18it/s, distance=25.9]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_21.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 20%|█▉        | 198/1000 [00:09&lt;00:36, 21.95it/s, distance=19.7]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_23.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 30%|██▉       | 297/1000 [00:13&lt;00:31, 22.10it/s, distance=16.3]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_25.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 40%|███▉      | 399/1000 [00:18&lt;00:27, 22.03it/s, distance=14.9]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_27.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 50%|████▉     | 498/1000 [00:23&lt;00:22, 22.08it/s, distance=14]  
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_29.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 60%|█████▉    | 598/1000 [00:27&lt;00:18, 21.57it/s, distance=13.2]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_31.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 70%|██████▉   | 698/1000 [00:34&lt;00:20, 14.50it/s, distance=13]  
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_33.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 80%|███████▉  | 798/1000 [00:41&lt;00:13, 15.14it/s, distance=12.6]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_35.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 90%|████████▉ | 898/1000 [00:48&lt;00:06, 14.97it/s, distance=12.1]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_37.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>100%|█████████▉| 998/1000 [00:55&lt;00:00, 14.23it/s, distance=11.4]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_39.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:55&lt;00:00, 17.96it/s, distance=11.4]
+2025-04-20 16:41:18,868 [DPS] &gt;&gt; Inference for image 2
+ 10%|▉         | 98/1000 [00:06&lt;01:02, 14.33it/s, distance=25.3]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_41.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 20%|█▉        | 198/1000 [00:13&lt;00:53, 15.07it/s, distance=20.5]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_43.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 30%|██▉       | 298/1000 [00:20&lt;00:44, 15.95it/s, distance=18.2]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_45.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 40%|███▉      | 398/1000 [00:26&lt;00:40, 14.74it/s, distance=15]  
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_47.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 50%|████▉     | 498/1000 [00:33&lt;00:25, 20.05it/s, distance=13.8]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_49.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 60%|█████▉    | 598/1000 [00:40&lt;00:28, 13.91it/s, distance=13]  
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_51.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 70%|██████▉   | 698/1000 [00:47&lt;00:21, 13.79it/s, distance=12.6]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_53.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 80%|███████▉  | 798/1000 [00:54&lt;00:14, 14.26it/s, distance=11.9]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_55.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> 90%|████████▉ | 898/1000 [01:02&lt;00:07, 14.11it/s, distance=11.3]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_57.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>100%|█████████▉| 998/1000 [01:09&lt;00:00, 13.86it/s, distance=10.6]
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter11_DPS_5_59.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [01:09&lt;00:00, 14.41it/s, distance=10.6]
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -754,27 +900,28 @@ without retraining the diffusion model.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">3.1 Goal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#posterior-sampling-formulation">3.2 Posterior sampling formulation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dps-sampling-rule">3.3 DPS Sampling Rule</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">From Paper to Code: Understanding and Reproducing “DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-reading-notes">Paper Reading Notes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">3.1 Goal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posterior-sampling-formulation">3.2 Posterior sampling formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dps-sampling-rule">3.3 DPS Sampling Rule</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-explanation-dps">Code Explanation — DPS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#code-reproduction-with-explanation-inference-via-dps-using-a-pretrained-dpm">Code Reproduction with Explanation: Inference via DPS using a Pretrained DPM</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-breakdown-p-sample-loop">🔧 Function Breakdown: <code class="docutils literal notranslate"><span class="pre">p_sample_loop()</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-loop-reverse-time-sampling">🔁 Main Loop: Reverse-Time Sampling</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diffusion-step">🎯 1. Standard Diffusion Step</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-measurement-based-guidance-key-difference">📡 2. Add Measurement-Based Guidance (Key Difference!)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detach-and-proceed">🧼 3. Detach and Proceed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-visualization">📊 4. Optional Visualization</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#return-final-result">✅ Return Final Result</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-loop-reverse-time-sampling">Main Loop: Reverse-Time Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-diffusion-step">1. Standard Diffusion Step</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-measurement-based-guidance-key-difference">2. Add Measurement-Based Guidance (Key Difference!)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detach-and-proceed">3. Detach and Proceed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-visualization">4. Optional Visualization</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-differences-from-standard-diffusion-models">🧠 Summary of Differences from Standard Diffusion Models</a></li>
 </ul>
 </li>
 </ul>

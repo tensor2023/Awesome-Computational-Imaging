@@ -1,17 +1,19 @@
-## Neural space–time model for dynamic multi-shot imaging
+### From Paper to Code: Understanding and Reproducing "Neural space–time model for dynamic multi-shot imaging"
 ![image.png](Chapter09_Neural_SpaceTime_files/image.png)
-Code: GitHub Repository https://github.com/rmcao/nstm, 
+Code: [GitHub Repository](https://github.com/rmcao/nstm), 
 Source Code in My Repo: ../../../../code/NeRF_optics/nstm-main/examples/notebook-DPC.ipynb
+
+# Paper Reading Notes
 
 ## 1. Highlights
 
-NSTM is the **first self-supervised framework** to jointly learn per-pixel motion and scene content from raw multi-shot measurements. It supports **any multi-shot system** with a differentiable forward model, including DPC, 3D SIM, and DiffuserCam. Also it enables **motion-aware reconstruction** that resolves artifacts in dynamic scenes, improving biological interpretability.n.
+NSTM is the first self-supervised framework to jointly learn per-pixel motion and scene content from raw multi-shot measurements. It supports any multi-shot system with a differentiable forward model, including DPC, 3D SIM, and DiffuserCam. Also it enables motion-aware reconstruction that resolves artifacts in dynamic scenes, improving biological interpretability.n.
 
 ## 2. Background
 
-Structured Illumination Microscopy (SIM) is a super-resolution imaging technique that breaks the diffraction limit. Traditional SIM achieves resolution enhancement by combining multiple images taken under varying illumination patterns. However, this leads to **slow acquisition speed** and **motion artifacts** when the sample moves during imaging. These methods have significantly expanded our ability to resolve biological structures, achieving breakthroughs in **super-resolution** [1], **phase retrieval** [2], and **video reconstruction from single images** [3].
+Structured Illumination Microscopy (SIM) is a super-resolution imaging technique that breaks the diffraction limit. Traditional SIM achieves resolution enhancement by combining multiple images taken under varying illumination patterns. However, this leads to slow acquisition speed and motion artifacts when the sample moves during imaging. These methods have significantly expanded our ability to resolve biological structures, achieving breakthroughs in super-resolution [1], phase retrieval [2], and video reconstruction from single images [3].
 
-However, a major limitation remains: **motion artifacts**. When imaging dynamic (moving) scenes, the assumption that the sample remains static during multi-shot acquisition breaks down. This mismatch leads to blurring, ghosting, and misinterpretation of structures. Traditional solutions try to either:
+However, a major limitation remains: motion artifacts. When imaging dynamic (moving) scenes, the assumption that the sample remains static during multi-shot acquisition breaks down. This mismatch leads to blurring, ghosting, and misinterpretation of structures. Traditional solutions try to either:
 - speed up hardware acquisition,
 - use pre-trained deep networks with strong priors,
 - or register images post hoc assuming simple motion.
@@ -20,19 +22,19 @@ These strategies are often system-specific and don't generalize well, especially
 
 ## 3.Method Overview
 ![image.png](Chapter09_Neural_SpaceTime_files/image.png)
-The central innovation of this paper is to **jointly predict motion and appearance** of a dynamic scene using two neural networks—trained entirely in a **self-supervised** manner from raw multi-shot measurements.
+The central innovation of this paper is to jointly predict motion and appearance of a dynamic scene using two neural networks—trained entirely in a self-supervised manner from raw multi-shot measurements.
 
-As illustrated in **Fig. 1a**, the system takes a sequence of raw images $I_{t_1}, I_{t_2}, I_{t_3}, I_{t_4}$ captured under different illumination conditions using an LED-array microscope. Each image corresponds to a slightly different time point, and due to sample motion, they do not align perfectly. A conventional reconstruction (middle) assumes a static scene and thus suffers from motion artifacts. In contrast, NSTM (right) reconstructs a clean scene at each time by modeling and correcting the motion.
+As illustrated in Fig. 1a, the system takes a sequence of raw images $I_{t_1}, I_{t_2}, I_{t_3}, I_{t_4}$ captured under different illumination conditions using an LED-array microscope. Each image corresponds to a slightly different time point, and due to sample motion, they do not align perfectly. A conventional reconstruction (middle) assumes a static scene and thus suffers from motion artifacts. In contrast, NSTM (right) reconstructs a clean scene at each time by modeling and correcting the motion.
 
 
 
 ### 3.1 Inputs and Outputs
 
-As shown in **Fig. 1b**, the **inputs** to the model are:
+As shown in Fig. 1b, the inputs to the model are:
 - A spatial grid of coordinates $(x, y)$ covering the image domain,
 - A temporal coordinate $t$ representing the time point of interest.
 
-The **outputs** are:
+The outputs are:
 - A reconstructed scene $o(x, y, t)$ at that time point,
 - And ultimately, a synthetic measurement $\hat{I}_t$ generated by passing $o(x, y, t)$ through the system's forward model.
 
@@ -40,27 +42,27 @@ The **outputs** are:
 
 ### 3.2 Network Structure (Fig. 1b)
 
-The model consists of two coordinate-based neural networks (a form of **Implicit Neural Representation**, or INR):
+The model consists of two coordinate-based neural networks (a form of Implicit Neural Representation, or INR):
 
-1. **Motion Network**  
+1. Motion Network  
    Takes as input $(x, y, t)$ and outputs the motion displacement vector $(\delta x_t, \delta y_t)$:
    $$
    (\delta x_t, \delta y_t) = f_{\text{motion}}(x, y, t)
    $$
-   This gives a **pixel-wise motion kernel** at time $t$.
+   This gives a pixel-wise motion kernel at time $t$.
 
-2. **Scene Network**  
-   Takes the **motion-compensated coordinate** $(x + \delta x_t, y + \delta y_t)$ and outputs the reconstructed scene value at that location:
+2. Scene Network  
+   Takes the motion-compensated coordinate $(x + \delta x_t, y + \delta y_t)$ and outputs the reconstructed scene value at that location:
    $$
    o(x, y, t) = f_{\text{scene}}(x + \delta x_t, y + \delta y_t)
    $$
-   Note: The scene network does **not** depend on $t$ directly—it learns a static canonical scene which is warped over time by the motion field.
+   Note: The scene network does not depend on $t$ directly—it learns a static canonical scene which is warped over time by the motion field.
 
 
 
 ### 3.3 Forward Model and Self-Supervised Loss
 
-Once the reconstructed scene $o(x, y, t)$ is obtained, it is passed through a **forward model** that simulates the image formation process of the actual imaging system:
+Once the reconstructed scene $o(x, y, t)$ is obtained, it is passed through a forward model that simulates the image formation process of the actual imaging system:
 $$
 \hat{I}_t = F(o(x, y, t))
 $$
@@ -72,7 +74,7 @@ $$
 \mathcal{L} = \sum_t \|F(o(x, y, t)) - I_t\|^2
 $$
 
-This loss is backpropagated through both the forward model and the two networks. In this way, **the motion and the scene are jointly learned from scratch**, using only the raw measurements as supervision.
+This loss is backpropagated through both the forward model and the two networks. In this way, the motion and the scene are jointly learned from scratch, using only the raw measurements as supervision.
 
 
 
@@ -84,7 +86,7 @@ This loss is backpropagated through both the forward model and the two networks.
 
 [3] Antipa, N. et al. (2019). Video from stills: lensless imaging with rolling shutter. *IEEE Int. Conf. Comput. Photography*
 
-# Neural space-time model example on differential phase contrast microscopy (DPC) data
+# Code Reproduction with Explanation: Neural space-time model example on differential phase contrast microscopy (DPC) data
 Jupyter lab demo for "Neural space-time model for dynamic multi-shot imaging" by Ruiming Cao, et al. (2024)
 
 
@@ -111,7 +113,7 @@ os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 import calcil as cc
 import sys
-sys.path.append("../../../../code/NeRF_optics/nstm-main")  # 把上一级目录（即项目根目录）加进 PYTHONPATH
+sys.path.append("../../../../code/NeRF_optics/nstm-main")
 
 from nstm import dpc_utils
 from nstm import dpc_flow

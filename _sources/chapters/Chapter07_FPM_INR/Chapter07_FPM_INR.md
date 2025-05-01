@@ -1,9 +1,10 @@
-## Fourier ptychographic microscopy image stack reconstruction using implicit neural representations
-
+### From Paper to Code: Understanding and Reproducing "Fourier ptychographic microscopy image stack reconstruction using implicit neural representations"
 ![image.png](Chapter07_FPM_INR_files/image.png)
-
-Code: GitHub Repository https://github.com/hwzhou2020/FPM_INR, 
+Code: [GitHub Repository](https://github.com/hwzhou2020/FPM_INR,), 
 Source Code in My Repo: ../../../../code/NeRF_optics/FPM_INR-main/FPM_INR.py
+
+# Paper Reading Notes
+
 ## 1. Highlights
 
 To save memory in Fourier Ptychographic Microscopy (FPM), the authors use Implicit Neural Representations (INRs) to model the 3D complex field, rather than explicitly storing each z-slice.  
@@ -15,47 +16,38 @@ It combines physics-based optical modeling with neural field learning for compac
 ## 2. Background
 ### 2.1 What is Fourier Ptychographic Microscopy (FPM)?
 
-Fourier Ptychographic Microscopy (FPM) is a computational imaging technique that enables wide field-of-view (FOV), high-resolution microscopy using simple optics. It works by capturing **multiple low-resolution images under varying illumination angles** and stitching them together in the Fourier domain [Zheng et al., 2013].
+Fourier Ptychographic Microscopy (FPM) is a computational imaging technique that enables wide field-of-view (FOV), high-resolution microscopy using simple optics. It works by capturing multiple low-resolution images under varying illumination angles and stitching them together in the Fourier domain [Zheng et al., 2013].
 
 Unlike traditional microscopes that rely on physical lens scanning to get different focus planes, FPM uses a computational model to digitally refocus, correct aberrations, and retrieve both amplitude and phase of the optical field — all without moving parts.
 
 
 ### 2.2 What is the "Fourier Stack" in FPM?
 
-In its classic form, FPM reconstructs a **single complex image** (amplitude + phase) at the focal plane — a process often called the “Fourier stack” or “1-layer FPM”. Each angular illumination provides a shifted slice in Fourier space; by combining them, we recover high-frequency content beyond the native resolution of the objective lens.
+In its classic form, FPM reconstructs a single complex image (amplitude + phase) at the focal plane — a process often called the “Fourier stack” or “1-layer FPM”. Each angular illumination provides a shifted slice in Fourier space; by combining them, we recover high-frequency content beyond the native resolution of the objective lens.
 
-However, real-world samples have depth. So how do we reconstruct not just one, but a **z-stack** — a full 3D volume?
+However, real-world samples have depth. So how do we reconstruct not just one, but a z-stack — a full 3D volume?
 
 
 ### 2.3 Why 3D FPM is Hard
 
 To get 3D volumes, traditional FPM methods reconstruct each z-slice separately. But this brings two big problems:
 
-- **Too slow**: each slice is optimized independently, leading to long reconstruction times.
-- **Too big**: storing high-res stacks costs gigabytes per sample — not scalable for digital pathology.
+- Too slow: each slice is optimized independently, leading to long reconstruction times.
+- Too big: storing high-res stacks costs gigabytes per sample — not scalable for digital pathology.
 
 ### 2.4 FPM-INR: Continuous 3D Reconstruction with Neural Fields
 
-To solve these problems, Zhou et al. (2023) propose **FPM-INR**, a method that combines physics-based optics with **Implicit Neural Representations (INRs)**.
+To solve these problems, Zhou et al. (2023) propose FPM-INR, a method that combines physics-based optics with Implicit Neural Representations (INRs).
 
 Here’s the key idea:
-- Instead of saving every z-slice, use a neural network (MLP) to **learn a compact function** that maps any 3D coordinate (x, y, z) to image intensity and phase.
+- Instead of saving every z-slice, use a neural network (MLP) to learn a compact function that maps any 3D coordinate (x, y, z) to image intensity and phase.
 - This network learns directly from raw measurements using the FPM physical forward model — no pretraining, no black-box hallucinations.
 
-### Why It Matters
-
-FPM-INR:
-- Compresses data up to **80×**,
-- Speeds up reconstruction by **up to 25×**,
-- Supports **continuous** digital refocusing,
-- Keeps the physics grounded — no fake details.
-
-This makes real-time, large-scale, and remote FPM imaging practical — opening new doors in biomedical imaging and digital pathology.
-
+FPM-INR makes real-time, large-scale, and remote FPM imaging practical — opening new doors in biomedical imaging and digital pathology.
 
 ## 3. Method Overview
 
-Method Overview behind **FPM-INR** is to parameterize a 3D image stack using a small neural network and a low-rank feature volume, then optimize both by fitting a physical forward model that simulates how FPM images are generated.
+Method Overview behind FPM-INR is to parameterize a 3D image stack using a small neural network and a low-rank feature volume, then optimize both by fitting a physical forward model that simulates how FPM images are generated.
 
 ### 3.1 Forward Model
 
@@ -73,18 +65,18 @@ Where:
 
 ### 3.2 Pipeline
 ![image.png](Chapter07_FPM_INR_files/image.png)
-**Input**: A stack of raw intensity images captured under varying LED illumination angles. No physical z-stack scanning or ground-truth depth labels are required.
+Input: A stack of raw intensity images captured under varying LED illumination angles. No physical z-stack scanning or ground-truth depth labels are required.
 
-**Output**: A continuous function that maps any 3D coordinate $(x, y, z)$ to a complex optical field (amplitude and phase), enabling digital refocusing and volumetric reconstruction at arbitrary depths.
+Output: A continuous function that maps any 3D coordinate $(x, y, z)$ to a complex optical field (amplitude and phase), enabling digital refocusing and volumetric reconstruction at arbitrary depths.
 
-**Representation**: The 3D volume is modeled as an implicit function using an MLP, driven by a compact feature space:  
+Representation: The 3D volume is modeled as an implicit function using an MLP, driven by a compact feature space:  
 - A 2D feature map $ M(x, y) $  
 - A 1D z-vector $ u(z) $  
 - Combined via Hadamard product: $ V_{x,y,z} = M_{x,y} \odot u_z $
 
-**Supervision**: Self-supervised training through a physics-based FPM forward model. The predicted optical field is passed through Fourier optics to simulate intensity measurements, which are compared against real camera captures.
+Supervision: Self-supervised training through a physics-based FPM forward model. The predicted optical field is passed through Fourier optics to simulate intensity measurements, which are compared against real camera captures.
 
-**Key Benefit**: Once trained, FPM-INR allows **continuous inference** of any z-plane without retraining, offering efficient and compact 3D imaging without scanning.
+Key Benefit: Once trained, FPM-INR allows continuous inference of any z-plane without retraining, offering efficient and compact 3D imaging without scanning.
 
 
 ## References
@@ -94,6 +86,8 @@ Where:
 3. Zhou, H., Feng, B. Y., et al. (2023). *Fourier ptychographic microscopy image stack reconstruction using implicit neural representations*. Optica, 10(12), 1679–1687. https://doi.org/10.1364/OPTICA.505283  
 
 
+
+# Code Reproduction with Explanation: **Predicting Phase and Amplitude**
 
 
 ```python
@@ -172,11 +166,15 @@ if fit_3D:
 os.makedirs(vis_dir, exist_ok=True)
 ```
 
-# Get Sub Spectrum
+    Current working directory: /home/xqgao/2025/MIT/Awesome-Computational-Imaging/chapters/Chapter07_FPM_INR
+    Appending path: /home/xqgao/2025/MIT/code/NeRF_optics/FPM_INR-main
+
+
+## Get Sub Spectrum
 
 This function simulates FPM measurements under different LED illuminations.
 
-It takes a complex image, computes its Fourier transform, pads it, extracts sub-spectra for **each LED** based on given coordinates, applies a spectral mask, and returns the corresponding low-resolution intensity images after inverse FFT.
+It takes a complex image, computes its Fourier transform, pads it, extracts sub-spectra for each LED based on given coordinates, applies a spectral mask, and returns the corresponding low-resolution intensity images after inverse FFT.
 
 
 ```python
@@ -196,12 +194,12 @@ def get_sub_spectrum(img_complex, led_num, x_0, y_0, x_1, y_1, spectrum_mask, ma
     return oI_sub
 ```
 
-# Load data
+## Load data
 
 
 ```python
 if fit_3D:
-    data_struct = mat73.loadmat(f"../../../../Datasets/FPM-INR/{sample}/{sample}_{color}.mat")
+    data_struct = mat73.loadmat(f"../../../Datasets/FPM-INR/{sample}/{sample}_{color}.mat")
 
     I = data_struct["I_low"].astype("float32")
 
@@ -255,7 +253,7 @@ if fit_3D:
     # Calculate illumination NA
     u = -NAx
     v = -NAy
-    NAillu = np.sqrt(u**2 + v**2)
+    NAillu = np.sqrt(u2 + v2)
     order = np.argsort(NAillu)
     u = u[order]
     v = v[order]
@@ -274,11 +272,11 @@ if fit_3D:
 
 else:
     if sample == 'Siemens':
-        data_struct = sio.loadmat(f"../../../../Datasets/FPM-INR/{sample}/{sample}_{color}.mat")
+        data_struct = sio.loadmat(f"../../../Datasets/FPM-INR/{sample}/{sample}_{color}.mat")
         MAGimg = 3
 
     else:
-        data_struct = mat73.loadmat(f"../../../../Datasets/FPM-INR/{sample}/{sample}_{color}.mat")
+        data_struct = mat73.loadmat(f"../../../Datasets/FPM-INR/{sample}/{sample}_{color}.mat")
         MAGimg = 2
 
         
@@ -334,7 +332,7 @@ else:
     # Calculate illumination NA
     u = -NAx
     v = -NAy
-    NAillu = np.sqrt(u**2 + v**2)
+    NAillu = np.sqrt(u2 + v2)
     order = np.argsort(NAillu)
     u = u[order]
     v = v[order]
@@ -352,7 +350,7 @@ else:
     Isum = I[:, :, order] / np.max(I)
 ```
 
-# Define Angular Spectrum
+## Define Angular Spectrum
 This section prepares some variables for the forward model. It is based on the physical principle described in the paper (Eq. 1):
 
 $$
@@ -368,12 +366,12 @@ The corresponding components in code are:
 ```python
 # Build Fourier grid
 kxx, kyy = np.meshgrid(...)        # k_x, k_y
-krr = np.sqrt(kxx**2 + kyy**2)     # frequency radius
+krr = np.sqrt(kxx2 + kyy2)     # frequency radius
 k0 = 2 * np.pi / wavelength
-kzz = np.sqrt(k0**2 - krr**2)      # z-direction propagation term
+kzz = np.sqrt(k02 - krr2)      # z-direction propagation term
 
 # Binary pupil mask (NA-limited aperture)
-Pupil0 = (Fxy**2 <= kmax**2)       # support of P(kx, ky)
+Pupil0 = (Fxy2 <= kmax2)       # support of P(kx, ky)
 ```
 #### Full forward model (in `FullModel`)
 ```python
@@ -381,7 +379,7 @@ complex_field = amplitude * torch.exp(1j * phase)
 O_k = torch.fft.fft2(complex_field)
 shifted = spectrum_shift(O_k, kx_i, ky_i)
 pupil = Pupil0 * torch.exp(1j * kzz * z)
-estimated = torch.abs(torch.fft.ifft2(shifted * pupil)) ** 2
+estimated = torch.abs(torch.fft.ifft2(shifted * pupil))  2
 
 
 ```python
@@ -390,21 +388,21 @@ if sample == 'Siemens':
 else:
     kxx, kyy = np.meshgrid(Fxx1[:M], Fxx1[:N])
 kxx, kyy = kxx - np.mean(kxx), kyy - np.mean(kyy)
-krr = np.sqrt(kxx**2 + kyy**2)
-mask_k = k0**2 - krr**2 > 0
+krr = np.sqrt(kxx2 + kyy2)
+mask_k = k02 - krr2 > 0
 kzz_ampli = mask_k * np.abs(
-    np.sqrt((k0**2 - krr.astype("complex64") ** 2))
+    np.sqrt((k02 - krr.astype("complex64")  2))
 )  
-kzz_phase = np.angle(np.sqrt((k0**2 - krr.astype("complex64") ** 2)))
+kzz_phase = np.angle(np.sqrt((k02 - krr.astype("complex64")  2)))
 kzz = kzz_ampli * np.exp(1j * kzz_phase)
 
 # Define Pupil support
 Fx1, Fy1 = np.meshgrid(np.arange(-N / 2, N / 2), np.arange(-M / 2, M / 2))
-Fx2 = (Fx1 / (N * D_pixel) * (2 * np.pi)) ** 2
-Fy2 = (Fy1 / (M * D_pixel) * (2 * np.pi)) ** 2
+Fx2 = (Fx1 / (N * D_pixel) * (2 * np.pi))  2
+Fy2 = (Fy1 / (M * D_pixel) * (2 * np.pi))  2
 Fxy2 = Fx2 + Fy2
 Pupil0 = np.zeros((M, N))
-Pupil0[Fxy2 <= (kmax**2)] = 1
+Pupil0[Fxy2 <= (kmax2)] = 1
 
 Pupil0 = (
     torch.from_numpy(Pupil0).view(1, 1, Pupil0.shape[0], Pupil0.shape[1]).to(device)
@@ -415,7 +413,7 @@ Isum = torch.from_numpy(Isum).to(device)
 if fit_3D:
     # Define depth of field of brightfield microscope for determine selected z-plane
     DOF = (
-        0.5 / NA**2 #+ pixel_size / mag / NA
+        0.5 / NA2 #+ pixel_size / mag / NA
     )  # wavelength is emphrically set as 0.5 um
     # z-slice separation (emphirically set)
     delta_z = 0.8 * DOF
@@ -431,7 +429,7 @@ else:
     z_max = 1.0
 ```
 
-# Define LED Batch size
+## Define LED Batch size
 
 
 ```python
@@ -468,7 +466,9 @@ scheduler = torch.optim.lr_scheduler.StepLR(
 t = tqdm.trange(num_epochs)
 ```
 
-# Training Loop
+      0%|          | 0/15 [00:00<?, ?it/s]
+
+## Training Loop
 
 
 ```python
@@ -591,6 +591,85 @@ for epoch in t:
         imageio.mimsave(
             f"{vis_dir}/vid/{epoch}.mp4", np.uint8(imgs * 255), fps=5, quality=8
         )
-save_path = os.path.join(f'../../../../code/NeRF_optics/FPM_INR-main/trained_models/{sample}', sample +'_'+ color + '.pth')
+save_path = os.path.join(f'../../../code/NeRF_optics/FPM_INR-main/trained_models/{sample}', sample +'_'+ color + '.pth')
 save_model_with_required_grad(model, save_path)
 ```
+
+    /tmp/ipykernel_545149/2853966467.py:51: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+      with torch.cuda.amp.autocast(enabled=use_amp, dtype=torch.bfloat16):
+      0%|          | 0/15 [00:05<?, ?it/s, Loss=4.3592e-02, PSNR=10.60]/tmp/ipykernel_545149/2853966467.py:51: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+      with torch.cuda.amp.autocast(enabled=use_amp, dtype=torch.bfloat16):
+      0%|          | 0/15 [00:06<?, ?it/s, Loss=3.8775e-04, PSNR=31.10]
+
+
+    
+![png](Chapter07_FPM_INR_files/Chapter07_FPM_INR_14_1.png)
+    
+
+
+     13%|█▎        | 2/15 [00:10<00:50,  3.91s/it, Loss=7.9427e-05, PSNR=37.99]
+
+
+    
+![png](Chapter07_FPM_INR_files/Chapter07_FPM_INR_14_3.png)
+    
+
+
+     27%|██▋       | 4/15 [00:14<00:27,  2.49s/it, Loss=6.2519e-05, PSNR=39.03]
+
+
+    
+![png](Chapter07_FPM_INR_files/Chapter07_FPM_INR_14_5.png)
+    
+
+
+     40%|████      | 6/15 [00:17<00:18,  2.10s/it, Loss=6.8686e-05, PSNR=38.62]
+
+
+    
+![png](Chapter07_FPM_INR_files/Chapter07_FPM_INR_14_7.png)
+    
+
+
+     53%|█████▎    | 8/15 [00:21<00:13,  1.95s/it, Loss=6.5221e-05, PSNR=38.85]
+
+
+    
+![png](Chapter07_FPM_INR_files/Chapter07_FPM_INR_14_9.png)
+    
+
+
+     60%|██████    | 9/15 [00:24<00:13,  2.20s/it, Loss=6.3298e-05, PSNR=38.98]
+
+
+    
+![png](Chapter07_FPM_INR_files/Chapter07_FPM_INR_14_11.png)
+    
+
+
+     67%|██████▋   | 10/15 [00:27<00:11,  2.37s/it, Loss=6.4527e-05, PSNR=38.89]
+
+
+    
+![png](Chapter07_FPM_INR_files/Chapter07_FPM_INR_14_13.png)
+    
+
+
+     80%|████████  | 12/15 [00:31<00:06,  2.09s/it, Loss=6.4119e-05, PSNR=38.92]
+
+
+    
+![png](Chapter07_FPM_INR_files/Chapter07_FPM_INR_14_15.png)
+    
+
+
+     93%|█████████▎| 14/15 [00:35<00:01,  1.96s/it, Loss=6.3372e-05, PSNR=38.97]
+
+
+    
+![png](Chapter07_FPM_INR_files/Chapter07_FPM_INR_14_17.png)
+    
+
+
+    100%|██████████| 15/15 [00:36<00:00,  2.46s/it, Loss=6.3372e-05, PSNR=38.97]
+

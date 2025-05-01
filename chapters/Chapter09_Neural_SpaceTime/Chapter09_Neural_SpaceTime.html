@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Neural space–time model for dynamic multi-shot imaging &#8212; Awesome Computational Imaging</title>
+    <title>From Paper to Code: Understanding and Reproducing “Neural space–time model for dynamic multi-shot imaging” &#8212; Awesome Computational Imaging</title>
   
   
   
@@ -376,7 +376,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Neural space–time model for dynamic multi-shot imaging</h1>
+    <h1>From Paper to Code: Understanding and Reproducing “Neural space–time model for dynamic multi-shot imaging”</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,17 +386,20 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Neural space–time model for dynamic multi-shot imaging</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3.Method Overview</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">3.1 Inputs and Outputs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-structure-fig-1b">3.2 Network Structure (Fig. 1b)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-and-self-supervised-loss">3.3 Forward Model and Self-Supervised Loss</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">From Paper to Code: Understanding and Reproducing “Neural space–time model for dynamic multi-shot imaging”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-reading-notes">Paper Reading Notes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3.Method Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">3.1 Inputs and Outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#network-structure-fig-1b">3.2 Network Structure (Fig. 1b)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-and-self-supervised-loss">3.3 Forward Model and Self-Supervised Loss</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data">Neural space-time model example on differential phase contrast microscopy (DPC) data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#code-reproduction-with-explanation-neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data">Code Reproduction with Explanation: Neural space-time model example on differential phase contrast microscopy (DPC) data</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-images">Visualize images</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpc-transfer-function">DPC transfer function</a></li>
@@ -426,20 +429,22 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="neural-spacetime-model-for-dynamic-multi-shot-imaging">
-<h1>Neural space–time model for dynamic multi-shot imaging<a class="headerlink" href="#neural-spacetime-model-for-dynamic-multi-shot-imaging" title="Link to this heading">#</a></h1>
+  <section id="from-paper-to-code-understanding-and-reproducing-neural-spacetime-model-for-dynamic-multi-shot-imaging">
+<h1>From Paper to Code: Understanding and Reproducing “Neural space–time model for dynamic multi-shot imaging”<a class="headerlink" href="#from-paper-to-code-understanding-and-reproducing-neural-spacetime-model-for-dynamic-multi-shot-imaging" title="Link to this heading">#</a></h1>
 <p><img alt="image.png" src="../../_images/image8.png" />
-Code: GitHub Repository https://github.com/rmcao/nstm,
+Code: <a class="reference external" href="https://github.com/rmcao/nstm">GitHub Repository</a>,
 Source Code in My Repo: ../../../../code/NeRF_optics/nstm-main/examples/notebook-DPC.ipynb</p>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="paper-reading-notes">
+<h1>Paper Reading Notes<a class="headerlink" href="#paper-reading-notes" title="Link to this heading">#</a></h1>
 <section id="highlights">
-<h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
-<p>NSTM is the <strong>first self-supervised framework</strong> to jointly learn per-pixel motion and scene content from raw multi-shot measurements. It supports <strong>any multi-shot system</strong> with a differentiable forward model, including DPC, 3D SIM, and DiffuserCam. Also it enables <strong>motion-aware reconstruction</strong> that resolves artifacts in dynamic scenes, improving biological interpretability.n.</p>
+<h2>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
+<p>NSTM is the first self-supervised framework to jointly learn per-pixel motion and scene content from raw multi-shot measurements. It supports any multi-shot system with a differentiable forward model, including DPC, 3D SIM, and DiffuserCam. Also it enables motion-aware reconstruction that resolves artifacts in dynamic scenes, improving biological interpretability.n.</p>
 </section>
 <section id="background">
-<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
-<p>Structured Illumination Microscopy (SIM) is a super-resolution imaging technique that breaks the diffraction limit. Traditional SIM achieves resolution enhancement by combining multiple images taken under varying illumination patterns. However, this leads to <strong>slow acquisition speed</strong> and <strong>motion artifacts</strong> when the sample moves during imaging. These methods have significantly expanded our ability to resolve biological structures, achieving breakthroughs in <strong>super-resolution</strong> [1], <strong>phase retrieval</strong> [2], and <strong>video reconstruction from single images</strong> [3].</p>
-<p>However, a major limitation remains: <strong>motion artifacts</strong>. When imaging dynamic (moving) scenes, the assumption that the sample remains static during multi-shot acquisition breaks down. This mismatch leads to blurring, ghosting, and misinterpretation of structures. Traditional solutions try to either:</p>
+<h2>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>Structured Illumination Microscopy (SIM) is a super-resolution imaging technique that breaks the diffraction limit. Traditional SIM achieves resolution enhancement by combining multiple images taken under varying illumination patterns. However, this leads to slow acquisition speed and motion artifacts when the sample moves during imaging. These methods have significantly expanded our ability to resolve biological structures, achieving breakthroughs in super-resolution [1], phase retrieval [2], and video reconstruction from single images [3].</p>
+<p>However, a major limitation remains: motion artifacts. When imaging dynamic (moving) scenes, the assumption that the sample remains static during multi-shot acquisition breaks down. This mismatch leads to blurring, ghosting, and misinterpretation of structures. Traditional solutions try to either:</p>
 <ul class="simple">
 <li><p>speed up hardware acquisition,</p></li>
 <li><p>use pre-trained deep networks with strong priors,</p></li>
@@ -448,44 +453,44 @@ Source Code in My Repo: ../../../../code/NeRF_optics/nstm-main/examples/notebook
 <p>These strategies are often system-specific and don’t generalize well, especially when ground truth data is unavailable or motion is complex.</p>
 </section>
 <section id="method-overview">
-<h1>3.Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h1>
+<h2>3.Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h2>
 <p><img alt="image.png" src="../../_images/image8.png" />
-The central innovation of this paper is to <strong>jointly predict motion and appearance</strong> of a dynamic scene using two neural networks—trained entirely in a <strong>self-supervised</strong> manner from raw multi-shot measurements.</p>
-<p>As illustrated in <strong>Fig. 1a</strong>, the system takes a sequence of raw images <span class="math notranslate nohighlight">\(I_{t_1}, I_{t_2}, I_{t_3}, I_{t_4}\)</span> captured under different illumination conditions using an LED-array microscope. Each image corresponds to a slightly different time point, and due to sample motion, they do not align perfectly. A conventional reconstruction (middle) assumes a static scene and thus suffers from motion artifacts. In contrast, NSTM (right) reconstructs a clean scene at each time by modeling and correcting the motion.</p>
+The central innovation of this paper is to jointly predict motion and appearance of a dynamic scene using two neural networks—trained entirely in a self-supervised manner from raw multi-shot measurements.</p>
+<p>As illustrated in Fig. 1a, the system takes a sequence of raw images <span class="math notranslate nohighlight">\(I_{t_1}, I_{t_2}, I_{t_3}, I_{t_4}\)</span> captured under different illumination conditions using an LED-array microscope. Each image corresponds to a slightly different time point, and due to sample motion, they do not align perfectly. A conventional reconstruction (middle) assumes a static scene and thus suffers from motion artifacts. In contrast, NSTM (right) reconstructs a clean scene at each time by modeling and correcting the motion.</p>
 <section id="inputs-and-outputs">
-<h2>3.1 Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Link to this heading">#</a></h2>
-<p>As shown in <strong>Fig. 1b</strong>, the <strong>inputs</strong> to the model are:</p>
+<h3>3.1 Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Link to this heading">#</a></h3>
+<p>As shown in Fig. 1b, the inputs to the model are:</p>
 <ul class="simple">
 <li><p>A spatial grid of coordinates <span class="math notranslate nohighlight">\((x, y)\)</span> covering the image domain,</p></li>
 <li><p>A temporal coordinate <span class="math notranslate nohighlight">\(t\)</span> representing the time point of interest.</p></li>
 </ul>
-<p>The <strong>outputs</strong> are:</p>
+<p>The outputs are:</p>
 <ul class="simple">
 <li><p>A reconstructed scene <span class="math notranslate nohighlight">\(o(x, y, t)\)</span> at that time point,</p></li>
 <li><p>And ultimately, a synthetic measurement <span class="math notranslate nohighlight">\(\hat{I}_t\)</span> generated by passing <span class="math notranslate nohighlight">\(o(x, y, t)\)</span> through the system’s forward model.</p></li>
 </ul>
 </section>
 <section id="network-structure-fig-1b">
-<h2>3.2 Network Structure (Fig. 1b)<a class="headerlink" href="#network-structure-fig-1b" title="Link to this heading">#</a></h2>
-<p>The model consists of two coordinate-based neural networks (a form of <strong>Implicit Neural Representation</strong>, or INR):</p>
+<h3>3.2 Network Structure (Fig. 1b)<a class="headerlink" href="#network-structure-fig-1b" title="Link to this heading">#</a></h3>
+<p>The model consists of two coordinate-based neural networks (a form of Implicit Neural Representation, or INR):</p>
 <ol class="arabic simple">
-<li><p><strong>Motion Network</strong><br />
+<li><p>Motion Network<br />
 Takes as input <span class="math notranslate nohighlight">\((x, y, t)\)</span> and outputs the motion displacement vector <span class="math notranslate nohighlight">\((\delta x_t, \delta y_t)\)</span>:
 $<span class="math notranslate nohighlight">\(
 (\delta x_t, \delta y_t) = f_{\text{motion}}(x, y, t)
 \)</span><span class="math notranslate nohighlight">\(
-This gives a **pixel-wise motion kernel** at time \)</span>t$.</p></li>
-<li><p><strong>Scene Network</strong><br />
-Takes the <strong>motion-compensated coordinate</strong> <span class="math notranslate nohighlight">\((x + \delta x_t, y + \delta y_t)\)</span> and outputs the reconstructed scene value at that location:
+This gives a pixel-wise motion kernel at time \)</span>t$.</p></li>
+<li><p>Scene Network<br />
+Takes the motion-compensated coordinate <span class="math notranslate nohighlight">\((x + \delta x_t, y + \delta y_t)\)</span> and outputs the reconstructed scene value at that location:
 $<span class="math notranslate nohighlight">\(
 o(x, y, t) = f_{\text{scene}}(x + \delta x_t, y + \delta y_t)
 \)</span><span class="math notranslate nohighlight">\(
-Note: The scene network does **not** depend on \)</span>t$ directly—it learns a static canonical scene which is warped over time by the motion field.</p></li>
+Note: The scene network does not depend on \)</span>t$ directly—it learns a static canonical scene which is warped over time by the motion field.</p></li>
 </ol>
 </section>
 <section id="forward-model-and-self-supervised-loss">
-<h2>3.3 Forward Model and Self-Supervised Loss<a class="headerlink" href="#forward-model-and-self-supervised-loss" title="Link to this heading">#</a></h2>
-<p>Once the reconstructed scene <span class="math notranslate nohighlight">\(o(x, y, t)\)</span> is obtained, it is passed through a <strong>forward model</strong> that simulates the image formation process of the actual imaging system:
+<h3>3.3 Forward Model and Self-Supervised Loss<a class="headerlink" href="#forward-model-and-self-supervised-loss" title="Link to this heading">#</a></h3>
+<p>Once the reconstructed scene <span class="math notranslate nohighlight">\(o(x, y, t)\)</span> is obtained, it is passed through a forward model that simulates the image formation process of the actual imaging system:
 $<span class="math notranslate nohighlight">\(
 \hat{I}_t = F(o(x, y, t))
 \)</span>$</p>
@@ -494,17 +499,18 @@ $<span class="math notranslate nohighlight">\(
 $<span class="math notranslate nohighlight">\(
 \mathcal{L} = \sum_t \|F(o(x, y, t)) - I_t\|^2
 \)</span>$</p>
-<p>This loss is backpropagated through both the forward model and the two networks. In this way, <strong>the motion and the scene are jointly learned from scratch</strong>, using only the raw measurements as supervision.</p>
+<p>This loss is backpropagated through both the forward model and the two networks. In this way, the motion and the scene are jointly learned from scratch, using only the raw measurements as supervision.</p>
 </section>
 </section>
 <section id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <p>[1] Huang, B., Bates, M. &amp; Zhuang, X. (2009). Super-resolution fluorescence microscopy. <em>Annu. Rev. Biochem.</em></p>
 <p>[2] Park, Y., Depeursinge, C. &amp; Popescu, G. (2018). Quantitative phase imaging in biomedicine. <em>Nat. Photonics</em></p>
 <p>[3] Antipa, N. et al. (2019). Video from stills: lensless imaging with rolling shutter. <em>IEEE Int. Conf. Comput. Photography</em></p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data">
-<h1>Neural space-time model example on differential phase contrast microscopy (DPC) data<a class="headerlink" href="#neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="code-reproduction-with-explanation-neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data">
+<h1>Code Reproduction with Explanation: Neural space-time model example on differential phase contrast microscopy (DPC) data<a class="headerlink" href="#code-reproduction-with-explanation-neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data" title="Link to this heading">#</a></h1>
 <p>Jupyter lab demo for “Neural space-time model for dynamic multi-shot imaging” by Ruiming Cao, et al. (2024)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
 <span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
@@ -528,7 +534,7 @@ $<span class="math notranslate nohighlight">\(
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">calcil</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cc</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../../../../code/NeRF_optics/nstm-main&quot;</span><span class="p">)</span>  <span class="c1"># 把上一级目录（即项目根目录）加进 PYTHONPATH</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../../../../code/NeRF_optics/nstm-main&quot;</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">nstm</span><span class="w"> </span><span class="kn">import</span> <span class="n">dpc_utils</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nstm</span><span class="w"> </span><span class="kn">import</span> <span class="n">dpc_flow</span>
@@ -883,17 +889,20 @@ publisher={Cold Spring Harbor Laboratory}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Neural space–time model for dynamic multi-shot imaging</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3.Method Overview</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">3.1 Inputs and Outputs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-structure-fig-1b">3.2 Network Structure (Fig. 1b)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-and-self-supervised-loss">3.3 Forward Model and Self-Supervised Loss</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">From Paper to Code: Understanding and Reproducing “Neural space–time model for dynamic multi-shot imaging”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-reading-notes">Paper Reading Notes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3.Method Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">3.1 Inputs and Outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#network-structure-fig-1b">3.2 Network Structure (Fig. 1b)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-and-self-supervised-loss">3.3 Forward Model and Self-Supervised Loss</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data">Neural space-time model example on differential phase contrast microscopy (DPC) data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#code-reproduction-with-explanation-neural-space-time-model-example-on-differential-phase-contrast-microscopy-dpc-data">Code Reproduction with Explanation: Neural space-time model example on differential phase contrast microscopy (DPC) data</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-images">Visualize images</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dpc-transfer-function">DPC transfer function</a></li>

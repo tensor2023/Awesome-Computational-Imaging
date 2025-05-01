@@ -1,8 +1,6 @@
-## Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling  
-
+### From Paper to Code: Understanding and Reproducing "Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling"
 ![image.png](Chapter06_Pixel2Gaussian_files/image.png)
-
-Code: https://github.com/Xinjie-Q/GaussianImage, 
+Code: [GitHub Repository](https://github.com/Xinjie-Q/GaussianImage), 
 Source Code in My Repo: ../../../../code/GS/ContinuousSR-main/demo.py
 
 ## 1. Highlights
@@ -15,7 +13,7 @@ Although GaussianImage(https://xingtongge.github.io/GaussianImage-page/) is an e
 
 Super-resolution (SR) aims to recover a high-resolution (HR) image from its low-resolution (LR) counterpart. Traditional SR methods focus on fixed integer scales like ×2, ×3, or ×4, which limits flexibility in real applications.  
 
-To solve this, **Arbitrary-Scale Super-Resolution (ASSR)** was proposed. A landmark method, **LIIF** [Chen et al., 2021], introduces *implicit neural representation (INR)* to map coordinates to RGB values via an MLP. Given any continuous coordinate $(x, y)$, the network outputs the corresponding color, enabling continuous upscaling.
+To solve this, Arbitrary-Scale Super-Resolution (ASSR) was proposed. A landmark method, LIIF [Chen et al., 2021], introduces *implicit neural representation (INR)* to map coordinates to RGB values via an MLP. Given any continuous coordinate $(x, y)$, the network outputs the corresponding color, enabling continuous upscaling.
 
 However, such INR-based methods suffer from:
 
@@ -23,12 +21,12 @@ However, such INR-based methods suffer from:
 - Limited fidelity: coordinate-based MLPs struggle to capture high-frequency textures.
 - Complex pipeline: involves multiple upsampling-decoding stages.
 
-In essence, while INR methods can do continuous SR, they do so **slowly** and **with limited detail reconstruction**.
+In essence, while INR methods can do continuous SR, they do so slowly and with limited detail reconstruction.
 
 ## 2. Method Overview
 ![image-2.png](Chapter06_Pixel2Gaussian_files/image-2.png)
 This paper proposes a fundamentally new idea:  
-Instead of **learning a function to query pixels**, learn to **explicitly construct a continuous image field**, represented by a set of 2D **Gaussian kernels**.
+Instead of learning a function to query pixels, learn to explicitly construct a continuous image field, represented by a set of 2D Gaussian kernels.
 
 Each kernel is parameterized by its spatial position $\mu$, covariance matrix $\Sigma$, and RGB color $c_{rgb}$. The reconstructed image is the sum of $N$ such Gaussians:
 
@@ -57,7 +55,7 @@ $$
 
 Directly predicting Gaussian parameters ($\mu$, $\Sigma$) from a low-resolution image is highly challenging due to the nature of the Gaussian space:
 
-- The space is **high-dimensional and sensitive**.
+- The space is high-dimensional and sensitive.
 - Even small errors in $\mu$ (position) or $\Sigma$ (covariance) can cause significant visual distortions.
 - Direct optimization easily gets stuck in poor local minima.
 
@@ -65,17 +63,17 @@ To overcome this, the authors propose three key components:
 
 
 
-#### 2.1.1 **Deep Gaussian Prior (DGP)**
+#### 2.1.1 Deep Gaussian Prior (DGP)
 
 The authors analyze 40,000 natural images and discover that the covariance parameters of Gaussian kernels follow a compact and roughly Gaussian-distributed range:
 
 - $\sigma_x^2 \in [0, 2.4]$, $\sigma_y^2 \in [0, 2.2]$, $\rho \in [-0.9, 1.5]$
 
-This prior, called **Deep Gaussian Prior (DGP)**, serves as a statistical guideline for efficient parameter estimation.
+This prior, called Deep Gaussian Prior (DGP), serves as a statistical guideline for efficient parameter estimation.
 
 ![image.png](Chapter06_Pixel2Gaussian_files/image.png)
 
-#### 2.1.2 **DGP-Driven Covariance Weighting (DDCW)**
+#### 2.1.2 DGP-Driven Covariance Weighting (DDCW)
 
 Rather than directly predicting the full covariance matrix $\Sigma$, the model:
 
@@ -90,9 +88,9 @@ This drastically reduces the optimization complexity by converting regression in
 
 
 
-#### 2.1.3 **Adaptive Position Drifting (APD)**
+#### 2.1.3 Adaptive Position Drifting (APD)
 
-To avoid rigid Gaussian placements at LR grid centers, the model learns **dynamic position offsets** from LR image features:
+To avoid rigid Gaussian placements at LR grid centers, the model learns dynamic position offsets from LR image features:
 
 $$
 P_{\text{final}} = P_{\text{init}} + \tanh(\text{MLP}(F_{LR}))
@@ -106,10 +104,10 @@ Together, DGP, DDCW, and APD allow robust, efficient modeling of Gaussian fields
 
 ## 3. Contributions
 
-- Propose **ContinuousSR**, the first to reconstruct 2D continuous signals explicitly from LR images using 2D Gaussian splatting.
-- Discover **Deep Gaussian Prior (DGP)** and propose **DGP-Driven Covariance Weighting (DDCW)** to simplify optimization.
-- Introduce **Adaptive Position Drifting (APD)** to dynamically place kernels based on image content.
-- Achieve **19.5× speedup** and **+0.9 dB PSNR gain** over previous SOTA (e.g., CiaoSR, LIIF) on multiple benchmarks.
+- Propose ContinuousSR, the first to reconstruct 2D continuous signals explicitly from LR images using 2D Gaussian splatting.
+- Discover Deep Gaussian Prior (DGP) and propose DGP-Driven Covariance Weighting (DDCW) to simplify optimization.
+- Introduce Adaptive Position Drifting (APD) to dynamically place kernels based on image content.
+- Achieve 19.5× speedup and +0.9 dB PSNR gain over previous SOTA (e.g., CiaoSR, LIIF) on multiple benchmarks.
 
 
 
@@ -121,7 +119,7 @@ Together, DGP, DDCW, and APD allow robust, efficient modeling of Gaussian fields
 [4] Zhang et al. "GaussianImage: High-Fidelity 2D Gaussian Splatting for SR." ECCV, 2024.  
 
 
-# Demo
+# Code Reproduction with Explanation: Multi-Resolution Reconstruction of Butterfly Wings
 
 
 ```python
@@ -209,13 +207,17 @@ plt.show()
     /tmp/ipykernel_494914/3970855738.py:3: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
       model_spec = torch.load(args.model)['model']
     /home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/torch/functional.py:534: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1729647329220/work/aten/src/ATen/native/TensorShape.cpp:3595.)
-      return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+      return _VF.meshgrid(tensors, kwargs)  # type: ignore[attr-defined]
     ../../../../code/GS/ContinuousSR-main/models/gaussian.py:241: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
       get_xyz = torch.tensor(get_coord(lr_h*2, lr_w*2)).reshape(lr_h*2, lr_w*2, 2).cuda()
 
 
 
     
-![png](Chapter06_Pixel2Gaussian_files/Chapter06_Pixel2Gaussian_5_1.png)
+![png](Chapter06_Pixel2Gaussian_files/Chapter06_Pixel2Gaussian_4_1.png)
     
 
+
+### Result Analysis
+
+As shown in the visualization, ContinuousSR produces high-quality super-resolved images at various scales including ×2.5, ×4, and ×6. The ×4 and ×6 results exhibit clean edges and sharp textures, demonstrating the effectiveness of the continuous Gaussian representation in preserving fine details. In contrast, the ×2.5 output shows minor striping artifacts, which I attribute to grid misalignment and insufficient Gaussian coverage at lower resolutions. These artifacts diminish as the output resolution increases, highlighting the robustness of ContinuousSR under higher scaling factors.

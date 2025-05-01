@@ -1,37 +1,40 @@
-## 3D Gaussian Splatting for Real-Time Radiance Field Rendering
-
+### From Paper to Code: Understanding and Reproducing "3D Gaussian Splatting for Real-Time Radiance Field Rendering"
 ![image.png](Chapter04_3D_Gaussian_Splatting_files/image.png)
 Code: https://github.com/graphdeco-inria/gaussian-splatting
+Code: [GitHub Repository](https://bmild.github.io/fourfeat/)
+Source Code in My Repo: ../../../../code/GS/gaussian-splatting-main/train.py
+
+# Paper Reading Notes
 
 ## 1. Highlights
 
-In computer graphics, traditional methods have limitations. NeRF, for example, offers **no direct visibility** into geometry, appearance, or structure—making it a "black box". It is also **slow and memory-intensive**.
+In computer graphics, traditional methods have limitations. NeRF, for example, offers no direct visibility into geometry, appearance, or structure—making it a "black box". It is also slow and memory-intensive.
 
-3D Gaussian Splatting (3DGS) addresses these issues by **projecting 3D Gaussians onto 2D splats**, then **optimizing their parameters** to represent the scene. This approach enables **real-time rendering** with **high-quality results**.
+3D Gaussian Splatting (3DGS) addresses these issues by projecting 3D Gaussians onto 2D splats, then optimizing their parameters to represent the scene. This approach enables real-time rendering with high-quality results.
 
 ## 2. Background
 
-In recent years, Neural Radiance Fields (NeRFs) [Mildenhall et al. 2020] have emerged as a powerful representation for synthesizing novel views of a scene. NeRF models use **multi-layer perceptrons (MLPs)** and **volumetric ray marching**, allowing them to model fine geometry and view-dependent color. However, **NeRFs are notoriously slow** — rendering even a single image can take seconds, and training can take days.
+In recent years, Neural Radiance Fields (NeRFs) [Mildenhall et al. 2020] have emerged as a powerful representation for synthesizing novel views of a scene. NeRF models use multi-layer perceptrons (MLPs) and volumetric ray marching, allowing them to model fine geometry and view-dependent color. However, NeRFs are notoriously slow — rendering even a single image can take seconds, and training can take days.
 
 Many methods have tried to accelerate NeRFs:
 
-- **Mip-NeRF360** [Barron et al. 2022] achieves state-of-the-art quality but takes ~48 hours to train.
-- **Plenoxels** [Fridovich-Keil et al. 2022] and **InstantNGP** [Müller et al. 2022] significantly reduce training time, but still struggle to render at real-time speeds for 1080p images.
+- Mip-NeRF360 [Barron et al. 2022] achieves state-of-the-art quality but takes ~48 hours to train.
+- Plenoxels [Fridovich-Keil et al. 2022] and InstantNGP [Müller et al. 2022] significantly reduce training time, but still struggle to render at real-time speeds for 1080p images.
 
 These trade-offs raise a central question:  
 > 💡 *Can we achieve both real-time rendering and high quality radiance field representation — without sacrificing speed or memory?*
 
-This paper proposes a new paradigm: **3D Gaussian Splatting**.
+This paper proposes a new paradigm: 3D Gaussian Splatting.
 which means gaussian can be splatted like snow ball from 3D space to 2D image.
-Instead of voxel grids or MLPs, the authors represent scenes using a set of **anisotropic 3D Gaussians** in world space. These Gaussians can be:
+Instead of voxel grids or MLPs, the authors represent scenes using a set of anisotropic 3D Gaussians in world space. These Gaussians can be:
 - Projected to 2D splats for efficient rasterization,
 - Differentiably optimized,
-- Interleaved with **adaptive density control**, adding/removing Gaussians as needed.
+- Interleaved with adaptive density control, adding/removing Gaussians as needed.
 
 
 ## 3.Method Overview
 
-A **3D Gaussian** can be defined in Euclidean space by its center $\mu \in \mathbb{R}^3$ and covariance matrix $\Sigma \in \mathbb{R}^{3 \times 3}$:
+A 3D Gaussian can be defined in Euclidean space by its center $\mu \in \mathbb{R}^3$ and covariance matrix $\Sigma \in \mathbb{R}^{3 \times 3}$:
 
 $$
 G(\mathbf{x}) = e^{ -\frac{1}{2} (\mathbf{x} - \mu)^T \Sigma^{-1} (\mathbf{x} - \mu) }
@@ -45,7 +48,7 @@ $$
 
 where $R$ is a rotation matrix (often represented via a quaternion) and $S$ is a diagonal scaling matrix. This ellipsoidal representation supports anisotropy and remains physically valid during optimization.
 
-To **project** the 3D Gaussian onto the 2D image plane (i.e., rasterization), the covariance is transformed by the Jacobian $J$ of the camera projection and world-to-camera transformation $W$:
+To project the 3D Gaussian onto the 2D image plane (i.e., rasterization), the covariance is transformed by the Jacobian $J$ of the camera projection and world-to-camera transformation $W$:
 
 $$
 \Sigma' = J W \Sigma W^T J^T
@@ -53,7 +56,7 @@ $$
 
 This results in a 2D Gaussian splat, whose shape adapts to the viewing angle, allowing tile-based sorting and fast alpha blending.
 
-The **appearance** of each point is encoded using **Spherical Harmonics (SH)** up to degree $L$. This allows compact modeling of view-dependent color:
+The appearance of each point is encoded using Spherical Harmonics (SH) up to degree $L$. This allows compact modeling of view-dependent color:
 
 $$
 \mathbf{c}(\mathbf{v}) = \sum_{l=0}^{L} \sum_{m=-l}^{l} c_{lm} Y_{lm}(\mathbf{v})
@@ -88,14 +91,13 @@ This model leads to a fast and differentiable pipeline for radiance field render
 - Müller et al., InstantNGP: Instant Neural Graphics Primitives, SIGGRAPH 2022  
 - Zwicker et al., EWA Volume Splatting, IEEE Vis 2001
 
+# Code Reproduction with Explanation
+
 ### Start GUI for Real-Time Visualization
 
 During training, a GUI server is used to visualize intermediate renderings. Start it with:
-
-
 ```python
 python gui_server.py --ip 127.0.0.1 --port 6009
-```
 
 
 ```python
@@ -141,9 +143,25 @@ except:
 from train import prepare_output_and_logger,training_report
 ```
 
+    ✅ Added /home/xqgao/2025/MIT/code/GS/gaussian-splatting-main to sys.path
+
+
+    2025-05-01 15:14:53.842422: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+    2025-05-01 15:14:53.847205: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+    2025-05-01 15:14:53.858693: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+    WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+    E0000 00:00:1746083693.877993 1950840 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+    E0000 00:00:1746083693.883505 1950840 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+    W0000 00:00:1746083693.897555 1950840 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+    W0000 00:00:1746083693.897577 1950840 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+    W0000 00:00:1746083693.897579 1950840 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+    W0000 00:00:1746083693.897581 1950840 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+    2025-05-01 15:14:53.902040: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+    To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+
 
 ```python
-
 from argparse import ArgumentParser
 
 # 手动模拟命令行参数
@@ -185,10 +203,6 @@ saving_iterations = args.save_iterations
 checkpoint_iterations = args.checkpoint_iterations
 checkpoint = args.start_checkpoint
 debug_from = args.debug_from
-```
-
-
-```python
 if not SPARSE_ADAM_AVAILABLE and opt.optimizer_type == "sparse_adam":
     sys.exit(f"Trying to use sparse adam but it is not installed, please install the correct rasterizer using pip install [3dgs_accel].")
 
@@ -217,6 +231,30 @@ ema_Ll1depth_for_log = 0.0
 
 progress_bar = tqdm(range(first_iter, opt.iterations), desc="Training progress")
 first_iter += 1
+```
+
+    Optimizing 
+
+
+    Output folder: /home/xqgao/2025/MIT/code/GS/gaussian-splatting-main/output/0da28e10-9 [01/05 15:14:56]
+    Found transforms_train.json file, assuming Blender data set! [01/05 15:14:56]
+    Reading Training Transforms [01/05 15:14:56]
+    Reading Test Transforms [01/05 15:15:00]
+    Loading Training Cameras [01/05 15:15:09]
+    Loading Test Cameras [01/05 15:15:16]
+    Number of points at initialisation :  100000 [01/05 15:15:16]
+    
+    [ITER 7000] Evaluating train: L1 0.37023224234581 PSNR 5.904714584350586 [01/05 15:17:29]
+    
+    [ITER 7000] Saving Gaussians [01/05 15:17:29]
+    
+    [ITER 30000] Evaluating train: L1 0.6462077140808106 PSNR 2.134984040260315 [01/05 15:26:05]
+    
+    [ITER 30000] Saving Gaussians [01/05 15:26:05]
+
+
+
+```python
 for iteration in range(first_iter, opt.iterations + 1):
     if network_gui.conn == None:
         network_gui.try_connect()
@@ -339,13 +377,16 @@ for iteration in range(first_iter, opt.iterations + 1):
 
 ```
 
+    Training progress: 100%|██████████| 30000/30000 [10:46<00:00, 46.43it/s, Loss=0.0104871, Depth Loss=0.0000000]
+
+
 ### Key Design Concepts in the Code
 
-This code implements **supervised**, **explicit**, and **differentiable** 3D Gaussian Splatting. Below are the highlights:
+This code implements supervised, explicit, and differentiable 3D Gaussian Splatting. Below are the highlights:
 
----
 
-**1. Explicit Representation**
+
+1. Explicit Representation
 
 ```python
 gaussians = GaussianModel(dataset.sh_degree, opt.optimizer_type)
@@ -353,11 +394,11 @@ gaussians = GaussianModel(dataset.sh_degree, opt.optimizer_type)
 
 - Scene is modeled as a list of 3D Gaussians.
 - Each has position, scale, rotation, color (SH), opacity.
-- Unlike NeRF, this is fully **inspectable and editable**.
+- Unlike NeRF, this is fully inspectable and editable.
 
----
 
-**2. Supervised Learning**
+
+2. Supervised Learning
 
 ```python
 gt_image = viewpoint_cam.original_image.cuda()
@@ -369,9 +410,9 @@ loss = (1.0 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * (1.0 - ssim_value)
 - Uses ground truth RGB image.
 - Supervised loss: L1 + SSIM.
 
----
 
-**3. Differentiable Rasterization**
+
+3. Differentiable Rasterization
 ```python
 rendered_image, radii, depth_image = rasterizer(...)
 ```
@@ -387,11 +428,11 @@ return _RasterizeGaussians.apply(...)
 ```
 
 - This invokes a CUDA kernel that performs the splatting.
-- It's **differentiable**, so gradients can flow through projection and blending.
+- It's differentiable, so gradients can flow through projection and blending.
 
-> This rasterization is not neural — it's **analytical and explicit**, yet fully integrated into the training loop.
+> This rasterization is not neural — it's analytical and explicit, yet fully integrated into the training loop.
 
-**4. Dynamic SH Complexity**
+4. Dynamic SH Complexity
 
 ```python
 if iteration % 1000 == 0:
@@ -400,6 +441,3 @@ if iteration % 1000 == 0:
 
 - Increases SH degree during training.
 - Allows progressive complexity in color modeling.
-
----
-

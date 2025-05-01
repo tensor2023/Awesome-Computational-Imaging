@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting &#8212; Awesome Computational Imaging</title>
+    <title>From Paper to Code: Understanding and Reproducing “GaussianImage: 1000 FPS Image Representation and Compression by 2D Gaussian Splatting” &#8212; Awesome Computational Imaging</title>
   
   
   
@@ -376,7 +376,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting</h1>
+    <h1>From Paper to Code: Understanding and Reproducing “GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting”</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,18 +386,22 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-3dgs-vs-gaussianimage">Comparison: 3DGS vs. GaussianImage</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">From Paper to Code: Understanding and Reproducing “GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-reading-notes">Paper Reading Notes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-3dgs-vs-gaussianimage">Comparison: 3DGS vs. GaussianImage</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">2. Method Overview</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-matrix-factorization">2.1 Covariance matrix factorization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accumulated-blending">2.2 Accumulated Blending</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">2. Method Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-matrix-factorization">2.1 Covariance matrix factorization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accumulated-blending">2.2 Accumulated Blending</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#code-reproduction-with-explanation">Code Reproduction with Explanation:</a></li>
 </ul>
 
             </nav>
@@ -410,17 +414,19 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="gaussianimage-1000-fps-image-representation-and-compression-by-2d-gaussian-splatting">
-<h1>GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting<a class="headerlink" href="#gaussianimage-1000-fps-image-representation-and-compression-by-2d-gaussian-splatting" title="Link to this heading">#</a></h1>
-<p><img alt="image.png" src="../../_images/image4.png" /></p>
-<p>Code: https://github.com/Xinjie-Q/GaussianImage,
-Source Code in My Repo: ../../../../code/GS/GaussianImage-main/train.py</p>
+  <section id="from-paper-to-code-understanding-and-reproducing-gaussianimage-1000-fps-image-representation-and-compression-by-2d-gaussian-splatting">
+<h1>From Paper to Code: Understanding and Reproducing “GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting”<a class="headerlink" href="#from-paper-to-code-understanding-and-reproducing-gaussianimage-1000-fps-image-representation-and-compression-by-2d-gaussian-splatting" title="Link to this heading">#</a></h1>
+<p><img alt="image.png" src="../../_images/image4.png" />
+Code: <a class="reference external" href="https://github.com/Xinjie-Q/GaussianImage">GitHub Repository</a>,
+Source Code in My Repo: ../../../code/GS/GaussianImage-main/train.py</p>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="paper-reading-notes">
+<h1>Paper Reading Notes<a class="headerlink" href="#paper-reading-notes" title="Link to this heading">#</a></h1>
 <section id="highlights">
-<h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
+<h2>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
 <p>This work transitions 3D Gaussian Splatting (3DGS) into a 2D formulation, specifically for single-image representation and compression. It inherits key advantages of 3DGS—such as high rendering quality and parallelism—while eliminating the need for camera parameters or depth sorting.</p>
 <section id="comparison-3dgs-vs-gaussianimage">
-<h2>Comparison: 3DGS vs. GaussianImage<a class="headerlink" href="#comparison-3dgs-vs-gaussianimage" title="Link to this heading">#</a></h2>
+<h3>Comparison: 3DGS vs. GaussianImage<a class="headerlink" href="#comparison-3dgs-vs-gaussianimage" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Feature</p></th>
@@ -455,13 +461,13 @@ Source Code in My Repo: ../../../../code/GS/GaussianImage-main/train.py</p>
 </section>
 </section>
 <section id="background">
-<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<h2>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
 <p>Implicit neural representations (INRs) have recently gained popularity in image processing. These methods represent images as continuous functions, often modeled by MLPs, that map spatial coordinates <span class="math notranslate nohighlight">\((x, y)\)</span> to RGB values.<br />
 Notable methods like SIREN [1] and WIRE [2] show impressive results in terms of image fidelity.</p>
-<p>Recently, 3D Gaussian Splatting [5] has been proposed in the context of 3D scene reconstruction, providing fast and visually high-quality rendering by explicitly modeling 3D Gaussians. This work inspires Method Overview of <strong>GaussianImage</strong>, which brings this approach to <strong>2D image representation and compression</strong>.</p>
+<p>Recently, 3D Gaussian Splatting [5] has been proposed in the context of 3D scene reconstruction, providing fast and visually high-quality rendering by explicitly modeling 3D Gaussians. This work inspires Method Overview of GaussianImage, which brings this approach to 2D image representation and compression.</p>
 </section>
 <section id="method-overview">
-<h1>2. Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h1>
+<h2>2. Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h2>
 <p>Pipeline</p>
 <ol class="arabic simple">
 <li><p>Input a high-resolution image (usually in full resolution);</p></li>
@@ -469,18 +475,18 @@ Notable methods like SIREN [1] and WIRE [2] show impressive results in terms of 
 <li><p>Store these Gaussian parameters as a compressed representation;</p></li>
 <li><p>When needed for display or reconstruction, render the image from these parameters at 2000 FPS.</p></li>
 </ol>
-<p>GaussianImage replaces MLP-based INRs with <strong>a set of 2D Gaussians</strong>. Each image is represented as a sum of weighted Gaussian functions in 2D space. Every Gaussian is defined by:</p>
+<p>GaussianImage replaces MLP-based INRs with a set of 2D Gaussians. Each image is represented as a sum of weighted Gaussian functions in 2D space. Every Gaussian is defined by:</p>
 <ul class="simple">
 <li><p>Position <span class="math notranslate nohighlight">\(\mu \in \mathbb{R}^2\)</span></p></li>
 <li><p>Covariance matrix <span class="math notranslate nohighlight">\(\Sigma \in \mathbb{R}^{2 \times 2}\)</span></p></li>
 <li><p>Weighted color coefficient <span class="math notranslate nohighlight">\(c' \in \mathbb{R}^3\)</span></p></li>
 </ul>
 <section id="covariance-matrix-factorization">
-<h2>2.1 Covariance matrix factorization<a class="headerlink" href="#covariance-matrix-factorization" title="Link to this heading">#</a></h2>
-<p>The covariance matrix defines the <strong>shape</strong>, <strong>orientation</strong>, and <strong>scale</strong> of a 2D Gaussian.<br />
+<h3>2.1 Covariance matrix factorization<a class="headerlink" href="#covariance-matrix-factorization" title="Link to this heading">#</a></h3>
+<p>The covariance matrix defines the shape, orientation, and scale of a 2D Gaussian.<br />
 It determines how the Gaussian spreads in space, allowing it to adapt to local image structures.<br />
 Using a full covariance matrix enables anisotropic and rotated blobs, which are essential for accurately fitting complex image regions.</p>
-<p>To ensure the covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> is always positive semi-definite, GaussianImage uses <strong>Cholesky decomposition</strong>:</p>
+<p>To ensure the covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> is always positive semi-definite, GaussianImage uses Cholesky decomposition:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \Sigma = LL^\top,\quad L = \begin{bmatrix} l_1 &amp; 0 \\\\ l_2 &amp; l_3 \end{bmatrix}
@@ -490,14 +496,14 @@ Using a full covariance matrix enables anisotropic and rotated blobs, which are 
 </section>
 <hr class="docutils" />
 <section id="accumulated-blending">
-<h2>2.2 Accumulated Blending<a class="headerlink" href="#accumulated-blending" title="Link to this heading">#</a></h2>
-<p>3D Gaussian Splatting (3DGS) uses <strong>alpha blending</strong>:</p>
+<h3>2.2 Accumulated Blending<a class="headerlink" href="#accumulated-blending" title="Link to this heading">#</a></h3>
+<p>3D Gaussian Splatting (3DGS) uses alpha blending:</p>
 <ul class="simple">
 <li><p>Needs depth sorting</p></li>
 <li><p>Requires camera parameters</p></li>
 <li><p>Sequential, not parallel</p></li>
 </ul>
-<p>But 2D images have <strong>no depth</strong>. GaussianImage instead uses <strong>accumulated summation</strong>:</p>
+<p>But 2D images have no depth. GaussianImage instead uses accumulated summation:</p>
 <div class="math notranslate nohighlight">
 \[
 C_i = \sum_{n \in N} c'_n \cdot \exp(-\sigma_n),\quad \sigma_n = \frac{1}{2} d_n^\top \Sigma^{-1} d_n
@@ -507,13 +513,17 @@ C_i = \sum_{n \in N} c'_n \cdot \exp(-\sigma_n),\quad \sigma_n = \frac{1}{2} d_n
 </section>
 </section>
 <section id="references">
-<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <p>[1] Sitzmann et al., “Implicit Neural Representations with Periodic Activation Functions”, NeurIPS 2020<br />
 [2] Saragadam et al., “WIRE: Wavelet Implicit Neural Representations”, CVPR 2023<br />
 [3] Müller et al., “Instant Neural Graphics Primitives”, SIGGRAPH 2022<br />
 [4] Chen et al., “NeuRBF: Neural Fields with Radial Basis Functions”, ICCV 2023<br />
 [5] Kerbl et al., “3D Gaussian Splatting for Real-Time Radiance Field Rendering”, SIGGRAPH 2023<br />
 [6] Townsend et al., “Practical Lossless Compression with Latent Variables using Bits-Back Coding”, arXiv 2019</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="code-reproduction-with-explanation">
+<h1>Code Reproduction with Explanation:<a class="headerlink" href="#code-reproduction-with-explanation" title="Link to this heading">#</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current working directory:&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
@@ -539,8 +549,8 @@ C_i = \sum_{n \in N} c'_n \cdot \exp(-\sigma_n),\quad \sigma_n = \frac{1}{2} d_n
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Current working directory: ../../../../Awesome-Computational-Imaging/chapters/Chapter05_Gaussian_Image
-Appending path: ../../../../code/GS/GaussianImage-main
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Current working directory: /home/xqgao/2025/MIT/Awesome-Computational-Imaging/chapters/Chapter05_Gaussian_Image
+Appending path: /home/xqgao/2025/MIT/code/GS/GaussianImage-main
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">SimpleTrainer2d</span></code> is designed to train a set of learnable 2D Gaussians to approximate a given image. It supports different Gaussian formulations such as Cholesky, Rotation-Scaling, and 3DGS, and takes care of everything from loading the image and initializing the model, to training over a specified number of iterations and evaluating performance using PSNR and MS-SSIM. The final goal is to represent the image efficiently using a compact set of parameterized Gaussians, while optionally saving the output and logging the process.</p>
@@ -565,7 +575,7 @@ Appending path: ../../../../code/GS/GaussianImage-main
         <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gt_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">gt_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span> <span class="o">=</span> <span class="n">iterations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_imgs</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">save_imgs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../../../../code/GS/GaussianImage-main/checkpoints/</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">data_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">iterations</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">num_points</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../../../code/GS/GaussianImage-main/checkpoints/</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">data_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">iterations</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">num_points</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">model_name</span> <span class="o">==</span> <span class="s2">&quot;GaussianImage_Cholesky&quot;</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">gaussianimage_cholesky</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianImage_Cholesky</span>
@@ -603,20 +613,6 @@ Appending path: ../../../../code/GS/GaussianImage-main
             <span class="n">psnr_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psnr</span><span class="p">)</span>
             <span class="n">iter_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
             
-            <span class="k">if</span> <span class="nb">iter</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-                    <span class="n">progress_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;Loss&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="mi">7</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;PSNR&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">psnr</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="mi">4</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">,&quot;</span><span class="p">})</span>
-                    <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-                    <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="p">()</span>
-                    <span class="n">img_tensor</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="s2">&quot;render&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
-                    <span class="n">img</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">img_tensor</span><span class="p">)</span>
-                    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-                    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Iteration </span><span class="si">{</span><span class="nb">iter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
-                    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">gaussian_model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-
                 
         <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
         <span class="n">progress_bar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -646,19 +642,19 @@ Appending path: ../../../../code/GS/GaussianImage-main
 
         <span class="bp">self</span><span class="o">.</span><span class="n">logwriter</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Test PSNR:</span><span class="si">{:.4f}</span><span class="s2">, MS_SSIM:</span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">psnr</span><span class="p">,</span> <span class="n">ms_ssim_value</span><span class="p">))</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_imgs</span><span class="p">:</span>
-            <span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()</span>
-            <span class="n">img</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">&quot;render&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="c1">#if self.save_imgs:</span>
+        <span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">&quot;render&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 
-            <span class="c1"># Save image</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_name</span> <span class="o">+</span> <span class="s2">&quot;_fitting.png&quot;</span>
-            <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">/</span> <span class="n">name</span><span class="p">))</span>
+        <span class="c1"># Save image</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_name</span> <span class="o">+</span> <span class="s2">&quot;_fitting.png&quot;</span>
+        <span class="c1"># img.save(str(self.log_dir / name))</span>
 
-            <span class="c1"># Show image with matplotlib</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="c1"># Show image with matplotlib</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">psnr</span><span class="p">,</span> <span class="n">ms_ssim_value</span>
 
@@ -673,13 +669,13 @@ Appending path: ../../../../code/GS/GaussianImage-main
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Example training script.&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--dataset&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../Datasets/Kodak&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Training dataset&quot;</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--dataset&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../Datasets/Kodak&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Training dataset&quot;</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--data_name&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;kodak&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Training dataset&quot;</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--iterations&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;number of training epochs (default: </span><span class="si">%(default)s</span><span class="s2">)&quot;</span>
+        <span class="s2">&quot;--iterations&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;number of training epochs (default: </span><span class="si">%(default)s</span><span class="s2">)&quot;</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--model_name&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;GaussianImage_Cholesky&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;model selection: GaussianImage_Cholesky, GaussianImage_RS, 3DGS&quot;</span>
@@ -726,9 +722,10 @@ Appending path: ../../../../code/GS/GaussianImage-main
 <span class="n">psnrs</span><span class="p">,</span> <span class="n">ms_ssims</span><span class="p">,</span> <span class="n">training_times</span><span class="p">,</span> <span class="n">eval_times</span><span class="p">,</span> <span class="n">eval_fpses</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
 <span class="n">image_h</span><span class="p">,</span> <span class="n">image_w</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">data_name</span> <span class="o">==</span> <span class="s2">&quot;kodak&quot;</span><span class="p">:</span>
-    <span class="n">image_length</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">image_length</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span>
 <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">data_name</span> <span class="o">==</span> <span class="s2">&quot;DIV2K_valid_LRX2&quot;</span><span class="p">:</span>
     <span class="n">image_length</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">800</span>
+
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">start</span><span class="o">+</span><span class="n">image_length</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">data_name</span> <span class="o">==</span> <span class="s2">&quot;kodak&quot;</span><span class="p">:</span>
         <span class="n">image_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.png&#39;</span>
@@ -763,114 +760,39 @@ Appending path: ../../../../code/GS/GaussianImage-main
 </div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/jaxtyping/__init__.py:231: UserWarning: jaxtyping version &gt;=0.2.23 should be used with Equinox version &gt;=0.11.1
   warnings.warn(
-Training progress:  16%|█▋        | 8170/50000 [00:13&lt;01:06, 630.57it/s, Loss=0.0001703, PSNR=37.6876,]
+Training progress:   0%|          | 0/5000 [00:07&lt;?, ?it/s]
 
 
----------------------------------------------------------------------------
-
-KeyboardInterrupt                         Traceback (most recent call last)
-
-Cell In[4], line 29
-     25     image_path = Path(args.dataset) /  f&#39;{i+1:04}x2.png&#39;
-     27 trainer = SimpleTrainer2d(image_path=image_path, num_points=args.num_points, 
-     28     iterations=args.iterations, model_name=args.model_name, args=args, model_path=args.model_path)
----&gt; 29 psnr, ms_ssim, training_time, eval_time, eval_fps = trainer.train()
-     30 psnrs.append(psnr)
-     31 ms_ssims.append(ms_ssim)
-
-
-Cell In[2], line 56, in SimpleTrainer2d.train(self)
-     54 start_time = time.time()
-     55 for iter in range(1, self.iterations+1):
----&gt; 56     loss, psnr = self.gaussian_model.train_iter(self.gt_image)
-     57     psnr_list.append(psnr)
-     58     iter_list.append(iter)
-
-
-File ~/2025/MIT/code/GS/GaussianImage-main/gaussianimage_cholesky.py:76, in GaussianImage_Cholesky.train_iter(self, gt_image)
-     75 def train_iter(self, gt_image):
----&gt; 76     render_pkg = self.forward()
-     77     image = render_pkg[&quot;render&quot;]
-     78     loss = loss_fn(image, gt_image, self.loss_type, lambda_value=0.7)
-
-
-File ~/2025/MIT/code/GS/GaussianImage-main/gaussianimage_cholesky.py:68, in GaussianImage_Cholesky.forward(self)
-     67 def forward(self):
----&gt; 68     self.xys, depths, self.radii, conics, num_tiles_hit = project_gaussians_2d(self.get_xyz, self.get_cholesky_elements, self.H, self.W, self.tile_bounds)
-     69     out_img = rasterize_gaussians_sum(self.xys, depths, self.radii, conics, num_tiles_hit,
-     70             self.get_features, self._opacity, self.H, self.W, self.BLOCK_H, self.BLOCK_W, background=self.background, return_alpha=False)
-     71     out_img = torch.clamp(out_img, 0, 1) #[H, W, 3]
-
-
-File ~/2025/MIT/Tools/gsplat-master/gsplat/gsplat/project_gaussians_2d.py:21, in project_gaussians_2d(means2d, L_elements, img_height, img_width, tile_bounds, clip_thresh)
-     13 def project_gaussians_2d(
-     14     means2d: Float[Tensor, &quot;*batch 2&quot;],
-     15     L_elements: Float[Tensor, &quot;*batch 3&quot;],
-   (...)     19     clip_thresh: float = 0.01,
-     20 ) -&gt; Tuple[Tensor, Tensor, Tensor, Tensor, int]:
----&gt; 21     return _ProjectGaussians2d.apply(
-     22         means2d.contiguous(),
-     23         L_elements.contiguous(),
-     24         img_height,
-     25         img_width,
-     26         tile_bounds,
-     27         clip_thresh,
-     28     )
-
-
-File ~/anaconda3/envs/inr/lib/python3.12/site-packages/torch/autograd/function.py:575, in Function.apply(cls, *args, **kwargs)
-    572 if not torch._C._are_functorch_transforms_active():
-    573     # See NOTE: [functorch vjp and autograd interaction]
-    574     args = _functorch.utils.unwrap_dead_wrappers(args)
---&gt; 575     return super().apply(*args, **kwargs)  # type: ignore[misc]
-    577 if not is_setup_ctx_defined:
-    578     raise RuntimeError(
-    579         &quot;In order to use an autograd.Function with functorch transforms &quot;
-    580         &quot;(vmap, grad, jvp, jacrev, ...), it must override the setup_context &quot;
-    581         &quot;staticmethod. For more details, please see &quot;
-    582         &quot;https://pytorch.org/docs/main/notes/extending.func.html&quot;
-    583     )
-
-
-File ~/2025/MIT/Tools/gsplat-master/gsplat/gsplat/project_gaussians_2d.py:51, in _ProjectGaussians2d.forward(ctx, means2d, L_elements, img_height, img_width, tile_bounds, clip_thresh)
-     33 @staticmethod
-     34 def forward(
-     35     ctx,
-   (...)     41     clip_thresh: float = 0.01,
-     42 ):
-     43     num_points = means2d.shape[-2]
-     45     (
-     46         xys,
-     47         depths,
-     48         radii,
-     49         conics,
-     50         num_tiles_hit,
----&gt; 51     ) = _C.project_gaussians_2d_forward(
-     52         num_points,
-     53         means2d,
-     54         L_elements,
-     55         img_height,
-     56         img_width,
-     57         tile_bounds,
-     58         clip_thresh,
-     59     )
-     61     # Save non-tensors.
-     62     ctx.img_height = img_height
-
-
-File ~/2025/MIT/Tools/gsplat-master/gsplat/gsplat/cuda/__init__.py:9, in _make_lazy_cuda_func.&lt;locals&gt;.call_cuda(*args, **kwargs)
-      5 def call_cuda(*args, **kwargs):
-      6     # pylint: disable=import-outside-toplevel
-      7     from ._backend import _C
-----&gt; 9     return getattr(_C, name)(*args, **kwargs)
-
-
-KeyboardInterrupt: 
-
-
-Training progress:  16%|█▋        | 8180/50000 [00:29&lt;01:06, 630.57it/s, Loss=0.0001703, PSNR=37.6876,]
+Test PSNR:37.0133, MS_SSIM:0.997281
 </pre></div>
 </div>
+<p><img alt="png" src="../../_images/Chapter05_Gaussian_Image_9_2.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Training Complete in 7.0003s, Eval time:0.00077572s, FPS:1289.1311
+1: 512x768, PSNR:37.0133, MS-SSIM:0.9973, Training:7.0003s, Eval:0.00077572s, FPS:1289.1311
+
+
+Training progress:   0%|          | 0/5000 [00:06&lt;?, ?it/s]
+
+Test PSNR:39.8294, MS_SSIM:0.994522
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter05_Gaussian_Image_9_7.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Training Complete in 6.8770s, Eval time:0.00032370s, FPS:3089.2943
+2: 512x768, PSNR:39.8294, MS-SSIM:0.9945, Training:6.8770s, Eval:0.00032370s, FPS:3089.2943
+
+
+Training progress:   0%|          | 0/5000 [00:06&lt;?, ?it/s]
+
+Test PSNR:43.2735, MS_SSIM:0.997530
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter05_Gaussian_Image_9_12.png" /></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Training Complete in 6.6995s, Eval time:0.00041715s, FPS:2397.1972
+3: 512x768, PSNR:43.2735, MS-SSIM:0.9975, Training:6.6995s, Eval:0.00041715s, FPS:2397.1972
+Average: 512x768, PSNR:40.0387, MS-SSIM:0.9964, Training:6.8589s, Eval:0.00050552s, FPS:2258.5410
+</pre></div>
+</div>
+<p>This is the Kodak dataset; as shown, the inference is indeed very fast, and the results are impressive.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -919,18 +841,22 @@ Training progress:  16%|█▋        | 8180/50000 [00:29&lt;01:06, 630.57it/s, 
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-3dgs-vs-gaussianimage">Comparison: 3DGS vs. GaussianImage</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">From Paper to Code: Understanding and Reproducing “GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#paper-reading-notes">Paper Reading Notes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-3dgs-vs-gaussianimage">Comparison: 3DGS vs. GaussianImage</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">2. Method Overview</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-matrix-factorization">2.1 Covariance matrix factorization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accumulated-blending">2.2 Accumulated Blending</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">2. Method Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-matrix-factorization">2.1 Covariance matrix factorization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accumulated-blending">2.2 Accumulated Blending</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#code-reproduction-with-explanation">Code Reproduction with Explanation:</a></li>
 </ul>
 
   </nav></div>

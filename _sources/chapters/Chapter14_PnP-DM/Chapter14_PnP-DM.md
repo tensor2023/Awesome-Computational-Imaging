@@ -5,14 +5,14 @@ Source Code in My Repo: ../../../../code/PnP/PnP-DM-public-master/posterior_samp
 
 ## 1. Highlights
 
-While traditional guided diffusion heuristically guides generation toward observations, **PnP-DM is a principled method that rigorously samples from the true posterior \( p(x|y) \)**, making it a fully Bayesian alternative with no approximations to the likelihood.
-The **prior step** handles $p(x)$, which is entirely determined by the diffusion model.
+While traditional guided diffusion heuristically guides generation toward observations, PnP-DM is a principled method that rigorously samples from the true posterior \( p(x|y) \), making it a fully Bayesian alternative with no approximations to the likelihood.
+The prior step handles $p(x)$, which is entirely determined by the diffusion model.
 ## 2. Background
 
 Inverse problems are central to computational imaging.
-In recent years, **diffusion models (DMs)** have emerged as powerful generative models that can learn rich and high-dimensional image distributions from data [Ho et al., 2020; Song et al., 2021]. These models enable denoising-based sampling by reversing a noise-injection (diffusion) process. This has sparked interest in using DMs as **priors** for inverse problems.
+In recent years, diffusion models (DMs) have emerged as powerful generative models that can learn rich and high-dimensional image distributions from data [Ho et al., 2020; Song et al., 2021]. These models enable denoising-based sampling by reversing a noise-injection (diffusion) process. This has sparked interest in using DMs as priors for inverse problems.
 
-However, existing approaches suffer from a key limitation: they either make **simplifying assumptions** that break the Bayesian formulation or resort to **heuristic guidance** that lacks theoretical grounding. For example, some methods approximate the intractable posterior score $\nabla \log p_t(x_t|y)$ using:
+However, existing approaches suffer from a key limitation: they either make simplifying assumptions that break the Bayesian formulation or resort to heuristic guidance that lacks theoretical grounding. For example, some methods approximate the intractable posterior score $\nabla \log p_t(x_t|y)$ using:
 
 $$
 \nabla \log p_t(x_t|y) \approx \nabla \log p_t(y|x_t) + \nabla \log p_t(x_t)
@@ -20,13 +20,13 @@ $$
 
 But this is only exact under a Gaussian prior, which is too simplistic for real images. Other methods bypass this issue entirely by treating $y$ as a conditioning signal, leading to empirically strong but theoretically ungrounded solutions.
 
-**This paper addresses these issues by proposing a principled and theoretically sound method for posterior sampling with DMs as priors.**
+This paper addresses these issues by proposing a principled and theoretically sound method for posterior sampling with DMs as priors.
 
-Specifically, the authors introduce a **Plug-and-Play Diffusion Model (PnP-DM)** framework built on the **Split Gibbs Sampler (SGS)**.This allows the method to handle both linear and **nonlinear**, even **severely ill-posed** inverse problems (e.g., black hole imaging), while offering accurate **uncertainty quantification**.
+Specifically, the authors introduce a Plug-and-Play Diffusion Model (PnP-DM) framework built on the Split Gibbs Sampler (SGS).This allows the method to handle both linear and nonlinear, even severely ill-posed inverse problems (e.g., black hole imaging), while offering accurate uncertainty quantification.
 
 ## 3. Method Overview
 
-The core of this paper is a **Bayesian sampling framework** that separates the influence of data (likelihood) and prior (image distribution) in a principled way. The proposed method, called **Plug-and-Play Diffusion Models (PnP-DM)**, is based on the **Split Gibbs Sampler (SGS)**.
+The core of this paper is a Bayesian sampling framework that separates the influence of data (likelihood) and prior (image distribution) in a principled way. The proposed method, called Plug-and-Play Diffusion Models (PnP-DM), is based on the Split Gibbs Sampler (SGS).
 
 ### 3.1 From Posterior Sampling to Gibbs Sampling
 
@@ -37,8 +37,8 @@ p(x|y) \propto p(y|x)p(x) = \exp(-f(x; y) - g(x))
 $$
 
 where:
-- $f(x; y) := -\log p(y|x)$ is the **likelihood potential**
-- $g(x) := -\log p(x)$ is the **prior potential**
+- $f(x; y) := -\log p(y|x)$ is the likelihood potential
+- $g(x) := -\log p(x)$ is the prior potential
 
 Directly sampling from this posterior is hard. So the authors introduce an auxiliary variable $z$ and define a joint distribution:
 
@@ -46,20 +46,20 @@ $$
 \pi(x, z) \propto \exp\left(-f(z; y) - g(x) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
 $$
 
-This leads to a **Gibbs sampler** that alternates between:
+This leads to a Gibbs sampler that alternates between:
 ![image.png](Chapter14_PnP-DM_files/image.png)
-- **Likelihood step**: sample $z$ from $\pi(z|x)$ (red arrow in the Figure)
-- **Prior step**: sample $x$ from $\pi(x|z)$ (blue arrow in the Figure)
+- Likelihood step: sample $z$ from $\pi(z|x)$ (red arrow in the Figure)
+- Prior step: sample $x$ from $\pi(x|z)$ (blue arrow in the Figure)
 
 As $\rho \to 0$, the marginal of $\pi(x, z)$ over $x$ converges to $p(x|y)$.
 
 #### 3.1.1 Likelihood Step
 
-In the likelihood step, we need to sample $z$ from the conditional distribution $\pi(z|x)$, which incorporates the observation $y$. This step enforces **data consistency**—i.e., it makes sure that the sample is plausible under the observed measurements.
+In the likelihood step, we need to sample $z$ from the conditional distribution $\pi(z|x)$, which incorporates the observation $y$. This step enforces data consistency—i.e., it makes sure that the sample is plausible under the observed measurements.
 
 #### 3.1.1.1 Case 1: Linear Forward Model + Gaussian Noise
 
-Suppose the forward model is **linear**, i.e., $A(x) = Ax$, and the noise is Gaussian: $n \sim \mathcal{N}(0, \Sigma)$. Then the observation model is:
+Suppose the forward model is linear, i.e., $A(x) = Ax$, and the noise is Gaussian: $n \sim \mathcal{N}(0, \Sigma)$. Then the observation model is:
 
 $$
 y = Ax + n
@@ -111,15 +111,15 @@ So, in the linear + Gaussian case, we can directly draw $z$ from this distributi
 
 #### 3.1.1.2 Case 2: Nonlinear Forward Model
 
-If the forward model $A(\cdot)$ is **nonlinear**, or the noise is **non-Gaussian**, then the distribution $\pi(z|x)$ is no longer Gaussian and no closed-form exists.
+If the forward model $A(\cdot)$ is nonlinear, or the noise is non-Gaussian, then the distribution $\pi(z|x)$ is no longer Gaussian and no closed-form exists.
 
-But we can still compute the **unnormalized log-probability**:
+But we can still compute the unnormalized log-probability:
 
 $$
 \log \pi(z|x) = -f(z; y) - \frac{1}{2\rho^2} \|x - z\|^2 + \text{const}
 $$
 
-As long as $f(z; y)$ is differentiable, we can sample from this distribution using **Langevin dynamics**:
+As long as $f(z; y)$ is differentiable, we can sample from this distribution using Langevin dynamics:
 
 $$
 dz_t = \nabla \log \pi(z_t|x) \, dt + \sqrt{2} \, dw_t
@@ -146,11 +146,11 @@ $$
 \pi(x|z) \propto \exp\left(-g(x) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
 $$
 
-This is a **Bayesian denoising** problem: observe $z = x + \text{Gaussian noise}$, infer $x$ using the prior $p(x) \propto \exp(-g(x))$.
+This is a Bayesian denoising problem: observe $z = x + \text{Gaussian noise}$, infer $x$ using the prior $p(x) \propto \exp(-g(x))$.
 
 ### 3.2 EDM Formulation
 
-Diffusion models in the **EDM framework** solve the denoising problem via the following reverse SDE:
+Diffusion models in the EDM framework solve the denoising problem via the following reverse SDE:
 
 $$
 d x_t = \left[ \frac{\dot{s}(t)}{s(t)} x_t - 2 s(t)^2 \dot{\sigma}(t)\sigma(t) \nabla \log p\left( \frac{x_t}{s(t)}; \sigma(t) \right) \right] dt + s(t) \sqrt{2 \dot{\sigma}(t) \sigma(t)} \, d\bar{w}_t
@@ -166,7 +166,7 @@ To apply this to the prior step:
 2. Initialize $x_{t^*} = s(t^*) z$
 3. Solve the reverse SDE backward to $t = 0$
 
-This allows the use of **any pretrained DM** that fits the EDM interface, without retraining or modifying the model.
+This allows the use of any pretrained DM that fits the EDM interface, without retraining or modifying the model.
 
 
 ```python
@@ -208,8 +208,8 @@ def posterior_sample(cfg):
     device = torch.device(device_str)
     
     # prepare task (forward model and noise)
-    operator = get_operator(**task_config.operator, device=device)
-    noiser = get_noise(**task_config.noise)
+    operator = get_operator(task_config.operator, device=device)
+    noiser = get_noise(task_config.noise)
 
     # prepare dataloader
     transform = transforms.Compose([
@@ -221,14 +221,14 @@ def posterior_sample(cfg):
     ])
     # inv_transform = transforms.Compose([
     #     transforms.Normalize((-1), (2)),
-    #     transforms.Lambda(lambda x: (x.clamp(0, 1)**0.4).detach())
+    #     transforms.Lambda(lambda x: (x.clamp(0, 1)0.4).detach())
     # ])
-    dataset = get_dataset(**data_config, transform=transform)
+    dataset = get_dataset(data_config, transform=transform)
     num_test_images = len(dataset)
     dataloader = get_dataloader(dataset, batch_size=1, num_workers=0, train=False)
 
     # load model
-    model = get_model(**model_config)
+    model = get_model(model_config)
     model = model.to(device)
     model.eval()
 
@@ -500,7 +500,7 @@ posterior_sample(cfg)
 
 ### PnPEDM: Code Explanation and Its Mathematical Backbone
 
-The `PnPEDM` class implements the **PnP-DM algorithm** introduced in the paper, combining a data-consistency step (likelihood) and a diffusion-based prior step using the **EDM framework**.
+The `PnPEDM` class implements the PnP-DM algorithm introduced in the paper, combining a data-consistency step (likelihood) and a diffusion-based prior step using the EDM framework.
 
 #### Key Mathematical Structure
 
@@ -511,14 +511,14 @@ $$
 $$
 
 We alternate between:
-- **Likelihood step**: sample $z \sim \pi(z|x)$
-- **Prior step**: sample $x \sim \pi(x|z)$
+- Likelihood step: sample $z \sim \pi(z|x)$
+- Prior step: sample $x \sim \pi(x|z)$
 
 The `PnPEDM` class performs this alternating procedure over multiple iterations.
 
 ---
 
-#### 1. **Initialization**
+#### 1. Initialization
 
 ```python
 x = self.operator.initialize(gt, y_n)
@@ -528,7 +528,7 @@ This initializes $x^{(0)}$, usually using a naive pseudoinverse or other simple 
 
 ---
 
-#### 2. **Likelihood Step: Data Consistency**
+#### 2. Likelihood Step: Data Consistency
 
 ```python
 z = self.operator.proximal_generator(x, y_n, self.noiser.sigma, rho_iter)
@@ -546,7 +546,7 @@ This step ensures $z$ is consistent with measurement $y$.
 
 ---
 
-#### 3. **Prior Step: Diffusion Denoising**
+#### 3. Prior Step: Diffusion Denoising
 
 ```python
 x = self.edm(z, rho_iter)
@@ -558,19 +558,19 @@ $$
 \pi(x|z) \propto \exp\left( -g(x) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
 $$
 
-This is equivalent to a **Bayesian denoising problem**, where:
+This is equivalent to a Bayesian denoising problem, where:
 - The noisy observation is $z$
 - The noise level is $\rho$
-- The prior $p(x) \propto \exp(-g(x))$ is modeled by a **pretrained diffusion model**
+- The prior $p(x) \propto \exp(-g(x))$ is modeled by a pretrained diffusion model
 
 The EDM framework provides a unified reverse-time SDE solver to sample from this distribution.
 
 ---
 
-#### 4. **Annealing Schedule**
+#### 4. Annealing Schedule
 
 ```python
-rho_iter = self.config.rho * (self.config.rho_decay_rate**i)
+rho_iter = self.config.rho * (self.config.rho_decay_ratei)
 rho_iter = max(rho_iter, self.config.rho_min)
 ```
 
@@ -578,7 +578,7 @@ This gradually reduces the noise level $\rho$, similar to simulated annealing. I
 
 ---
 
-#### 5. **Sample Collection**
+#### 5. Sample Collection
 
 ```python
 if i in iters_count_as_sample:
@@ -589,7 +589,7 @@ After the burn-in phase, $x$ samples are stored to approximate the posterior dis
 
 ---
 
-#### 6. **Metrics and Visualization**
+#### 6. Metrics and Visualization
 
 The method logs PSNR, SSIM, LPIPS over iterations, and visualizes:
 - Denoised samples $x$
@@ -603,8 +603,8 @@ This helps track convergence and sample quality.
 ### Summary
 
 The class `PnPEDM` is a direct implementation of the Split Gibbs Sampler:
-- The **likelihood step** ensures fidelity to measurements
-- The **prior step** leverages EDM to denoise using pretrained diffusion priors
+- The likelihood step ensures fidelity to measurements
+- The prior step leverages EDM to denoise using pretrained diffusion priors
 - An annealing schedule ensures smooth convergence
 
 This setup allows principled posterior sampling using diffusion models for both linear and nonlinear inverse problems.
