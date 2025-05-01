@@ -1,22 +1,22 @@
-## Denoising Diffusion Probabilistic Models
-
+## From Paper to Code: Understanding and Reproducing "Denoising Diffusion Probabilistic Models"
 ![image.png](Chapter10_DDPM_files/image.png)
-Github Repo: https://github.com/lucidrains/denoising-diffusion-pytorch, 
+Code: [GitHub Repository](https://github.com/lucidrains/denoising-diffusion-pytorch), 
 Corresponding code: ../../../../code/Inv/denoising-diffusion-pytorch-main/demo.py
+
+# Paper Reading Notes
 
 ## Background
 
-In recent years, deep generative models have achieved impressive results in generating realistic data. Models such as **Generative Adversarial Networks (GANs)** [1], **Variational Autoencoders (VAEs)** [2], and **Normalizing Flows** [3] have been widely adopted in image, audio, and text synthesis. However, these methods often face various trade-offs between sample quality, likelihood estimation, and training stability.
+In recent years, deep generative models have achieved impressive results in generating realistic data. Models such as Generative Adversarial Networks (GANs) [1], Variational Autoencoders (VAEs) [2], and Normalizing Flows [3] have been widely adopted in image, audio, and text synthesis. However, these methods often face various trade-offs between sample quality, likelihood estimation, and training stability.
 
 Diffusion Probabilistic Models (DPMs), introduced by Sohl-Dickstein et al. [4], offer a conceptually simple alternative. A DPM gradually corrupts data with Gaussian noise and then learns to reverse this process using a neural network. While theoretically elegant, early diffusion models were not competitive in sample quality.
 ![image.png](Chapter10_DDPM_files/image.png)
 
-# The Core Idea
+## Method Overview
 
-This paper by **Ho et al. (2020)** [5] proposes a new formulation of diffusion probabilistic models that significantly improves their generation quality. The model consists of two processes:
+This paper by Ho et al. (2020) [5] proposes a new formulation of diffusion probabilistic models that significantly improves their generation quality. The model consists of two processes:
 
-### 1. Forward Process (Diffusion)
-<!-- 
+### 1. Forward Process (Diffusion) 
 The forward process gradually adds Gaussian noise to the original data $x_0$, forming a sequence $x_1, x_2, \dots, x_T$:
 
 $$
@@ -35,7 +35,7 @@ We define the accumulated product of noise schedule as:
 
 $$
 \bar{\alpha}_t = \prod_{s=1}^t (1 - \beta_s)
-$$ -->
+$$ 
 The forward process gradually adds Gaussian noise to the original data $x_0$, forming a sequence of increasingly noisy images $x_1, x_2, \dots, x_T$.
 
 This is defined as a fixed Markov process:
@@ -62,7 +62,7 @@ $$
 x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsilon, \quad \varepsilon \sim \mathcal{N}(0, I)
 $$
 
----
+
 
 ### 🔧 Code: `q_sample` Implementation
 
@@ -80,9 +80,7 @@ def q_sample(self, x_start, t, noise=None):
     return sqrt_alphas_cumprod_t * x_start + sqrt_one_minus_alphas_cumprod_t * noise
 ```
 
-### 🔍 Code Explanation
-
-This directly corresponds to the equation:
+`q_sample` directly corresponds to the equation:
 
 $$
 x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsilon
@@ -133,19 +131,19 @@ $$
 
 This resembles denoising score matching and simplifies training using standard stochastic gradient descent.
 
----
+
 
 ### 🧪 Code: `forward()` and `p_losses()` for Training
 
 
 ```python
-def forward(self, img, *args, **kwargs):
+def forward(self, img, *args, kwargs):
     b, c, h, w, device, img_size = *img.shape, img.device, self.image_size
     assert h == img_size[0] and w == img_size[1]
     t = torch.randint(0, self.num_timesteps, (b,), device=device).long()
 
     img = self.normalize(img)
-    return self.p_losses(img, t, *args, **kwargs)
+    return self.p_losses(img, t, *args, kwargs)
 ```
 
 - Sample random timestep $t$.
@@ -205,13 +203,13 @@ where $x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \varepsi
 
 The main contributions of this paper are:
 
-1. **Noise Prediction Parameterization:** Instead of predicting the denoised image, the model predicts the noise added during diffusion, making training more stable and effective.
+1. Noise Prediction Parameterization: Instead of predicting the denoised image, the model predicts the noise added during diffusion, making training more stable and effective.
 
-2. **Simplified Training Objective:** The authors propose a training loss that is simple to implement and closely related to denoising score matching.
+2. Simplified Training Objective: The authors propose a training loss that is simple to implement and closely related to denoising score matching.
 
-3. **High-Quality Image Synthesis:** The model achieves state-of-the-art results on datasets like CIFAR-10 and LSUN, outperforming many GAN-based models.
+3. High-Quality Image Synthesis: The model achieves state-of-the-art results on datasets like CIFAR-10 and LSUN, outperforming many GAN-based models.
 
-4. **Progressive Sampling Interpretation:** The sampling process can be viewed as a form of progressive decoding, providing a new perspective on how diffusion models generate data.
+4. Progressive Sampling Interpretation: The sampling process can be viewed as a form of progressive decoding, providing a new perspective on how diffusion models generate data.
 
 
 ## References
@@ -223,11 +221,20 @@ The main contributions of this paper are:
 [5] Ho et al., 2020. *Denoising Diffusion Probabilistic Models*
 
 
+# Demo
+
 
 ```python
+import os
+import sys
+print("Current working directory:", os.getcwd())
+target_path = os.path.abspath(os.path.join(os.getcwd(), "../../../code/Inv/denoising-diffusion-pytorch-main"))
+print("Appending path:", target_path)
+sys.path.insert(0, target_path)
+
 #An example of a diffusion model
 import torch
-from denoising_diffusion_pytorch import Unet#, GaussianDiffusion
+from denoising_diffusion_pytorch import Unet, GaussianDiffusion
 
 model = Unet(
     dim = 64,
@@ -250,3 +257,23 @@ loss.backward()
 sampled_images = diffusion.sample(batch_size = 4)
 sampled_images.shape # (4, 3, 128, 128)
 ```
+
+    Current working directory: /home/xqgao/2025/MIT/Awesome-Computational-Imaging/chapters/Chapter10_DDPM
+    Appending path: /home/xqgao/2025/MIT/code/Inv/denoising-diffusion-pytorch-main
+    A100 GPU detected, using flash attention if input tensor is on cuda
+
+
+    /home/xqgao/anaconda3/envs/inr/lib/python3.12/contextlib.py:105: FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new context manager, with updated signature.
+      self.gen = func(*args, kwds)
+
+
+
+    sampling loop time step:   0%|          | 0/1000 [00:00<?, ?it/s]
+
+
+
+
+
+    torch.Size([4, 3, 128, 128])
+
+

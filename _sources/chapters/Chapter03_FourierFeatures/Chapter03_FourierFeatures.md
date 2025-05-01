@@ -1,6 +1,9 @@
-## Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains
-
+## From Paper to Code: Understanding and Reproducing "Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains"
 ![image.png](Chapter03_FourierFeatures_files/image.png)
+Code: [GitHub Repository](https://bmild.github.io/fourfeat/)
+Source Code in My Repo: ../../../../code/NeRF/fourier-feature-networks-master/fourier-feature-networks-master/demo.py
+
+# Paper Reading Notes
 
 ## 1. Highlights
 Based on Neural Tangent Kernel(NTK) theory and Random Fourier Features (RFF), this paper maps input coordinates into a high-dimensional Fourier space to help neural networks capture high-frequency details, rather than just learning smooth, low-frequency patterns. The method is implemented in JAX for efficient kernel-level analysis and training.
@@ -8,19 +11,19 @@ Based on Neural Tangent Kernel(NTK) theory and Random Fourier Features (RFF), th
 
 ## 2. Background
 
-In recent years, **coordinate-based multilayer perceptrons (MLPs)** have emerged as a powerful representation for continuous signals in computer vision and graphics. These MLPs take spatial coordinates (e.g., 2D $(x, y)$ or 3D $(x, y, z)$) as inputs and output corresponding signal values, such as color, density, or occupancy. This method offers compactness and is well-suited for gradient-based learning, leading to impressive applications like NeRF (Mildenhall et al., 2020) and Occupancy Networks (Mescheder et al., 2019).
+In recent years, coordinate-based multilayer perceptrons (MLPs) have emerged as a powerful representation for continuous signals in computer vision and graphics. These MLPs take spatial coordinates (e.g., 2D $(x, y)$ or 3D $(x, y, z)$) as inputs and output corresponding signal values, such as color, density, or occupancy. This method offers compactness and is well-suited for gradient-based learning, leading to impressive applications like NeRF (Mildenhall et al., 2020) and Occupancy Networks (Mescheder et al., 2019).
 ![image.png](Chapter03_FourierFeatures_files/image.png)
-However, a key limitation of standard MLPs is their **spectral bias**: they favor learning low-frequency functions and struggle to capture high-frequency details, a challenge described in several studies such as Rahaman et al. (2019) and Basri et al. (2020).
+However, a key limitation of standard MLPs is their spectral bias: they favor learning low-frequency functions and struggle to capture high-frequency details, a challenge described in several studies such as Rahaman et al. (2019) and Basri et al. (2020).
 
-To address this, the authors introduce **Fourier feature mappings**, inspired by **random Fourier features** from kernel theory (Rahimi & Recht, 2007). By transforming the input coordinates via sinusoidal functions before passing them to the MLP, they effectively modify the network's **Neural Tangent Kernel (NTK)** to become stationary and tunable, allowing the network to learn high-frequency components more efficiently.
+To address this, the authors introduce Fourier feature mappings, inspired by random Fourier features from kernel theory (Rahimi & Recht, 2007). By transforming the input coordinates via sinusoidal functions before passing them to the MLP, they effectively modify the network's Neural Tangent Kernel (NTK) to become stationary and tunable, allowing the network to learn high-frequency components more efficiently.
 
 About NKT: https://www.inference.vc/neural-tangent-kernels-some-intuition-for-kernel-gradient-descent/
-When the width of a neural network tends to infinity, its training dynamics converge to those of a **kernel regression** model—specifically, one defined by the NTK. In this limit, the network behaves like a fixed linear model, and its entire training process can be understood analytically.
+When the width of a neural network tends to infinity, its training dynamics converge to those of a kernel regression model—specifically, one defined by the NTK. In this limit, the network behaves like a fixed linear model, and its entire training process can be understood analytically.
 Imagine you slightly change the network’s output at one input—how does that affect the output at another input? NTK quantifies this interaction. Mathematically, it’s the inner product of the gradients of the network’s output with respect to its parameters, taken at two different inputs.
 
-## 3. The Core Idea 
+## 3. Method Overview 
 
-This paper builds on the theory of the Neural Tangent Kernel (NTK) by projecting input coordinates into a high-dimensional space, making the network more sensitive to high-frequency details. The projected features must still preserve the original structure of the input, which is where **kernel approximation** comes into play.
+This paper builds on the theory of the Neural Tangent Kernel (NTK) by projecting input coordinates into a high-dimensional space, making the network more sensitive to high-frequency details. The projected features must still preserve the original structure of the input, which is where kernel approximation comes into play.
 
 The projection is defined as:
 
@@ -32,11 +35,11 @@ $$
 
 Here, $\mathbf{v} \in \mathbb{R}^d$ is the input coordinate, and each $\mathbf{b}_i \in \mathbb{R}^d$ is a randomly sampled frequency vector from a Gaussian distribution. The function $\gamma(\mathbf{v})$ maps $\mathbf{v}$ into a $2m$-dimensional space using sinusoidal components.
 
-As for kernel approximation, a classic example of a kernel is the **Gaussian kernel**, which can be thought of as a smooth, blurry function: the closer two inputs are, the more similar they are treated. This "blurring" effect encodes locality, allowing the model to emphasize nearby relationships while gradually ignoring distant ones. To efficiently approximate such kernels, the paper adopts Random Fourier Features (RFF). RFF is a method for mapping inputs into a feature space where the inner product approximates a shift-invariant kernel function, like the Gaussian. By sampling random frequencies from a specific distribution and applying sine and cosine functions, RFF enables the network to capture both low and high-frequency patterns without requiring expensive kernel matrix computations.
+As for kernel approximation, a classic example of a kernel is the Gaussian kernel, which can be thought of as a smooth, blurry function: the closer two inputs are, the more similar they are treated. This "blurring" effect encodes locality, allowing the model to emphasize nearby relationships while gradually ignoring distant ones. To efficiently approximate such kernels, the paper adopts Random Fourier Features (RFF). RFF is a method for mapping inputs into a feature space where the inner product approximates a shift-invariant kernel function, like the Gaussian. By sampling random frequencies from a specific distribution and applying sine and cosine functions, RFF enables the network to capture both low and high-frequency patterns without requiring expensive kernel matrix computations.
 
 <a href="https://colab.research.google.com/github/tancik/fourier-feature-networks/blob/master/Demo.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-# Demo
+# Code Reproduction with Explanation: Train and Test
 
 
 ```python
@@ -145,7 +148,7 @@ def train_model(network_size, learning_rate, iters, B, train_data, test_data):
     init_fn, apply_fn = make_network(*network_size)
 
     model_pred = jit(lambda params, x: apply_fn(params, input_mapping(x, B)))
-    model_loss = jit(lambda params, x, y: .5 * np.mean((model_pred(params, x) - y) ** 2))
+    model_loss = jit(lambda params, x, y: .5 * np.mean((model_pred(params, x) - y)  2))
     model_psnr = jit(lambda params, x, y: -10 * np.log10(2.*model_loss(params, x, y)))
     model_grad_loss = jit(lambda params, x, y: grad(model_loss)(params, x, y))
 
@@ -219,41 +222,6 @@ outputs = {}
 for k in tqdm(B_dict):
   outputs[k] = train_model(network_size, learning_rate, iters, B_dict[k], train_data, test_data)
 ```
-
-
-    ---------------------------------------------------------------------------
-
-    ImportError                               Traceback (most recent call last)
-
-    Cell In[5], line 19
-         17 # This should take about 2-3 minutes
-         18 outputs = {}
-    ---> 19 for k in tqdm(B_dict):
-         20   outputs[k] = train_model(network_size, learning_rate, iters, B_dict[k], train_data, test_data)
-
-
-    File ~/anaconda3/envs/inr/lib/python3.12/site-packages/tqdm/notebook.py:234, in tqdm_notebook.__init__(self, *args, **kwargs)
-        232 unit_scale = 1 if self.unit_scale is True else self.unit_scale or 1
-        233 total = self.total * unit_scale if self.total else self.total
-    --> 234 self.container = self.status_printer(self.fp, total, self.desc, self.ncols)
-        235 self.container.pbar = proxy(self)
-        236 self.displayed = False
-
-
-    File ~/anaconda3/envs/inr/lib/python3.12/site-packages/tqdm/notebook.py:108, in tqdm_notebook.status_printer(_, total, desc, ncols)
-         99 # Fallback to text bar if there's no total
-        100 # DEPRECATED: replaced with an 'info' style bar
-        101 # if not total:
-       (...)    105 
-        106 # Prepare IPython progress bar
-        107 if IProgress is None:  # #187 #451 #558 #872
-    --> 108     raise ImportError(WARN_NOIPYW)
-        109 if total:
-        110     pbar = IProgress(min=0, max=total)
-
-
-    ImportError: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-
 
 ## Plot results
 

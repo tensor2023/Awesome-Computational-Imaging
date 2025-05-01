@@ -1,10 +1,13 @@
-## NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis
+## From Paper to Code: Understanding and Reproducing "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis"
 ![image.png](Chapter02_NeRF_files/image.png)
-Code: https://github.com/bmild/nerf, https://github.com/yenchenlin/nerf-pytorch 
+Code: [GitHub Repository(Tnsorflow)](https://github.com/bmild/nerf), [GitHub Repository(Pytorch)](https://github.com/yenchenlin/nerf-pytorch)
+Source Code in My Repo: ../../../code/NeRF/nerf-pytorch-master/run_nerf.py
+
+# Paper Reading Notes
 
 ## 1. Highlights
 
-Inspired by SIREN(https://www.vincentsitzmann.com/siren/), we represent 3D scenes as a consistent function, instead of relying on discrete geometry or voxel-based representations. We use a simple, fully-connected MLP that models complex scenes as **continuous neural radiance fields**, a **differentiable volume rendering technique** that allows training from 2D images without any 3D supervision.
+Inspired by SIREN(https://www.vincentsitzmann.com/siren/), we represent 3D scenes as a consistent function, instead of relying on discrete geometry or voxel-based representations. We use a simple, fully-connected MLP that models complex scenes as continuous neural radiance fields, a differentiable volume rendering technique that allows training from 2D images without any 3D supervision.
 
 
 ## 2. Background
@@ -17,26 +20,25 @@ Traditional approaches rely on:
 - Or multi-view stereo, which struggles under non-Lambertian materials or occlusions.
 
 Recent deep learning methods have proposed:
-- **Implicit neural scene representations**, such as Occupancy Networks [1] and DeepSDF [2], mapping coordinates to occupancy or signed distance fields,
-- **Voxel-based neural rendering**, such as DeepVoxels [3],
-- **Image-based interpolation methods**, like Local Light Field Fusion (LLFF) [4].
+- Implicit neural scene representations, such as Occupancy Networks [1] and DeepSDF [2], mapping coordinates to occupancy or signed distance fields,
+- Voxel-based neural rendering, such as DeepVoxels [3],
+- Image-based interpolation methods, like Local Light Field Fusion (LLFF) [4].
 
 However, existing techniques often suffer from either:
 - The need for ground-truth 3D geometry,
 - Limited ability to capture fine details,
 - Or high memory and computational costs for high-resolution modeling.
 
----
 
-## 3. The Core Idea
+## 3. Method Overview
 
 The key idea of NeRF is simple but powerful:
 
 > Represent a 3D scene as a continuous volumetric field using a multilayer perceptron (MLP).
 
 Specifically:
-- **Input**: a 5D coordinate $(x, y, z, \theta, \phi)$, or a 3D position $x$ and 2D viewing direction $d$.
-- **Output**: the volume density $\sigma$ and RGB color $c=(r,g,b)$ at that point and direction.
+- Input: a 5D coordinate $(x, y, z, \theta, \phi)$, or a 3D position $x$ and 2D viewing direction $d$.
+- Output: the volume density $\sigma$ and RGB color $c=(r,g,b)$ at that point and direction.
 
 To render a novel view, NeRF traces rays from the virtual camera, samples 3D points along each ray, queries the network, and integrates their contributions using volume rendering.
 
@@ -55,8 +57,8 @@ $$
 The integral is numerically estimated using stratified sampling and quadrature.
 
 Further improvements include:
-- **Positional encoding**: mapping coordinates to a higher dimensional space with sinusoidal functions to better represent high-frequency details,
-- **Hierarchical volume sampling**: using a coarse-to-fine strategy to focus computational effort where density is high.
+- Positional encoding: mapping coordinates to a higher dimensional space with sinusoidal functions to better represent high-frequency details,
+- Hierarchical volume sampling: using a coarse-to-fine strategy to focus computational effort where density is high.
 
 Because the entire rendering process is differentiable, the network can be optimized end-to-end using only RGB images and known camera poses.
 
@@ -66,37 +68,34 @@ Because the entire rendering process is differentiable, the network can be optim
 ## References
 
 [1] Lars Mescheder, Michael Oechsle, Michael Niemeyer, Sebastian Nowozin, Andreas Geiger.  
-**"Occupancy Networks: Learning 3D Reconstruction in Function Space."**  
+"Occupancy Networks: Learning 3D Reconstruction in Function Space."  
 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2019.
 
 [2] Jeong Joon Park, Peter Florence, Julian Straub, Richard Newcombe, Steven Lovegrove.  
-**"DeepSDF: Learning Continuous Signed Distance Functions for Shape Representation."**  
+"DeepSDF: Learning Continuous Signed Distance Functions for Shape Representation."  
 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2019.
 
 [3] Vincent Sitzmann, Justus Thies, Felix Heide, Matthias Nießner, Gordon Wetzstein, Michael Zollhöfer.  
-**"DeepVoxels: Learning Persistent 3D Feature Embeddings."**  
+"DeepVoxels: Learning Persistent 3D Feature Embeddings."  
 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2019.
 
 [4] Ben Mildenhall, Pratul P. Srinivasan, Rodrigo Ortiz-Cayon, Nima Khademi Kalantari, Ravi Ramamoorthi, Ren Ng, Abhishek Kar.  
-**"Local Light Field Fusion: Practical View Synthesis with Prescriptive Sampling Guidelines."**  
+"Local Light Field Fusion: Practical View Synthesis with Prescriptive Sampling Guidelines."  
 ACM Transactions on Graphics (TOG), Proceedings of SIGGRAPH, 2019.
 
 
 
 Corresponding code: code/NeRF/nerf-pytorch-master/run_nerf.py
 
+# Code Reproduction with Explanation
+
 
 ```python
 import sys
 import os
 
-# 当前 notebook 的路径
 current_dir = os.path.dirname(os.path.abspath("__file__")) if "__file__" in locals() else os.getcwd()
-
-# 目标 train.py 所在目录
 gs_code_dir = os.path.abspath(os.path.join(current_dir, '../../../code/NeRF/nerf-pytorch-master'))
-
-# 添加到 sys.path
 if gs_code_dir not in sys.path:
     sys.path.append(gs_code_dir)
 
@@ -123,7 +122,15 @@ from load_LINEMOD import load_LINEMOD_data
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 np.random.seed(0)
 DEBUG = False
+torch.set_default_tensor_type('torch.cuda.FloatTensor')
 ```
+
+    ✅ Added /home/xqgao/2025/MIT/code/NeRF/nerf-pytorch-master to sys.path
+
+
+    /home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/torch/__init__.py:1144: UserWarning: torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at /opt/conda/conda-bld/pytorch_1729647329220/work/torch/csrc/tensor/python_tensor.cpp:432.)
+      _C._set_default_tensor_type(t)
+
 
 At first, `batchify` allows us to handle large datasets by processing them in smaller, manageable pieces, helping to avoid memory overflow.
 
@@ -138,12 +145,12 @@ def batchify(fn, chunk):
         return torch.cat([fn(inputs[i:i+chunk]) for i in range(0, inputs.shape[0], chunk)], 0)
     return ret
 
-def batchify_rays(rays_flat, chunk=1024*32, **kwargs):
+def batchify_rays(rays_flat, chunk=1024*32, kwargs):
     """Render rays in smaller minibatches to avoid OOM.
     """
     all_ret = {}
     for i in range(0, rays_flat.shape[0], chunk):
-        ret = render_rays(rays_flat[i:i+chunk], **kwargs)
+        ret = render_rays(rays_flat[i:i+chunk], kwargs)
         for k in ret:
             if k not in all_ret:
                 all_ret[k] = []
@@ -190,7 +197,7 @@ As shown in Fig. 1, we input the pose and coordinates, with the target being a 2
 def render(H, W, K, chunk=1024*32, rays=None, c2w=None, ndc=True,
                   near=0., far=1.,
                   use_viewdirs=False, c2w_staticcam=None,
-                  **kwargs):
+                  kwargs):
     """Render rays
     Args:
       H: int. Height of image in pixels.
@@ -244,7 +251,7 @@ def render(H, W, K, chunk=1024*32, rays=None, c2w=None, ndc=True,
         rays = torch.cat([rays, viewdirs], -1)
 
     # Render and reshape
-    all_ret = batchify_rays(rays, chunk, **kwargs)
+    all_ret = batchify_rays(rays, chunk, kwargs)
     for k in all_ret:
         k_sh = list(sh[:-1]) + list(all_ret[k].shape[1:])
         all_ret[k] = torch.reshape(all_ret[k], k_sh)
@@ -272,7 +279,7 @@ def render_path(render_poses, hwf, K, chunk, render_kwargs, gt_imgs=None, savedi
     for i, c2w in enumerate(tqdm(render_poses)):
         print(i, time.time() - t)
         t = time.time()
-        rgb, disp, acc, _ = render(H, W, K, chunk=chunk, c2w=c2w[:3,:4], **render_kwargs)
+        rgb, disp, acc, _ = render(H, W, K, chunk=chunk, c2w=c2w[:3,:4], render_kwargs)
         rgbs.append(rgb.cpu().numpy())
         disps.append(disp.cpu().numpy())
         if i==0:
@@ -394,9 +401,9 @@ def config_parser():
                         help='config file path')
     parser.add_argument("--expname", type=str, 
                         help='experiment name')
-    parser.add_argument("--basedir", type=str, default='../../../../code/NeRF/nerf-pytorch-master/logs/', 
+    parser.add_argument("--basedir", type=str, default='../../../code/NeRF/nerf-pytorch-master/logs/', 
                         help='where to store ckpts and logs')
-    parser.add_argument("--datadir", type=str, default='../../../../Datasets/NeRF/nerf_llff_data/fern/', 
+    parser.add_argument("--datadir", type=str, default='../../../Datasets/NeRF/nerf_llff_data/fern/', 
                         help='input data directory')
 
     # training options
@@ -504,7 +511,7 @@ def config_parser():
 ```python
 parser = config_parser()
 args = parser.parse_args([
-    '--config', '../../../../code/NeRF/nerf-pytorch-master/configs/lego.yaml'
+    '--config', '../../../code/NeRF/nerf-pytorch-master/configs/lego.yaml'
 ])
 
 # Load data
@@ -579,6 +586,9 @@ else:
     # return
 ```
 
+    Loaded blender (138, 400, 400, 4) torch.Size([40, 4, 4]) [400, 400, 555.5555155968841] /home/xqgao/2025/MIT/Datasets/NeRF/nerf_synthetic/lego
+
+
 
 ```python
 # Cast intrinsics to right types
@@ -624,6 +634,15 @@ render_kwargs_test.update(bds_dict)
 # Move testing data to GPU
 render_poses = torch.Tensor(render_poses).to(device)
 ```
+
+    Found ckpts ['/home/xqgao/2025/MIT/code/NeRF/nerf-pytorch-master/pre_trained_models/lego_test/200000.tar']
+    Reloading from /home/xqgao/2025/MIT/code/NeRF/nerf-pytorch-master/pre_trained_models/lego_test/200000.tar
+    Not ndc!
+
+
+    /tmp/ipykernel_562082/714444991.py:48: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+      ckpt = torch.load(ckpt_path)
+
 
 
 ```python
@@ -740,7 +759,7 @@ for i in trange(start, N_iters):
     #####  Core optimization loop  #####
     rgb, disp, acc, extras = render(H, W, K, chunk=args.chunk, rays=batch_rays,
                                             verbose=i < 10, retraw=True,
-                                            **render_kwargs_train)
+                                            render_kwargs_train)
 
     optimizer.zero_grad()
     img_loss = img2mse(rgb, target_s)
@@ -760,7 +779,7 @@ for i in trange(start, N_iters):
     ###   update learning rate   ###
     decay_rate = 0.1
     decay_steps = args.lrate_decay * 1000
-    new_lrate = args.lrate * (decay_rate ** (global_step / decay_steps))
+    new_lrate = args.lrate * (decay_rate  (global_step / decay_steps))
     for param_group in optimizer.param_groups:
         param_group['lr'] = new_lrate
     ################################
@@ -828,7 +847,7 @@ for i in trange(start, N_iters):
             pose = poses[img_i, :3,:4]
             with torch.no_grad():
                 rgb, disp, acc, extras = render(H, W, focal, chunk=args.chunk, c2w=pose,
-                                                    **render_kwargs_test)
+                                                    render_kwargs_test)
 
             psnr = mse2psnr(img2mse(rgb, target))
 
@@ -852,3 +871,17 @@ for i in trange(start, N_iters):
 
     global_step += 1
 ```
+
+    Begin
+    TRAIN views are [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+     24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+     48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
+     72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
+     96 97 98 99]
+    TEST views are [113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130
+     131 132 133 134 135 136 137]
+    VAL views are [100 101 102 103 104 105 106 107 108 109 110 111 112]
+
+
+    0it [00:00, ?it/s]
+

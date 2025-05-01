@@ -1,7 +1,9 @@
-## Score-Based Diffusion Models as Principled Priors for Inverse Imaging
+## From Paper to Code: Understanding and Reproducing "Score-Based Diffusion Models as Principled Priors for Inverse Imaging"
 ![image.png](Chapter12_ScoreDiffusion_files/image.png)
-Github Repo: https://github.com/berthyf96/score_prior, 
+Code: [GitHub Repository](https://github.com/berthyf96/score_prior), 
 Corresponding code: ../../../../code/Inv/score_prior-main/demos/2d_posterior_sampling.py
+
+# Paper Reading Notes
 
 ## 1. Highlights
 
@@ -9,7 +11,7 @@ To tackle more complex inverse problems that require expressive image priors, th
 
 ## 2. Background
 
-**Inverse problems** in imaging, such as denoising or deblurring, are ill-posed: many images may explain the same observation. To resolve ambiguity, a *prior* on the image is needed. Classical priors like total variation or Gaussian models are limited in expressiveness.
+Inverse problems in imaging, such as denoising or deblurring, are ill-posed: many images may explain the same observation. To resolve ambiguity, a *prior* on the image is needed. Classical priors like total variation or Gaussian models are limited in expressiveness.
 
 Bayesian inference offers a clean solution by decomposing the posterior as:
 
@@ -31,22 +33,22 @@ $$
 
 This integral accounts for the uncertainty in denoising, but is generally intractable. So what do prior methods do?
 
-They often approximate $ p(y \mid x_t) $ by simply evaluating $ p(y \mid \hat{x}_0(x_t)) $, where $ \hat{x}_0(x_t) $ is an estimate of the denoised image (e.g., from the score network). This assumes $ y $ directly depends on $ x_t $, which is **not true**.
+They often approximate $ p(y \mid x_t) $ by simply evaluating $ p(y \mid \hat{x}_0(x_t)) $, where $ \hat{x}_0(x_t) $ is an estimate of the denoised image (e.g., from the score network). This assumes $ y $ directly depends on $ x_t $, which is not true.
 
 > ❌ Incorrect: $ p(y \mid x_t) \approx p(y \mid x_0) $  
 > ✅ Correct (but hard): $ p(y \mid x_t) = \int p(y \mid x_0) \, p(x_0 \mid x_t) \, dx_0 $
 
-This approximation leads to biased posteriors and unreliable uncertainty estimates. The method proposed in this paper avoids this by **never modifying the diffusion process**, and instead computes the posterior properly via variational inference using the actual log-probability $ \log p_\theta(x) $.
+This approximation leads to biased posteriors and unreliable uncertainty estimates. The method proposed in this paper avoids this by never modifying the diffusion process, and instead computes the posterior properly via variational inference using the actual log-probability $ \log p_\theta(x) $.
 
 
 Score-based diffusion models are a promising exception. They define a generative process via denoising, and theoretically allow for exact log-probability and gradient computation. Yet prior works using them in inverse problems often rely on heuristic sampling or tuned parameters, breaking the Bayesian formulation.
 
-> **Can we turn score-based diffusion models into true probabilistic priors—ones that allow principled, hyperparameter-free inference?**
+> Can we turn score-based diffusion models into true probabilistic priors—ones that allow principled, hyperparameter-free inference?
 
 ---
 ### Review:  Score-based Diffusion Model
 
-Score-based diffusion models are a class of generative models that learn to sample from complex data distributions by reversing a gradual noising process. Instead of modeling the data distribution $ p(x) $ directly, they estimate the **score function**:
+Score-based diffusion models are a class of generative models that learn to sample from complex data distributions by reversing a gradual noising process. Instead of modeling the data distribution $ p(x) $ directly, they estimate the score function:
 
 $$
 s_\theta(x, t) \approx \nabla_x \log p_t(x)
@@ -56,7 +58,7 @@ where $ p_t(x) $ is the distribution of noisy data at time $ t $, and $ s_\theta
 
 #### Forward and Reverse Process
 
-The model defines a forward **stochastic differential equation (SDE)** that gradually perturbs the data $ x_0 $ into noise:
+The model defines a forward stochastic differential equation (SDE) that gradually perturbs the data $ x_0 $ into noise:
 
 $$
 d x_t = f(x_t, t) dt + g(t) dw
@@ -65,12 +67,12 @@ $$
 To sample from the data distribution, we reverse this process using either:
 
 - A reverse-time SDE, or
-- An equivalent **probability flow ODE**, which is deterministic.
+- An equivalent probability flow ODE, which is deterministic.
 
 
 #### Why Learn the Score?
 
-By learning the score $ \nabla_x \log p_t(x) $, we can use it to simulate the reverse process without needing to know $ p_t(x) $ itself. This approach connects to **denoising score matching** [Vincent, 2011], and was extended to diffusion models in [Song & Ermon, 2019; 2021].
+By learning the score $ \nabla_x \log p_t(x) $, we can use it to simulate the reverse process without needing to know $ p_t(x) $ itself. This approach connects to denoising score matching [Vincent, 2011], and was extended to diffusion models in [Song & Ermon, 2019; 2021].
 
 
 #### Applications and Relevance
@@ -87,18 +89,18 @@ Score-based diffusion models achieve state-of-the-art results in image generatio
 - Vincent. *A Connection Between Score Matching and Denoising Autoencoders*. Neural Computation, 2011.
 ---
 
-## 3.The Core Idea
+## 3.Method Overview
 
-This paper transforms a **score-based diffusion model** into a differentiable image prior $ \log p_\theta(x) $, enabling direct use in **Bayesian inference** pipelines.
+This paper transforms a score-based diffusion model into a differentiable image prior $ \log p_\theta(x) $, enabling direct use in Bayesian inference pipelines.
 
-A **RealNVP normalizing flow** is trained to approximate the posterior $ q_\phi(x) \approx p(x|y) $, guided by:
+A RealNVP normalizing flow is trained to approximate the posterior $ q_\phi(x) \approx p(x|y) $, guided by:
 
-- A fixed **score model** defining the prior $ p(x) $
-- A task-specific **forward model** $ \mathcal{A}(x) $
+- A fixed score model defining the prior $ p(x) $
+- A task-specific forward model $ \mathcal{A}(x) $
 - Self-supervision via observed measurements $ y $
 
 
-#### 🔁 Self-Supervised Training
+#### 🔁 **Self-Supervised Training**
 
 No ground-truth images are used. The training minimizes:
 
@@ -106,13 +108,13 @@ $$
 \mathcal{L}(x) = -\log p(y \mid x) - \log p(x) - H(q_\phi)
 $$
 
-- **Data term:** $ -\log p(y|x) $ comes from a **likelihood model** defined by the forward operator:
+- Data term: $ -\log p(y|x) $ comes from a likelihood model defined by the forward operator:
   
   $$
   y = \mathcal{A}(x) + \epsilon, \quad \epsilon \sim \mathcal{N}(0, \sigma^2 I)
   $$
 
-- **Prior term:** $ -\log p(x) $ is computed via the **score model** using a probability flow ODE.
+- Prior term: $ -\log p(x) $ is computed via the score model using a probability flow ODE.
 
 #### Network I/O
 
@@ -123,7 +125,7 @@ $$
 | Likelihood | $ x $                       | $ \log p(y \mid x) $    |
 
 
-# Posterior Sampling with Score-based Priors: 2D Example
+# Code Reproduction with Explanation: Posterior Sampling with Score-based Priors, 2D Example
 
 To set up the environment, first 
 ```bash
@@ -168,17 +170,20 @@ sns.set(font='serif', font_scale=1.5)
 tfd = tfp.distributions
 ```
 
-    Current working directory: ../../../../Awesome-Computational-Imaging/chapters/Chapter12_ScoreDiffusion
-    Appending path: ../../../../code/Inv/score_prior-main
+    Current working directory: /home/xqgao/2025/MIT/Awesome-Computational-Imaging/chapters/Chapter12_ScoreDiffusion
+    Appending path: /home/xqgao/2025/MIT/code/Inv/score_prior-main
+
+
+    2025-05-01 14:20:40.635463: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
 
 
 ## Ground-truth posterior
 
 In this example, we will work with a mixture-of-Gaussians prior and a linear forward model. The resulting posterior is also a mixture-of-Gaussians.
 
-**Prior:** $\mathbf{x}\sim\sum_{k=1}^K\mathcal{N}(\mathbf{\mu}_k,\beta_k^2\mathbf{I}_2)$
+Prior: $\mathbf{x}\sim\sum_{k=1}^K\mathcal{N}(\mathbf{\mu}_k,\beta_k^2\mathbf{I}_2)$
 
-**Likelihood:** $y=\mathbf{a^\intercal x}+\eta,\quad\eta\sim\mathcal{N}(0,\sigma^2)$
+Likelihood: $y=\mathbf{a^\intercal x}+\eta,\quad\eta\sim\mathcal{N}(0,\sigma^2)$
 
 
 ```python
@@ -202,6 +207,9 @@ prior = tfd.MixtureSameFamily(
 )
 ```
 
+    WARNING:2025-05-01 14:20:42,754:jax._src.xla_bridge:969: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+
+
 
 ```python
 """
@@ -215,7 +223,7 @@ y = 0.3  # observation
 likelihood = lambda x: tfd.Normal(loc=jnp.dot(a, x), scale=sigma)
 
 def prob_y(y):
-  stds = jnp.sqrt(betas**2 * jnp.dot(a, a) + sigma**2)
+  stds = jnp.sqrt(betas2 * jnp.dot(a, a) + sigma2)
   dist = tfd.MixtureSameFamily(
     mixture_distribution=tfd.Categorical(probs=weights),
     components_distribution=tfd.MultivariateNormalDiag(
@@ -268,7 +276,7 @@ plt.show()
 
 
     
-![png](Chapter12_ScoreDiffusion_files/Chapter12_ScoreDiffusion_8_0.png)
+![png](Chapter12_ScoreDiffusion_files/Chapter12_ScoreDiffusion_9_0.png)
     
 
 
@@ -307,9 +315,9 @@ def marginal_dist_params(t: float):
 def score_fn(x, t_batch):
   def _unnormalized_log_prob(data, t):
     alpha_t, beta_t = marginal_dist_params(t)
-    var_t = alpha_t**2 * betas**2 + beta_t**2
+    var_t = alpha_t2 * betas2 + beta_t2
     means_t = alpha_t * means
-    norm2 = jnp.linalg.norm(data - means_t, axis=-1)**2
+    norm2 = jnp.linalg.norm(data - means_t, axis=-1)2
     return jax.scipy.special.logsumexp(-0.5 * norm2 / var_t)
   return jax.vmap(jax.grad(lambda xi, ti: _unnormalized_log_prob(xi, ti)))(x, t_batch)
 
@@ -325,12 +333,12 @@ prob_flow = probability_flow.ProbabilityFlow(
 
 Here we set up the RealNVP that we wish to optimize.
 
-A **normalizing flow** is a type of generative model that learns a complex data distribution by transforming a simple distribution (like a standard Gaussian) through a sequence of **invertible and differentiable functions**. Unlike implicit models (e.g., GANs), flows enable **exact likelihood computation** using the change-of-variables formula:
+A normalizing flow is a type of generative model that learns a complex data distribution by transforming a simple distribution (like a standard Gaussian) through a sequence of invertible and differentiable functions. Unlike implicit models (e.g., GANs), flows enable exact likelihood computation using the change-of-variables formula:
 $$
 \log p(x) = \log p(z) + \log \left| \det \left( \frac{\partial z}{\partial x} \right) \right|, \quad z = f^{-1}(x)
 $$
 
-**RealNVP (Real-valued Non-Volume Preserving flow)** is a popular flow model that uses **affine coupling layers**, where only part of the input is transformed at each step, enabling tractable and stable Jacobian computation.
+RealNVP (Real-valued Non-Volume Preserving flow) is a popular flow model that uses affine coupling layers, where only part of the input is transformed at each step, enabling tractable and stable Jacobian computation.
 
 
 ```python
@@ -372,13 +380,13 @@ state = mutils.State(
 )
 ```
 
-RealNVP flow is trained in a **self-supervised** way using only measurements $ y $, without ground-truth images.
+RealNVP flow is trained in a self-supervised way using only measurements $ y $, without ground-truth images.
 
 ```python
 def data_loss_fn(x):
     return -likelihood(x).log_prob(Y)
 ```   
-Here, `likelihood(x)` defines the **forward model** $ \mathcal{A}(x) $ and noise model, modeling $ p(y|x) $.  
+Here, `likelihood(x)` defines the forward model $ \mathcal{A}(x) $ and noise model, modeling $ p(y|x) $.  
 The loss enforces that the generated sample $ x $ is consistent with the observed data $ y $.
 
 No labels or true images are used — supervision comes purely from physics via $ \mathcal{A}(x) $.
@@ -400,7 +408,7 @@ def get_sampling_fn(model, params, states, train=False):
     # Sample latent.
     z = jax.random.normal(rng, shape)
 
-    variables = {'params': params, **states}
+    variables = {'params': params, states}
     if train:
       (samples, logdet), new_states = model.apply(
           variables, z, reverse=True, mutable=list(states.keys()))
@@ -498,3 +506,19 @@ for step in range(init_step, 12001):
     plt.title(f'$p(x|y={y})$')
     plt.show()
 ```
+
+
+    
+![png](Chapter12_ScoreDiffusion_files/Chapter12_ScoreDiffusion_16_0.png)
+    
+
+
+## **Results Analysis**
+
+The figure shows the estimated posterior $ p(x \mid y = 0.3) $ in a 2D toy problem. The black dashed line represents the likelihood constraint from the forward model $ \mathcal{A}(x) = y $. The solid black contours denote the prior $ p(x) $, and the colored contours represent the learned posterior $ q_\phi(x) $. Samples from the RealNVP model are overlaid as points.
+
+This visualization demonstrates how DPI captures uncertainty by producing a bimodal posterior consistent with both the observation and prior.
+
+The prior and posterior do not fully overlap because the prior encodes general image plausibility, while the posterior incorporates both prior and data. It is not necessary for the two to coincide; rather, the posterior should align with high-probability regions of the prior **along the likelihood manifold**.
+
+Shape alignment and support overlap are sufficient, as exact matching is neither expected nor required.

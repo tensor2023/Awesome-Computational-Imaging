@@ -1,9 +1,10 @@
-## GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting
-
+## From Paper to Code: Understanding and Reproducing "GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting"
 ![image.png](Chapter05_Gaussian_Image_files/image.png)
+Code: [GitHub Repository](https://github.com/Xinjie-Q/GaussianImage), 
+Source Code in My Repo: ../../../code/GS/GaussianImage-main/train.py
 
-Github Repo:https://github.com/Xinjie-Q/GaussianImage, 
-Corresponding code: ../../../../code/GS/GaussianImage-main/train.py
+# Paper Reading Notes
+
 ## 1. Highlights
 
 This work transitions 3D Gaussian Splatting (3DGS) into a 2D formulation, specifically for single-image representation and compression. It inherits key advantages of 3DGS—such as high rendering quality and parallelism—while eliminating the need for camera parameters or depth sorting.
@@ -22,9 +23,9 @@ This work transitions 3D Gaussian Splatting (3DGS) into a 2D formulation, specif
 Implicit neural representations (INRs) have recently gained popularity in image processing. These methods represent images as continuous functions, often modeled by MLPs, that map spatial coordinates $(x, y)$ to RGB values.  
 Notable methods like SIREN [1] and WIRE [2] show impressive results in terms of image fidelity. 
 
-Recently, 3D Gaussian Splatting [5] has been proposed in the context of 3D scene reconstruction, providing fast and visually high-quality rendering by explicitly modeling 3D Gaussians. This work inspires The Core Idea of **GaussianImage**, which brings this approach to **2D image representation and compression**.
+Recently, 3D Gaussian Splatting [5] has been proposed in the context of 3D scene reconstruction, providing fast and visually high-quality rendering by explicitly modeling 3D Gaussians. This work inspires Method Overview of GaussianImage, which brings this approach to 2D image representation and compression.
 
-## 2. The Core Idea
+## 2. Method Overview
 Pipeline
 1. Input a high-resolution image (usually in full resolution);
 2. Optimize (overfit) a set of 2D Gaussians to represent the image;
@@ -32,7 +33,7 @@ Pipeline
 4. When needed for display or reconstruction, render the image from these parameters at 2000 FPS.
 
 
-GaussianImage replaces MLP-based INRs with **a set of 2D Gaussians**. Each image is represented as a sum of weighted Gaussian functions in 2D space. Every Gaussian is defined by:
+GaussianImage replaces MLP-based INRs with a set of 2D Gaussians. Each image is represented as a sum of weighted Gaussian functions in 2D space. Every Gaussian is defined by:
 
 - Position $\mu \in \mathbb{R}^2$
 - Covariance matrix $\Sigma \in \mathbb{R}^{2 \times 2}$
@@ -41,11 +42,11 @@ GaussianImage replaces MLP-based INRs with **a set of 2D Gaussians**. Each image
 
 ### 2.1 Covariance matrix factorization
 
-The covariance matrix defines the **shape**, **orientation**, and **scale** of a 2D Gaussian.  
+The covariance matrix defines the shape, orientation, and scale of a 2D Gaussian.  
 It determines how the Gaussian spreads in space, allowing it to adapt to local image structures.  
 Using a full covariance matrix enables anisotropic and rotated blobs, which are essential for accurately fitting complex image regions.
 
-To ensure the covariance matrix $\Sigma$ is always positive semi-definite, GaussianImage uses **Cholesky decomposition**:
+To ensure the covariance matrix $\Sigma$ is always positive semi-definite, GaussianImage uses Cholesky decomposition:
 
 $$
 \Sigma = LL^\top,\quad L = \begin{bmatrix} l_1 & 0 \\\\ l_2 & l_3 \end{bmatrix}
@@ -59,12 +60,12 @@ This makes optimization stable and avoids invalid $\Sigma$ values during trainin
 
 ### 2.2 Accumulated Blending
 
-3D Gaussian Splatting (3DGS) uses **alpha blending**:
+3D Gaussian Splatting (3DGS) uses alpha blending:
 - Needs depth sorting
 - Requires camera parameters
 - Sequential, not parallel
 
-But 2D images have **no depth**. GaussianImage instead uses **accumulated summation**:
+But 2D images have no depth. GaussianImage instead uses accumulated summation:
 
 $$
 C_i = \sum_{n \in N} c'_n \cdot \exp(-\sigma_n),\quad \sigma_n = \frac{1}{2} d_n^\top \Sigma^{-1} d_n
@@ -85,6 +86,8 @@ No need to sort. Fully parallel. Order-invariant. Faster and more stable.
 [6] Townsend et al., "Practical Lossless Compression with Latent Variables using Bits-Back Coding", arXiv 2019  
 
 
+
+# Code Reproduction with Explanation:
 
 
 ```python
@@ -113,8 +116,8 @@ import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 ```
 
-    Current working directory: ../../../../Awesome-Computational-Imaging/chapters/Chapter05_Gaussian_Image
-    Appending path: ../../../../code/GS/GaussianImage-main
+    Current working directory: /home/xqgao/2025/MIT/Awesome-Computational-Imaging/chapters/Chapter05_Gaussian_Image
+    Appending path: /home/xqgao/2025/MIT/code/GS/GaussianImage-main
 
 
 `SimpleTrainer2d` is designed to train a set of learnable 2D Gaussians to approximate a given image. It supports different Gaussian formulations such as Cholesky, Rotation-Scaling, and 3DGS, and takes care of everything from loading the image and initializing the model, to training over a specified number of iterations and evaluating performance using PSNR and MS-SSIM. The final goal is to represent the image efficiently using a compact set of parameterized Gaussians, while optionally saving the output and logging the process.
@@ -142,7 +145,7 @@ class SimpleTrainer2d:
         self.H, self.W = self.gt_image.shape[2], self.gt_image.shape[3]
         self.iterations = iterations
         self.save_imgs = args.save_imgs
-        self.log_dir = Path(f"../../../../code/GS/GaussianImage-main/checkpoints/{args.data_name}/{model_name}_{args.iterations}_{num_points}/{self.image_name}")
+        self.log_dir = Path(f"../../../code/GS/GaussianImage-main/checkpoints/{args.data_name}/{model_name}_{args.iterations}_{num_points}/{self.image_name}")
         
         if model_name == "GaussianImage_Cholesky":
             from gaussianimage_cholesky import GaussianImage_Cholesky
@@ -180,20 +183,6 @@ class SimpleTrainer2d:
             psnr_list.append(psnr)
             iter_list.append(iter)
             
-            if iter % 100 == 0:
-                with torch.no_grad():
-                    progress_bar.set_postfix({f"Loss":f"{loss.item():.{7}f}", "PSNR":f"{psnr:.{4}f},"})
-                    progress_bar.update(10)
-                    self.gaussian_model.eval()
-                    out = self.gaussian_model()
-                    img_tensor = out["render"].float().squeeze(0).cpu()
-                    img = transforms.ToPILImage()(img_tensor)
-                    plt.imshow(img)
-                    plt.title(f"Iteration {iter}")
-                    plt.axis("off")
-                    plt.show()
-                    self.gaussian_model.train()
-
                 
         end_time = time.time() - start_time
         progress_bar.close()
@@ -223,19 +212,19 @@ class SimpleTrainer2d:
 
         self.logwriter.write("Test PSNR:{:.4f}, MS_SSIM:{:.6f}".format(psnr, ms_ssim_value))
 
-        if self.save_imgs:
-            transform = transforms.ToPILImage()
-            img = transform(out["render"].float().squeeze(0))
+        #if self.save_imgs:
+        transform = transforms.ToPILImage()
+        img = transform(out["render"].float().squeeze(0))
 
-            # Save image
-            name = self.image_name + "_fitting.png"
-            img.save(str(self.log_dir / name))
+        # Save image
+        name = self.image_name + "_fitting.png"
+        # img.save(str(self.log_dir / name))
 
-            # Show image with matplotlib
-            plt.imshow(img)
-            plt.title(f"Prediction: {self.image_name}")
-            plt.axis("off")
-            plt.show()
+        # Show image with matplotlib
+        plt.imshow(img)
+        plt.title(f"Prediction: {self.image_name}")
+        plt.axis("off")
+        plt.show()
 
         return psnr, ms_ssim_value
 
@@ -252,13 +241,13 @@ def image_path_to_tensor(image_path: Path):
 def parse_args(argv):
     parser = argparse.ArgumentParser(description="Example training script.")
     parser.add_argument(
-        "-d", "--dataset", type=str, default='../../../../Datasets/Kodak', help="Training dataset"
+        "-d", "--dataset", type=str, default='../../../Datasets/Kodak', help="Training dataset"
     )
     parser.add_argument(
         "--data_name", type=str, default='kodak', help="Training dataset"
     )
     parser.add_argument(
-        "--iterations", type=int, default=50000, help="number of training epochs (default: %(default)s)"
+        "--iterations", type=int, default=5000, help="number of training epochs (default: %(default)s)"
     )
     parser.add_argument(
         "--model_name", type=str, default="GaussianImage_Cholesky", help="model selection: GaussianImage_Cholesky, GaussianImage_RS, 3DGS"
@@ -309,9 +298,10 @@ logwriter = LogWriter(Path(f"./checkpoints/{args.data_name}/{args.model_name}_{a
 psnrs, ms_ssims, training_times, eval_times, eval_fpses = [], [], [], [], []
 image_h, image_w = 0, 0
 if args.data_name == "kodak":
-    image_length, start = 24, 0
+    image_length, start = 3, 0
 elif args.data_name == "DIV2K_valid_LRX2":
     image_length, start = 100, 800
+
 for i in range(start, start+image_length):
     if args.data_name == "kodak":
         image_path = Path(args.dataset) / f'{i+1}.png'
@@ -346,109 +336,57 @@ logwriter.write("Average: {}x{}, PSNR:{:.4f}, MS-SSIM:{:.4f}, Training:{:.4f}s, 
 
     /home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/jaxtyping/__init__.py:231: UserWarning: jaxtyping version >=0.2.23 should be used with Equinox version >=0.11.1
       warnings.warn(
-    Training progress:  16%|█▋        | 8170/50000 [00:13<01:06, 630.57it/s, Loss=0.0001703, PSNR=37.6876,]
+    Training progress:   0%|          | 0/5000 [00:07<?, ?it/s]
 
 
-    ---------------------------------------------------------------------------
-
-    KeyboardInterrupt                         Traceback (most recent call last)
-
-    Cell In[4], line 29
-         25     image_path = Path(args.dataset) /  f'{i+1:04}x2.png'
-         27 trainer = SimpleTrainer2d(image_path=image_path, num_points=args.num_points, 
-         28     iterations=args.iterations, model_name=args.model_name, args=args, model_path=args.model_path)
-    ---> 29 psnr, ms_ssim, training_time, eval_time, eval_fps = trainer.train()
-         30 psnrs.append(psnr)
-         31 ms_ssims.append(ms_ssim)
+    Test PSNR:37.0133, MS_SSIM:0.997281
 
 
-    Cell In[2], line 56, in SimpleTrainer2d.train(self)
-         54 start_time = time.time()
-         55 for iter in range(1, self.iterations+1):
-    ---> 56     loss, psnr = self.gaussian_model.train_iter(self.gt_image)
-         57     psnr_list.append(psnr)
-         58     iter_list.append(iter)
+
+    
+![png](Chapter05_Gaussian_Image_files/Chapter05_Gaussian_Image_9_2.png)
+    
 
 
-    File ~/2025/MIT/code/GS/GaussianImage-main/gaussianimage_cholesky.py:76, in GaussianImage_Cholesky.train_iter(self, gt_image)
-         75 def train_iter(self, gt_image):
-    ---> 76     render_pkg = self.forward()
-         77     image = render_pkg["render"]
-         78     loss = loss_fn(image, gt_image, self.loss_type, lambda_value=0.7)
+    Training Complete in 7.0003s, Eval time:0.00077572s, FPS:1289.1311
+    1: 512x768, PSNR:37.0133, MS-SSIM:0.9973, Training:7.0003s, Eval:0.00077572s, FPS:1289.1311
 
 
-    File ~/2025/MIT/code/GS/GaussianImage-main/gaussianimage_cholesky.py:68, in GaussianImage_Cholesky.forward(self)
-         67 def forward(self):
-    ---> 68     self.xys, depths, self.radii, conics, num_tiles_hit = project_gaussians_2d(self.get_xyz, self.get_cholesky_elements, self.H, self.W, self.tile_bounds)
-         69     out_img = rasterize_gaussians_sum(self.xys, depths, self.radii, conics, num_tiles_hit,
-         70             self.get_features, self._opacity, self.H, self.W, self.BLOCK_H, self.BLOCK_W, background=self.background, return_alpha=False)
-         71     out_img = torch.clamp(out_img, 0, 1) #[H, W, 3]
+    Training progress:   0%|          | 0/5000 [00:06<?, ?it/s]
+
+    Test PSNR:39.8294, MS_SSIM:0.994522
 
 
-    File ~/2025/MIT/Tools/gsplat-master/gsplat/gsplat/project_gaussians_2d.py:21, in project_gaussians_2d(means2d, L_elements, img_height, img_width, tile_bounds, clip_thresh)
-         13 def project_gaussians_2d(
-         14     means2d: Float[Tensor, "*batch 2"],
-         15     L_elements: Float[Tensor, "*batch 3"],
-       (...)     19     clip_thresh: float = 0.01,
-         20 ) -> Tuple[Tensor, Tensor, Tensor, Tensor, int]:
-    ---> 21     return _ProjectGaussians2d.apply(
-         22         means2d.contiguous(),
-         23         L_elements.contiguous(),
-         24         img_height,
-         25         img_width,
-         26         tile_bounds,
-         27         clip_thresh,
-         28     )
+    
 
 
-    File ~/anaconda3/envs/inr/lib/python3.12/site-packages/torch/autograd/function.py:575, in Function.apply(cls, *args, **kwargs)
-        572 if not torch._C._are_functorch_transforms_active():
-        573     # See NOTE: [functorch vjp and autograd interaction]
-        574     args = _functorch.utils.unwrap_dead_wrappers(args)
-    --> 575     return super().apply(*args, **kwargs)  # type: ignore[misc]
-        577 if not is_setup_ctx_defined:
-        578     raise RuntimeError(
-        579         "In order to use an autograd.Function with functorch transforms "
-        580         "(vmap, grad, jvp, jacrev, ...), it must override the setup_context "
-        581         "staticmethod. For more details, please see "
-        582         "https://pytorch.org/docs/main/notes/extending.func.html"
-        583     )
+
+    
+![png](Chapter05_Gaussian_Image_files/Chapter05_Gaussian_Image_9_7.png)
+    
 
 
-    File ~/2025/MIT/Tools/gsplat-master/gsplat/gsplat/project_gaussians_2d.py:51, in _ProjectGaussians2d.forward(ctx, means2d, L_elements, img_height, img_width, tile_bounds, clip_thresh)
-         33 @staticmethod
-         34 def forward(
-         35     ctx,
-       (...)     41     clip_thresh: float = 0.01,
-         42 ):
-         43     num_points = means2d.shape[-2]
-         45     (
-         46         xys,
-         47         depths,
-         48         radii,
-         49         conics,
-         50         num_tiles_hit,
-    ---> 51     ) = _C.project_gaussians_2d_forward(
-         52         num_points,
-         53         means2d,
-         54         L_elements,
-         55         img_height,
-         56         img_width,
-         57         tile_bounds,
-         58         clip_thresh,
-         59     )
-         61     # Save non-tensors.
-         62     ctx.img_height = img_height
+    Training Complete in 6.8770s, Eval time:0.00032370s, FPS:3089.2943
+    2: 512x768, PSNR:39.8294, MS-SSIM:0.9945, Training:6.8770s, Eval:0.00032370s, FPS:3089.2943
 
 
-    File ~/2025/MIT/Tools/gsplat-master/gsplat/gsplat/cuda/__init__.py:9, in _make_lazy_cuda_func.<locals>.call_cuda(*args, **kwargs)
-          5 def call_cuda(*args, **kwargs):
-          6     # pylint: disable=import-outside-toplevel
-          7     from ._backend import _C
-    ----> 9     return getattr(_C, name)(*args, **kwargs)
+    Training progress:   0%|          | 0/5000 [00:06<?, ?it/s]
+
+    Test PSNR:43.2735, MS_SSIM:0.997530
 
 
-    KeyboardInterrupt: 
+    
 
 
-    Training progress:  16%|█▋        | 8180/50000 [00:29<01:06, 630.57it/s, Loss=0.0001703, PSNR=37.6876,]
+
+    
+![png](Chapter05_Gaussian_Image_files/Chapter05_Gaussian_Image_9_12.png)
+    
+
+
+    Training Complete in 6.6995s, Eval time:0.00041715s, FPS:2397.1972
+    3: 512x768, PSNR:43.2735, MS-SSIM:0.9975, Training:6.6995s, Eval:0.00041715s, FPS:2397.1972
+    Average: 512x768, PSNR:40.0387, MS-SSIM:0.9964, Training:6.8589s, Eval:0.00050552s, FPS:2258.5410
+
+
+This is the Kodak dataset; as shown, the inference is indeed very fast, and the results are impressive.
