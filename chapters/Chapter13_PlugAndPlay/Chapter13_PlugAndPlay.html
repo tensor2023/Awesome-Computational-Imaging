@@ -435,25 +435,25 @@ Source Code in My Repo: ../../../../code/PnP/DPIR-master/main_dpir_deblocking_co
 <h2>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
 <p>Image restoration is a fundamental problem in computer vision and computational imaging. The goal is to recover a high-quality image <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> from its degraded observation <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, which may be blurred, noisy, downsampled, or compressed.</p>
 <p>A standard Bayesian approach is to perform Maximum A Posteriori (MAP) estimation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e8f7471-01e6-42ce-8884-12762d3c2b5b">
-<span class="eqno">()<a class="headerlink" href="#equation-7e8f7471-01e6-42ce-8884-12762d3c2b5b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5e7e1ec8-7b7b-4a3e-8257-e591d9d6884d">
+<span class="eqno">()<a class="headerlink" href="#equation-5e7e1ec8-7b7b-4a3e-8257-e591d9d6884d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\mathbf{x}} = \arg\max_{\mathbf{x}} \log p(\mathbf{y} \mid \mathbf{x}) + \log p(\mathbf{x})
 \tag{1}
 \end{equation}\]</div>
 <p>Assuming additive Gaussian noise, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-85a23de2-dfdb-4d1f-85cc-324981ea136b">
-<span class="eqno">()<a class="headerlink" href="#equation-85a23de2-dfdb-4d1f-85cc-324981ea136b" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+<div class="amsmath math notranslate nohighlight" id="equation-ab99ecde-f3a1-49ee-84c9-c646ba32926e">
+<span class="eqno">()<a class="headerlink" href="#equation-ab99ecde-f3a1-49ee-84c9-c646ba32926e" title="Permalink to this equation">#</a></span>\[\begin{equation} 
 \mathbf{y} = \mathcal{T}(\mathbf{x}) + \mathbf{n}, \quad \mathbf{n} \sim \mathcal{N}(0, \sigma^2 \mathbf{I})
 \end{equation}\]</div>
 <p>the likelihood becomes:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52a1594e-ae3e-4334-bf1f-6ce2c16e6f0e">
-<span class="eqno">()<a class="headerlink" href="#equation-52a1594e-ae3e-4334-bf1f-6ce2c16e6f0e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5abe3d22-21c1-4f4d-bd73-5a2eb99e674d">
+<span class="eqno">()<a class="headerlink" href="#equation-5abe3d22-21c1-4f4d-bd73-5a2eb99e674d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p(\mathbf{y}|\mathbf{x}) = \frac{1}{Z} \exp\left(-\frac{1}{2\sigma^2} \|\mathbf{y} - \mathcal{T}(\mathbf{x})\|^2 \right)
 \tag{2}
 \end{equation}\]</div>
 <p>Taking the negative log of Equation (1) and substituting Equation (2) leads to the following optimization formulation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bc434f1f-f1e0-4ef7-8187-eeac9b5e2bef">
-<span class="eqno">()<a class="headerlink" href="#equation-bc434f1f-f1e0-4ef7-8187-eeac9b5e2bef" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4cbf64f0-8e88-40e2-ac25-4beaceb4d190">
+<span class="eqno">()<a class="headerlink" href="#equation-4cbf64f0-8e88-40e2-ac25-4beaceb4d190" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\mathbf{x}} = \arg\min_{\mathbf{x}} \frac{1}{2\sigma^2} \| \mathbf{y} - \mathcal{T}(\mathbf{x}) \|^2 + \lambda \mathcal{R}(\mathbf{x})
 \tag{3}
 \end{equation}\]</div>
@@ -461,8 +461,8 @@ p(\mathbf{y}|\mathbf{x}) = \frac{1}{Z} \exp\left(-\frac{1}{2\sigma^2} \|\mathbf{
 <section id="review-maximum-a-posteriori-map">
 <h3>Review: Maximum A Posteriori (MAP)<a class="headerlink" href="#review-maximum-a-posteriori-map" title="Link to this heading">#</a></h3>
 <p>Maximum a posteriori (MAP) estimation solves:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f23912ed-346c-4a25-b9f4-fb322ba99081">
-<span class="eqno">()<a class="headerlink" href="#equation-f23912ed-346c-4a25-b9f4-fb322ba99081" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7ac85d17-1469-4c40-892f-2450309f7a50">
+<span class="eqno">()<a class="headerlink" href="#equation-7ac85d17-1469-4c40-892f-2450309f7a50" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\mathbf{x}} = \arg\max_{\mathbf{x}} \log p(\mathbf{y} \mid \mathbf{x}) + \log p(\mathbf{x})
 \tag{1}
 \end{equation}\]</div>
@@ -484,8 +484,8 @@ p(\mathbf{y}|\mathbf{x}) = \frac{1}{Z} \exp\left(-\frac{1}{2\sigma^2} \|\mathbf{
 </ul>
 <hr class="docutils" />
 <p>In this paper, the forward model <span class="math notranslate nohighlight">\(T(x)\)</span> is a deterministic function (like blurring, downsampling, etc). But in Bayesian inference, we always deal with uncertainty, so we represent the observation model probabilistically:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-661463b7-9f96-4841-a5d6-81d2c8515181">
-<span class="eqno">()<a class="headerlink" href="#equation-661463b7-9f96-4841-a5d6-81d2c8515181" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-504b6830-13c1-48de-89e6-827f14612b24">
+<span class="eqno">()<a class="headerlink" href="#equation-504b6830-13c1-48de-89e6-827f14612b24" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y = T(x) + \text{noise}
 \quad \Rightarrow \quad p(y|x)
 \end{equation}\]</div>
@@ -509,20 +509,20 @@ y = T(x) + \text{noise}
 <p>This enables using modern CNN-based denoisers, such as DnCNN or DRUNet, which are trained on clean/noisy image pairs, as implicit priors.</p>
 <p>The optimization problem becomes decoupled into two subproblems:</p>
 <p>Data fidelity step:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1a3fb8d0-8019-4695-b979-9870337f821b">
-<span class="eqno">()<a class="headerlink" href="#equation-1a3fb8d0-8019-4695-b979-9870337f821b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fd2bde5b-ef3c-4fce-9baf-22e95e8e88fb">
+<span class="eqno">()<a class="headerlink" href="#equation-fd2bde5b-ef3c-4fce-9baf-22e95e8e88fb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathbf{x}^{(k)} = \arg\min_{\mathbf{x}} \| \mathbf{y} - \mathcal{T}(\mathbf{x}) \|^2 + \mu \| \mathbf{x} - \mathbf{z}^{(k-1)} \|^2
 \tag{4a}
 \end{equation}\]</div>
 <p>Denoising step (Prior step):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-880ed18f-b691-4f03-b70e-e648fede915f">
-<span class="eqno">()<a class="headerlink" href="#equation-880ed18f-b691-4f03-b70e-e648fede915f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1619b05c-e9ab-4987-bc05-71a6c55a285b">
+<span class="eqno">()<a class="headerlink" href="#equation-1619b05c-e9ab-4987-bc05-71a6c55a285b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathbf{z}^{(k)} = \arg\min_{\mathbf{z}} \frac{1}{2} \left( \frac{\lambda}{\mu} \right)^2 \| \mathbf{z} - \mathbf{x}^{(k)} \|^2 + \mathcal{R}(\mathbf{z})
 \tag{4b}
 \end{equation}\]</div>
 <p>This is the core of the Half-Quadratic Splitting (HQS) formulation. Here, <span class="math notranslate nohighlight">\(k\)</span> denotes the iteration index of the optimization process. In PnP, the second step is not solved explicitly; rather, we perform:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ba7b09ae-aa6f-4414-a974-45d9299d9376">
-<span class="eqno">()<a class="headerlink" href="#equation-ba7b09ae-aa6f-4414-a974-45d9299d9376" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4714bde1-4cae-4ff5-bc50-62b943bdd51d">
+<span class="eqno">()<a class="headerlink" href="#equation-4714bde1-4cae-4ff5-bc50-62b943bdd51d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathbf{z}^{(k)} = \text{Denoiser}(\mathbf{x}^{(k)}, \sigma_k)
 \tag{5}
 \end{equation}\]</div>
@@ -716,8 +716,8 @@ PSNR: 25.38, LPIPS: 0.5968
 <h2>Explanation of <code class="docutils literal notranslate"><span class="pre">hqs_super_resolve</span></code> function<a class="headerlink" href="#explanation-of-hqs-super-resolve-function" title="Link to this heading">#</a></h2>
 <p>This function implements a Plug-and-Play (PnP) super-resolution algorithm based on the Half-Quadratic Splitting (HQS) framework. The optimization problem is split into two sub-problems that are solved alternately in an iterative manner.</p>
 <p>We aim to solve the following HQS formulation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a455420-56ec-4518-a262-7e6b14f5d72c">
-<span class="eqno">()<a class="headerlink" href="#equation-0a455420-56ec-4518-a262-7e6b14f5d72c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-30502fe4-b286-40e6-85ee-bae671304da8">
+<span class="eqno">()<a class="headerlink" href="#equation-30502fe4-b286-40e6-85ee-bae671304da8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathbf{x}^{(k)} = \arg\min_{\mathbf{x}} \| \mathbf{y} - \mathcal{T}(\mathbf{x}) \|^2 + \mu \| \mathbf{x} - \mathbf{z}^{(k-1)} \|^2
 \tag{4a}
 \end{equation}\]</div>
@@ -726,14 +726,14 @@ PSNR: 25.38, LPIPS: 0.5968
 </pre></div>
 </div>
 <p>Denoising step (Prior step):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c3eae481-8f9a-4fe8-96d9-5657900b56d2">
-<span class="eqno">()<a class="headerlink" href="#equation-c3eae481-8f9a-4fe8-96d9-5657900b56d2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fcadadc1-26cd-4e73-922b-50d4d24b931d">
+<span class="eqno">()<a class="headerlink" href="#equation-fcadadc1-26cd-4e73-922b-50d4d24b931d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathbf{z}^{(k)} = \arg\min_{\mathbf{z}} \frac{1}{2} \left( \frac{\lambda}{\mu} \right)^2 \| \mathbf{z} - \mathbf{x}^{(k)} \|^2 + \mathcal{R}(\mathbf{z})
 \tag{4b}
 \end{equation}\]</div>
 <p>This is the core of the Half-Quadratic Splitting (HQS) formulation. Here, <span class="math notranslate nohighlight">\(k\)</span> denotes the iteration index of the optimization process. In PnP, the second step is not solved explicitly; rather, we perform:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b76cdec4-9f9a-42b1-86fc-507bfc772568">
-<span class="eqno">()<a class="headerlink" href="#equation-b76cdec4-9f9a-42b1-86fc-507bfc772568" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-dfd84cff-8f08-4a20-8df4-400250f2b0fd">
+<span class="eqno">()<a class="headerlink" href="#equation-dfd84cff-8f08-4a20-8df4-400250f2b0fd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathbf{z}^{(k)} = \text{Denoiser}(\mathbf{x}^{(k)}, \sigma_k)
 \tag{5}
 \end{equation}\]</div>
