@@ -1,7 +1,9 @@
 # Contents
 
+## TODO: Add sidebar navigation and hide certain cells.
+
 - [Chapter 1: SIREN](chapters/Chapter01_SIREN/Chapter01_SIREN.md)
-- [Chapter 2: NeRF](chapters/Chapter02_NeRF/index.md)
+- [Chapter 2: NeRF](chapters/Chapter02_NeRF/Chapter02_NeRF.md)
 - [Chapter 3: FourierFeatures](chapters/Chapter03_FourierFeatures/Chapter03_FourierFeatures.md)
 - [Chapter 4: 3D Gaussian Splatting](chapters/Chapter04_3D_Gaussian_Splatting/Chapter04_3D_Gaussian_Splatting.md)
 - [Chapter 5: Gaussian Image](chapters/Chapter05_Gaussian_Image/Chapter05_Gaussian_Image.md)

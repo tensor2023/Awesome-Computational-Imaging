@@ -361,7 +361,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -377,6 +379,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-add-sidebar-navigation-and-hide-certain-cells">TODO: Add sidebar navigation and hide certain cells.</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -388,9 +398,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="contents">
 <h1>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h1>
+<section id="todo-add-sidebar-navigation-and-hide-certain-cells">
+<h2>TODO: Add sidebar navigation and hide certain cells.<a class="headerlink" href="#todo-add-sidebar-navigation-and-hide-certain-cells" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="chapters/Chapter01_SIREN/Chapter01_SIREN.html"><span class="std std-doc">Chapter 1: SIREN</span></a></p></li>
-<li><p><a class="reference internal" href="#chapters/Chapter02_NeRF/index.md"><span class="xref myst">Chapter 2: NeRF</span></a></p></li>
+<li><p><a class="reference internal" href="chapters/Chapter02_NeRF/Chapter02_NeRF.html"><span class="std std-doc">Chapter 2: NeRF</span></a></p></li>
 <li><p><a class="reference internal" href="chapters/Chapter03_FourierFeatures/Chapter03_FourierFeatures.html"><span class="std std-doc">Chapter 3: FourierFeatures</span></a></p></li>
 <li><p><a class="reference internal" href="chapters/Chapter04_3D_Gaussian_Splatting/Chapter04_3D_Gaussian_Splatting.html"><span class="std std-doc">Chapter 4: 3D Gaussian Splatting</span></a></p></li>
 <li><p><a class="reference internal" href="chapters/Chapter05_Gaussian_Image/Chapter05_Gaussian_Image.html"><span class="std std-doc">Chapter 5: Gaussian Image</span></a></p></li>
@@ -404,6 +416,7 @@ document.write(`
 <li><p><a class="reference internal" href="chapters/Chapter13_PlugAndPlay/Chapter13_PlugAndPlay.html"><span class="std std-doc">Chapter 13: PlugAndPlay</span></a></p></li>
 <li><p><a class="reference internal" href="chapters/Chapter14_PnP-DM/Chapter14_PnP-DM.html"><span class="std std-doc">Chapter 14: PnP-DM</span></a></p></li>
 </ul>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -470,6 +483,21 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#todo-add-sidebar-navigation-and-hide-certain-cells">TODO: Add sidebar navigation and hide certain cells.</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

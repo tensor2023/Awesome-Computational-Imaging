@@ -1,5 +1,5 @@
 ### From Paper to Code: Understanding and Reproducing "DIFFUSION POSTERIOR SAMPLING FOR GENERAL NOISY INVERSE PROBLEMS"
-![image.png](Chapter11_DPS_files/image.png)
+![image.png](Chapter11_DPS_files/DPS.png)
 Published in International Conference on Learning Representations (ICLR), 2023  
 Code: [GitHub Repository](https://github.com/DPS2022/diffusion-posterior-sampling), 
 Source Code in My Repo: ../../../../code/Inv/diffusion-posterior-sampling-main/sample_condition.py

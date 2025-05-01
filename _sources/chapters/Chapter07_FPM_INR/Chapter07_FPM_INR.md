@@ -1,5 +1,5 @@
 ### From Paper to Code: Understanding and Reproducing "Fourier ptychographic microscopy image stack reconstruction using implicit neural representations"
-![image.png](Chapter07_FPM_INR_files/image.png)
+![image.png](Chapter07_FPM_INR_files/FPM-INR.png)
 Code: [GitHub Repository](https://github.com/hwzhou2020/FPM_INR,), 
 Source Code in My Repo: ../../../../code/NeRF_optics/FPM_INR-main/FPM_INR.py
 

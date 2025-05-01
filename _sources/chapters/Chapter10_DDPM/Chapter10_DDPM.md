@@ -1,5 +1,5 @@
 ### From Paper to Code: Understanding and Reproducing "Denoising Diffusion Probabilistic Models"
-![image.png](Chapter10_DDPM_files/image.png)
+![image.png](Chapter10_DDPM_files/DDPM.png)
 Code: [GitHub Repository](https://github.com/lucidrains/denoising-diffusion-pytorch), 
 Corresponding code: ../../../../code/Inv/denoising-diffusion-pytorch-main/demo.py
 

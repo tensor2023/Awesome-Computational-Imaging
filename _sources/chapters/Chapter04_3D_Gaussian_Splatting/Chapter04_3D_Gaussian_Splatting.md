@@ -1,5 +1,5 @@
 ### From Paper to Code: Understanding and Reproducing "3D Gaussian Splatting for Real-Time Radiance Field Rendering"
-![image.png](Chapter04_3D_Gaussian_Splatting_files/image.png)
+![image.png](Chapter04_3D_Gaussian_Splatting_files/3DGS.png)
 Code: https://github.com/graphdeco-inria/gaussian-splatting
 Code: [GitHub Repository](https://bmild.github.io/fourfeat/)
 Source Code in My Repo: ../../../../code/GS/gaussian-splatting-main/train.py

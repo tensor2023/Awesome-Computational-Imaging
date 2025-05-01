@@ -425,7 +425,7 @@ document.write(`
                   
   <section id="principled-probabilistic-imaging-using-diffusion-models-as-plug-and-play-priors">
 <h1>Principled Probabilistic Imaging using Diffusion Models as Plug-and-Play Priors<a class="headerlink" href="#principled-probabilistic-imaging-using-diffusion-models-as-plug-and-play-priors" title="Link to this heading">#</a></h1>
-<p><img alt="image.png" src="../../_images/image13.png" />
+<p><img alt="image.png" src="../../_images/PnP-DM.png" />
 Code: GitHub Repository https://github.com/zihuiwu/PnP-DM-public,
 Source Code in My Repo: ../../../../code/PnP/PnP-DM-public-master/posterior_sample.py</p>
 </section>
@@ -468,7 +468,7 @@ p(x|y) \propto p(y|x)p(x) = \exp(-f(x; y) - g(x))
 \pi(x, z) \propto \exp\left(-f(z; y) - g(x) - \frac{1}{2\rho^2} \|x - z\|^2 \right)
 \]</div>
 <p>This leads to a Gibbs sampler that alternates between:
-<img alt="image.png" src="../../_images/image13.png" /></p>
+<img alt="image.png" src="../../_images/image12.png" /></p>
 <ul class="simple">
 <li><p>Likelihood step: sample <span class="math notranslate nohighlight">\(z\)</span> from <span class="math notranslate nohighlight">\(\pi(z|x)\)</span> (red arrow in the Figure)</p></li>
 <li><p>Prior step: sample <span class="math notranslate nohighlight">\(x\)</span> from <span class="math notranslate nohighlight">\(\pi(x|z)\)</span> (blue arrow in the Figure)</p></li>

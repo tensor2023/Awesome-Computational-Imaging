@@ -1,5 +1,5 @@
 ## Principled Probabilistic Imaging using Diffusion Models as Plug-and-Play Priors
-![image.png](Chapter14_PnP-DM_files/image.png)
+![image.png](Chapter14_PnP-DM_files/PnP-DM.png)
 Code: GitHub Repository https://github.com/zihuiwu/PnP-DM-public, 
 Source Code in My Repo: ../../../../code/PnP/PnP-DM-public-master/posterior_sample.py
 
