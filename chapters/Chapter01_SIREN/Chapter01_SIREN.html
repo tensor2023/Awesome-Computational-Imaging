@@ -1,0 +1,1232 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Implicit Neural Representations with Periodic Activation Functions &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter01_SIREN/Chapter01_SIREN';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Contents
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter01_SIREN/Chapter01_SIREN.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter01_SIREN/Chapter01_SIREN.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/Chapter01_SIREN/Chapter01_SIREN.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Implicit Neural Representations with Periodic Activation Functions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Implicit Neural Representations with Periodic Activation Functions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">4. References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#siren-explained-and-reproduced-theory-code-and-practice">SIREN Explained and Reproduced: Theory, Code, and Practice</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-input-coordinates-omega-and-activation">Notes on Input Coordinates, Omega, and Activation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#experiments">Experiments</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-an-image">Fitting an image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-siren-periodicity-out-of-range-behavior">Case study: Siren periodicity &amp; out-of-range behavior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-an-audio-signal">Fitting an audio signal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-poisson-s-equation">Solving Poisson’s equation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-siren-model">Instantiate SIREN model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-loss-function">Define the loss function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization-scheme-distribution-of-activations">Initialization scheme &amp; distribution of activations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-activations-is-shift-invariant">Distribution of activations is shift-invariant</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="implicit-neural-representations-with-periodic-activation-functions">
+<h1>Implicit Neural Representations with Periodic Activation Functions<a class="headerlink" href="#implicit-neural-representations-with-periodic-activation-functions" title="Link to this heading">#</a></h1>
+<p><img alt="image.png" src="../../_images/image.png" />
+Code: GitHub Repository https://vsitzmann.github.io/siren/
+Source Code in My Repo: ../../../../code/NeRF/siren-master/explore_siren.ipynb</p>
+</section>
+<section id="highlights">
+<h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
+<p>This paper proposes SIREN, a novel method that uses <strong>continuous coordinates</strong> as input instead of discrete meshes to represent images, enabling <strong>arbitrary-resolution sampling</strong> and <strong>super-resolution image reconstruction</strong>.</p>
+<p>For example, traditional meshes can only retrieve colors at integer coordinates, whereas <strong>SIREN</strong> allows querying at any real-valued coordinate such as (3.45, 4.98).</p>
+<p>SIREN based on <strong>periodic activation functions</strong>, along with a <strong>principled initialization scheme</strong> to ensure stable training of deep networks. They demonstrate <strong>high-fidelity representations</strong> across images, videos, audio, and 3D shapes, and further show that SIRENs can <strong>solve partial differential equations (PDEs)</strong> directly from derivative supervision. In addition, they combine SIRENs with <strong>hypernetworks</strong> to learn priors over implicit function spaces, enabling tasks such as <strong>sparse image inpainting</strong>.</p>
+</section>
+<section id="background">
+<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<p>How to represent a signal is a fundamental question across science and engineering.<br />
+Traditional representations are typically discrete, such as pixel grids for images or voxel grids for 3D shapes.<br />
+However, these discrete formats suffer from issues like high memory usage, limited resolution, and difficulty in computing derivatives.</p>
+<p>Recently, <strong>implicit neural representations (INRs)</strong> have emerged as a powerful alternative.<br />
+Instead of storing signals explicitly, they use neural networks to map coordinates <span class="math notranslate nohighlight">\(x\)</span> (e.g., spatial or spatiotemporal) directly to signal values <span class="math notranslate nohighlight">\(\Phi(x)\)</span>.</p>
+<p>For example, in many physical problems, we aim to learn a function <span class="math notranslate nohighlight">\(\Phi\)</span> that satisfies:</p>
+<div class="math notranslate nohighlight">
+\[
+F(x, \Phi(x), \nabla_x \Phi(x), \nabla^2_x \Phi(x), \ldots) = 0
+\tag{1}
+\]</div>
+<p>This includes problems in physics, imaging, graphics, and differential equations.</p>
+<p>Most existing INR methods are built on ReLU-based MLPs. While these can fit low-frequency components, they <strong>struggle with high-frequency signals</strong> and <strong>fail to represent higher-order derivatives</strong> well — which are essential for many physical systems.</p>
+<hr class="docutils" />
+</section>
+<section id="method-overview">
+<h1>3. Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h1>
+<p>This paper introduces <strong>SIREN (Sinusoidal Representation Networks)</strong>, a neural network architecture that uses the sine function as its activation:</p>
+<div class="math notranslate nohighlight">
+\[
+\phi_i(x_i) = \sin(W_i x_i + b_i)
+\]</div>
+<p>A full SIREN network is:</p>
+<div class="math notranslate nohighlight">
+\[
+\Phi(x) = W_n \cdot (\phi_{n-1} \circ \phi_{n-2} \circ \cdots \circ \phi_0)(x) + b_n
+\tag{4}
+\]</div>
+<p>The key advantage is that <strong>any derivative of a sine is also a sine or cosine</strong>, which preserves expressiveness through derivatives.<br />
+This makes SIREN particularly powerful for modeling natural signals <strong>and</strong> their derivatives — such as gradients and Laplacians.</p>
+<p>They define a general optimization objective to solve constraint problems of the form:
+$<span class="math notranslate nohighlight">\(
+\begin{aligned}
+&amp; \text{Find } \Phi(x) \text{ such that} \\
+&amp; C_m\left(a(x), \Phi(x), \nabla \Phi(x), \ldots\right) = 0, \\
+&amp; \forall x \in \Omega_m,\quad m=1,\ldots,M
+\end{aligned}
+\)</span>$</p>
+<p>The corresponding loss function is:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L} = \int_\Omega \sum_{m=1}^M \mathbf{1}_{\Omega_m}(x) \left\| C_m(a(x), \Phi(x), \nabla \Phi(x), \ldots) \right\| dx
+\tag{3}
+\]</div>
+<p>The authors further propose a <strong>principled initialization scheme</strong> for SIREN:</p>
+<ul class="simple">
+<li><p>Weights <span class="math notranslate nohighlight">\(W_i\)</span> are sampled from <span class="math notranslate nohighlight">\(U\left(-\sqrt{\frac{6}{n}}, \sqrt{\frac{6}{n}}\right)\)</span></p></li>
+<li><p>The first layer uses a higher frequency <span class="math notranslate nohighlight">\(\omega_0 = 30\)</span> to match the spectrum of natural signals</p></li>
+</ul>
+<p>This ensures stability in training and allows SIRENs to scale deeper without vanishing or exploding gradients.</p>
+<hr class="docutils" />
+</section>
+<section id="references">
+<h1>4. References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Vincent Sitzmann et al., <em>Implicit Neural Representations with Periodic Activation Functions</em>, arXiv:2006.09661, 2020</p></li>
+<li><p>Ben Mildenhall et al., <em>NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis</em>, arXiv:2003.08934</p></li>
+<li><p>Jeong Joon Park et al., <em>DeepSDF</em>, CVPR 2019</p></li>
+<li><p>Maziar Raissi et al., <em>Physics-informed Neural Networks</em>, JCP 2019</p></li>
+<li><p>David Ha et al., <em>Hypernetworks</em>, ICLR 2017</p></li>
+</ol>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="siren-explained-and-reproduced-theory-code-and-practice">
+<h1>SIREN Explained and Reproduced: Theory, Code, and Practice<a class="headerlink" href="#siren-explained-and-reproduced-theory-code-and-practice" title="Link to this heading">#</a></h1>
+<p>My implementation is based on the streamlined version of SIREN provided in the official Colab notebook: <a class="reference external" href="https://vsitzmann.github.io/siren">Implicit Neural Activations with Periodic Activation Functions</a>, with modifications and additional explanations to better integrate theoretical insights from the paper.</p>
+<p><strong>Make sure that you have enabled the GPU under Edit -&gt; Notebook Settings!</strong></p>
+<p>We will then reproduce the following results from the paper:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#section_1"><span class="xref myst">Fitting an image</span></a></p></li>
+<li><p><a class="reference internal" href="#section_2"><span class="xref myst">Fitting an audio signal</span></a></p></li>
+<li><p><a class="reference internal" href="#section_3"><span class="xref myst">Solving Poisson’s equation</span></a></p></li>
+<li><p><a class="reference internal" href="#activations"><span class="xref myst">Initialization scheme &amp; distribution of activations</span></a></p></li>
+<li><p><a class="reference internal" href="#shift_invariance"><span class="xref myst">Distribution of activations is shift-invariant</span></a></p></li>
+</ul>
+<p>We will also explore Siren’s <a class="reference internal" href="#out_of_range"><span class="xref myst">behavior outside of the training range</span></a>.</p>
+<p>Let’s go! First, some imports, and a function to quickly generate coordinate grids.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">Resize</span><span class="p">,</span> <span class="n">Compose</span><span class="p">,</span> <span class="n">ToTensor</span><span class="p">,</span> <span class="n">Normalize</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">skimage</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_mgrid</span><span class="p">(</span><span class="n">sidelen</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Generates a flattened grid of (x,y,...) coordinates in a range of -1 to 1.</span>
+<span class="sd">    sidelen: int</span>
+<span class="sd">    dim: int&#39;&#39;&#39;</span>
+    <span class="n">tensors</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">dim</span> <span class="o">*</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="n">sidelen</span><span class="p">)])</span>
+    <span class="n">mgrid</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">tensors</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">mgrid</span> <span class="o">=</span> <span class="n">mgrid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mgrid</span>
+</pre></div>
+</div>
+<p>Now, we code up the sine layer, which will be the basic building block of SIREN. This is a much more concise implementation than the one in the main code, as here, we aren’t concerned with the baseline comparisons.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SineLayer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="c1"># See paper sec. 3.2, final paragraph, and supplement Sec. 1.5 for discussion of omega_0.</span>
+    
+    <span class="c1"># If is_first=True, omega_0 is a frequency factor which simply multiplies the activations before the </span>
+    <span class="c1"># nonlinearity. Different signals may require different omega_0 in the first layer - this is a </span>
+    <span class="c1"># hyperparameter.</span>
+    
+    <span class="c1"># If is_first=False, then the weights will be divided by omega_0 so as to keep the magnitude of </span>
+    <span class="c1"># activations constant, but boost gradients to the weight matrix (see supplement Sec. 1.5)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">is_first</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">omega_0</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">omega_0</span> <span class="o">=</span> <span class="n">omega_0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_first</span> <span class="o">=</span> <span class="n">is_first</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_features</span> <span class="o">=</span> <span class="n">in_features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_weights</span><span class="p">()</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_first</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_features</span><span class="p">,</span> 
+                                             <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_features</span><span class="p">)</span>      
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">6</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_features</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega_0</span><span class="p">,</span> 
+                                             <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">6</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_features</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega_0</span><span class="p">)</span>
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">omega_0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="nb">input</span><span class="p">))</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward_with_intermediate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span> 
+        <span class="c1"># For visualization of activation distributions</span>
+        <span class="n">intermediate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega_0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">intermediate</span><span class="p">),</span> <span class="n">intermediate</span>
+    
+</pre></div>
+</div>
+<p>For a 256×256 image, each pixel corresponds to a 2D coordinate, so the input <code class="docutils literal notranslate"><span class="pre">coords</span></code> has shape <span class="math notranslate nohighlight">\((1, 65536, 2)\)</span>. After passing through the network, the output shape becomes <span class="math notranslate nohighlight">\((1, 65536, 1)\)</span>, representing the predicted signal (e.g., color or intensity) at each coordinate.</p>
+<p>In each <code class="docutils literal notranslate"><span class="pre">SineLayer</span></code>, the input first goes through a linear transformation and is then scaled by <span class="math notranslate nohighlight">\(\omega_0\)</span> before applying the sine activation. The <span class="math notranslate nohighlight">\(\omega_0\)</span> controls the frequency of the sine function: a larger <span class="math notranslate nohighlight">\(\omega_0\)</span> enables the network to capture higher-frequency details in the data.</p>
+<section id="notes-on-input-coordinates-omega-and-activation">
+<h2>Notes on Input Coordinates, Omega, and Activation<a class="headerlink" href="#notes-on-input-coordinates-omega-and-activation" title="Link to this heading">#</a></h2>
+<p>In each <code class="docutils literal notranslate"><span class="pre">SineLayer</span></code>, the activation is defined as <code class="docutils literal notranslate"><span class="pre">torch.sin(self.omega_0</span> <span class="pre">*</span> <span class="pre">self.linear(input))</span></code>. The input <code class="docutils literal notranslate"><span class="pre">coords</span></code> are sampled from <span class="math notranslate nohighlight">\([-1, 1]\)</span>. The frequency factor <span class="math notranslate nohighlight">\(\omega_0\)</span> scales the output of the linear layer before applying the sine function:</p>
+<ul class="simple">
+<li><p>A <strong>larger</strong> <span class="math notranslate nohighlight">\(\omega_0\)</span> amplifies the pre-activation values, meaning a small change in the input coordinate leads to a large change in the sine input, resulting in rapid oscillations. This makes the network highly sensitive to fine, high-frequency features.</p></li>
+<li><p>A <strong>smaller</strong> <span class="math notranslate nohighlight">\(\omega_0\)</span> causes smoother oscillations, favoring the modeling of low-frequency, slowly varying structures.</p></li>
+</ul>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">torch.sin</span></code> serves as the activation function, introducing periodic nonlinearity after each linear transformation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Siren</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_features</span><span class="p">,</span> <span class="n">hidden_features</span><span class="p">,</span> <span class="n">hidden_layers</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> <span class="n">outermost_linear</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                 <span class="n">first_omega_0</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">hidden_omega_0</span><span class="o">=</span><span class="mf">30.</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SineLayer</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">hidden_features</span><span class="p">,</span> 
+                                  <span class="n">is_first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">omega_0</span><span class="o">=</span><span class="n">first_omega_0</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hidden_layers</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SineLayer</span><span class="p">(</span><span class="n">hidden_features</span><span class="p">,</span> <span class="n">hidden_features</span><span class="p">,</span> 
+                                      <span class="n">is_first</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">omega_0</span><span class="o">=</span><span class="n">hidden_omega_0</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">outermost_linear</span><span class="p">:</span>
+            <span class="n">final_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">)</span>
+            
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">final_linear</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">6</span> <span class="o">/</span> <span class="n">hidden_features</span><span class="p">)</span> <span class="o">/</span> <span class="n">hidden_omega_0</span><span class="p">,</span> 
+                                              <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">6</span> <span class="o">/</span> <span class="n">hidden_features</span><span class="p">)</span> <span class="o">/</span> <span class="n">hidden_omega_0</span><span class="p">)</span>
+                
+            <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">final_linear</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SineLayer</span><span class="p">(</span><span class="n">hidden_features</span><span class="p">,</span> <span class="n">out_features</span><span class="p">,</span> 
+                                      <span class="n">is_first</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">omega_0</span><span class="o">=</span><span class="n">hidden_omega_0</span><span class="p">))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># allows to take derivative w.r.t. input</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">coords</span>        
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward_with_activations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">retain_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns not only model output, but also intermediate activations.</span>
+<span class="sd">        Only used for visualizing activations later!&#39;&#39;&#39;</span>
+        <span class="n">activations</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+
+        <span class="n">activation_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">activations</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">SineLayer</span><span class="p">):</span>
+                <span class="n">x</span><span class="p">,</span> <span class="n">intermed</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">forward_with_intermediate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">retain_grad</span><span class="p">:</span>
+                    <span class="n">x</span><span class="o">.</span><span class="n">retain_grad</span><span class="p">()</span>
+                    <span class="n">intermed</span><span class="o">.</span><span class="n">retain_grad</span><span class="p">()</span>
+                    
+                <span class="n">activations</span><span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="vm">__class__</span><span class="p">),</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">activation_count</span><span class="p">))]</span> <span class="o">=</span> <span class="n">intermed</span>
+                <span class="n">activation_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="n">x</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">retain_grad</span><span class="p">:</span>
+                    <span class="n">x</span><span class="o">.</span><span class="n">retain_grad</span><span class="p">()</span>
+                    
+            <span class="n">activations</span><span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="vm">__class__</span><span class="p">),</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">activation_count</span><span class="p">))]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="n">activation_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">activations</span>
+</pre></div>
+</div>
+<p>And finally, differential operators that allow us to leverage autograd to compute gradients, the laplacian, etc.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">laplace</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">grad</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">divergence</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">divergence</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">div</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">div</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">]),</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">div</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">grad_outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">grad_outputs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">grad_outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">grad</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">grad_outputs</span><span class="o">=</span><span class="n">grad_outputs</span><span class="p">,</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">grad</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="experiments">
+<h1>Experiments<a class="headerlink" href="#experiments" title="Link to this heading">#</a></h1>
+<p>For the image fitting and poisson experiments, we’ll use the classic cameraman image.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_cameraman_tensor</span><span class="p">(</span><span class="n">sidelength</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">skimage</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">camera</span><span class="p">())</span>        
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">([</span>
+        <span class="n">Resize</span><span class="p">(</span><span class="n">sidelength</span><span class="p">),</span>
+        <span class="n">ToTensor</span><span class="p">(),</span>
+        <span class="n">Normalize</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">0.5</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">0.5</span><span class="p">]))</span>
+    <span class="p">])</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">img</span>
+</pre></div>
+</div>
+<p><a id='section_1'></a></p>
+<section id="fitting-an-image">
+<h2>Fitting an image<a class="headerlink" href="#fitting-an-image" title="Link to this heading">#</a></h2>
+<p>First, let’s simply fit that image!</p>
+<p>We seek to parameterize a greyscale image <span class="math notranslate nohighlight">\(f(x)\)</span> with pixel coordinates <span class="math notranslate nohighlight">\(x\)</span> with a SIREN <span class="math notranslate nohighlight">\(\Phi(x)\)</span>.</p>
+<p>That is we seek the function <span class="math notranslate nohighlight">\(\Phi\)</span> such that:
+<span class="math notranslate nohighlight">\(\mathcal{L}=\int_{\Omega} \lVert \Phi(\mathbf{x}) - f(\mathbf{x}) \rVert\mathrm{d}\mathbf{x}\)</span>
+is minimized, in which <span class="math notranslate nohighlight">\(\Omega\)</span> is the domain of the image.</p>
+<p>We write a little datast that does nothing except calculating per-pixel coordinates:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ImageFitting</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sidelength</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">get_cameraman_tensor</span><span class="p">(</span><span class="n">sidelength</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixels</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">get_mgrid</span><span class="p">(</span><span class="n">sidelength</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>    
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">IndexError</span>
+            
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixels</span>
+</pre></div>
+</div>
+<p>Let’s instantiate the dataset and our Siren. As pixel coordinates are 2D, the siren has 2 input features, and since the image is grayscale, it has one output channel.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cameraman</span> <span class="o">=</span> <span class="n">ImageFitting</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">cameraman</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">img_siren</span> <span class="o">=</span> <span class="n">Siren</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> 
+                  <span class="n">hidden_layers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">outermost_linear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">img_siren</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We now fit Siren in a simple training loop. Within only hundreds of iterations, the image and its gradients are approximated well.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_steps</span> <span class="o">=</span> <span class="mi">500</span> <span class="c1"># Since the whole image is our dataset, this just means 500 gradient descent steps.</span>
+<span class="n">steps_til_summary</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">optim</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">img_siren</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+<span class="n">model_input</span><span class="p">,</span> <span class="n">ground_truth</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dataloader</span><span class="p">))</span>
+<span class="n">model_input</span><span class="p">,</span> <span class="n">ground_truth</span> <span class="o">=</span> <span class="n">model_input</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span> <span class="n">ground_truth</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_steps</span><span class="p">):</span>
+    <span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span> <span class="o">=</span> <span class="n">img_siren</span><span class="p">(</span><span class="n">model_input</span><span class="p">)</span>    
+    <span class="n">loss</span> <span class="o">=</span> <span class="p">((</span><span class="n">model_output</span> <span class="o">-</span> <span class="n">ground_truth</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">step</span> <span class="o">%</span> <span class="n">steps_til_summary</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step </span><span class="si">%d</span><span class="s2">, Total loss </span><span class="si">%0.6f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+        <span class="n">img_grad</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+        <span class="n">img_laplacian</span> <span class="o">=</span> <span class="n">laplace</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">model_output</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_grad</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_laplacian</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">optim</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optim</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a id='out_of_range'></a></p>
+</section>
+<section id="case-study-siren-periodicity-out-of-range-behavior">
+<h2>Case study: Siren periodicity &amp; out-of-range behavior<a class="headerlink" href="#case-study-siren-periodicity-out-of-range-behavior" title="Link to this heading">#</a></h2>
+<p>It is known that the sum of two periodic signals is itself periodic with a period that is equal to the least common multiple of the periods of the two summands, if and only if the two periods are rational multiples of each other. If the ratio of the two periods is irrational, then their sum will <em>not</em> be periodic itself.</p>
+<p>Due to the floating-point representation in neural network libraries, this case cannot occur in practice, and all functions parameterized by Siren indeed have to be periodic.</p>
+<p>Yet, the period of the resulting function may in practice be several orders of magnitudes larger than the period of each Siren neuron!</p>
+<p>Let’s test this with two sines.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">get_mgrid</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    
+    <span class="n">sin_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+    <span class="n">sin_2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">coords</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="n">sin_1</span> <span class="o">+</span> <span class="n">sin_2</span>
+    
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">sin_1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">sin_2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Rational multiple&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="n">sin_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+    <span class="n">sin_2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">coords</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="n">sin_1</span> <span class="o">+</span> <span class="n">sin_2</span>
+    
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">sin_1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">sin_2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Pseudo-irrational multiple&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Though the second plot looks periodic, closer inspection shows that the period of the blue line is indeed larger than the range we’re sampling here.</p>
+<p>Let’s take a look at what the Siren we just trained looks like outside its training domain!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">out_of_range_coords</span> <span class="o">=</span> <span class="n">get_mgrid</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">50</span>
+    <span class="n">model_out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">img_siren</span><span class="p">(</span><span class="n">out_of_range_coords</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span>
+    
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">16</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">model_out</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Though there is some self-similarity, the signal is not repeated on this range of (-50, 50).</p>
+</section>
+<section id="fitting-an-audio-signal">
+<h2>Fitting an audio signal<a class="headerlink" href="#fitting-an-audio-signal" title="Link to this heading">#</a></h2>
+<p><a id='section_2'></a></p>
+<p>Here, we’ll use Siren to parameterize an audio signal - i.e., we seek to parameterize an audio waverform <span class="math notranslate nohighlight">\(f(t)\)</span>  at time points <span class="math notranslate nohighlight">\(t\)</span> by a SIREN <span class="math notranslate nohighlight">\(\Phi\)</span>.</p>
+<p>That is we seek the function <span class="math notranslate nohighlight">\(\Phi\)</span> such that:  <span class="math notranslate nohighlight">\(\mathcal{L}\int_\Omega \lVert \Phi(t) - f(t) \rVert \mathrm{d}t\)</span>  is minimized, in which  <span class="math notranslate nohighlight">\(\Omega\)</span>  is the domain of the waveform.</p>
+<p>For the audio, we’ll use the bach sonata:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.io.wavfile</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">wavfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;gt_bach.wav&#39;</span><span class="p">):</span>
+    <span class="err">!</span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">vsitzmann</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">siren</span><span class="o">/</span><span class="n">img</span><span class="o">/</span><span class="n">audio</span><span class="o">/</span><span class="n">gt_bach</span><span class="o">.</span><span class="n">wav</span>
+</pre></div>
+</div>
+<p>Let’s build a little dataset that computes coordinates for audio files:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">AudioFile</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timepoints</span> <span class="o">=</span> <span class="n">get_mgrid</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_num_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">timepoints</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">amplitude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">amplitude</span><span class="p">))</span>
+        <span class="n">amplitude</span> <span class="o">=</span> <span class="p">(</span><span class="n">amplitude</span> <span class="o">/</span> <span class="n">scale</span><span class="p">)</span>
+        <span class="n">amplitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">timepoints</span><span class="p">,</span> <span class="n">amplitude</span>
+</pre></div>
+</div>
+<p>Let’s instantiate the Siren. As this audio signal has a much higer spatial frequency on the range of -1 to 1, we increase the <span class="math notranslate nohighlight">\(\omega_0\)</span> in the first layer of siren.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bach_audio</span> <span class="o">=</span> <span class="n">AudioFile</span><span class="p">(</span><span class="s1">&#39;gt_bach.wav&#39;</span><span class="p">)</span>
+
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">bach_audio</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Note that we increase the frequency of the first layer to match the higher frequencies of the</span>
+<span class="c1"># audio signal. Equivalently, we could also increase the range of the input coordinates.</span>
+<span class="n">audio_siren</span> <span class="o">=</span> <span class="n">Siren</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> 
+                    <span class="n">hidden_layers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">first_omega_0</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">outermost_linear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">audio_siren</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Let’s have a quick listen to ground truth:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rate</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;gt_bach.wav&#39;</span><span class="p">)</span>
+
+<span class="n">model_input</span><span class="p">,</span> <span class="n">ground_truth</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dataloader</span><span class="p">))</span>
+<span class="n">Audio</span><span class="p">(</span><span class="n">ground_truth</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span><span class="n">rate</span><span class="o">=</span><span class="n">rate</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We now fit the Siren to this signal.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_steps</span> <span class="o">=</span> <span class="mi">1000</span> 
+<span class="n">steps_til_summary</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">optim</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">audio_siren</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+<span class="n">model_input</span><span class="p">,</span> <span class="n">ground_truth</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dataloader</span><span class="p">))</span>
+<span class="n">model_input</span><span class="p">,</span> <span class="n">ground_truth</span> <span class="o">=</span> <span class="n">model_input</span><span class="o">.</span><span class="n">cuda</span><span class="p">(),</span> <span class="n">ground_truth</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_steps</span><span class="p">):</span>
+    <span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span> <span class="o">=</span> <span class="n">audio_siren</span><span class="p">(</span><span class="n">model_input</span><span class="p">)</span>    
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">step</span> <span class="o">%</span> <span class="n">steps_til_summary</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step </span><span class="si">%d</span><span class="s2">, Total loss </span><span class="si">%0.6f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+    
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span><span class="n">model_output</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span><span class="n">ground_truth</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">optim</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optim</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model_output</span><span class="p">,</span> <span class="n">coords</span> <span class="o">=</span> <span class="n">audio_siren</span><span class="p">(</span><span class="n">model_input</span><span class="p">)</span>
+<span class="n">Audio</span><span class="p">(</span><span class="n">final_model_output</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span><span class="n">rate</span><span class="o">=</span><span class="n">rate</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As we can see, within few iterations, Siren has approximated the audio signal very well!</p>
+<p><a id='section_3'></a></p>
+</section>
+<section id="solving-poisson-s-equation">
+<h2>Solving Poisson’s equation<a class="headerlink" href="#solving-poisson-s-equation" title="Link to this heading">#</a></h2>
+<p>Now, let’s make it a bit harder. Let’s say we want to reconstruct an image but we only have access to its gradients!</p>
+<p>That is, we now seek the function <span class="math notranslate nohighlight">\(\Phi\)</span> such that:
+<span class="math notranslate nohighlight">\(\mathcal{L}=\int_{\Omega} \lVert \nabla\Phi(\mathbf{x}) - \nabla f(\mathbf{x}) \rVert\mathrm{d}\mathbf{x}\)</span>
+is minimized, in which <span class="math notranslate nohighlight">\(\Omega\)</span> is the domain of the image.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.ndimage</span>
+    
+<span class="k">class</span><span class="w"> </span><span class="nc">PoissonEqn</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sidelength</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">get_cameraman_tensor</span><span class="p">(</span><span class="n">sidelength</span><span class="p">)</span>
+        
+        <span class="c1"># Compute gradient and laplacian       </span>
+        <span class="n">grads_x</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">sobel</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">grads_y</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">sobel</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">grads_x</span><span class="p">,</span> <span class="n">grads_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">grads_x</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">grads_y</span><span class="p">)</span>
+                
+        <span class="bp">self</span><span class="o">.</span><span class="n">grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">grads_x</span><span class="p">,</span> <span class="n">grads_y</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laplace</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">laplace</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">laplace</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">laplace</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixels</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">get_mgrid</span><span class="p">(</span><span class="n">sidelength</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;pixels&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">pixels</span><span class="p">,</span> <span class="s1">&#39;grads&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">grads</span><span class="p">,</span> <span class="s1">&#39;laplace&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">laplace</span><span class="p">}</span>
+</pre></div>
+</div>
+<section id="instantiate-siren-model">
+<h3>Instantiate SIREN model<a class="headerlink" href="#instantiate-siren-model" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cameraman_poisson</span> <span class="o">=</span> <span class="n">PoissonEqn</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">cameraman_poisson</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">poisson_siren</span> <span class="o">=</span> <span class="n">Siren</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_features</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> 
+                      <span class="n">hidden_layers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">outermost_linear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">poisson_siren</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="define-the-loss-function">
+<h3>Define the loss function<a class="headerlink" href="#define-the-loss-function" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">gradients_mse</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">gt_gradients</span><span class="p">):</span>
+    <span class="c1"># compute gradients on the model</span>
+    <span class="n">gradients</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+    <span class="c1"># compare them with the ground-truth</span>
+    <span class="n">gradients_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">gradients</span> <span class="o">-</span> <span class="n">gt_gradients</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">gradients_loss</span>
+</pre></div>
+</div>
+</section>
+<section id="train-the-model">
+<h3>Train the model<a class="headerlink" href="#train-the-model" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_steps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">steps_til_summary</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">optim</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">poisson_siren</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+<span class="n">model_input</span><span class="p">,</span> <span class="n">gt</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dataloader</span><span class="p">))</span>
+<span class="n">gt</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">gt</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">model_input</span> <span class="o">=</span> <span class="n">model_input</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_steps</span><span class="p">):</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span> <span class="o">=</span> <span class="n">poisson_siren</span><span class="p">(</span><span class="n">model_input</span><span class="p">)</span>
+    <span class="n">train_loss</span> <span class="o">=</span> <span class="n">gradients_mse</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">gt</span><span class="p">[</span><span class="s1">&#39;grads&#39;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">step</span> <span class="o">%</span> <span class="n">steps_til_summary</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step </span><span class="si">%d</span><span class="s2">, Total loss </span><span class="si">%0.6f</span><span class="s2">, iteration time </span><span class="si">%0.6f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">train_loss</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+
+        <span class="n">img_grad</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+        <span class="n">img_laplacian</span> <span class="o">=</span> <span class="n">laplace</span><span class="p">(</span><span class="n">model_output</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">model_output</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_grad</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_laplacian</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        
+    <span class="n">optim</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">train_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optim</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a id='activations'></a></p>
+</section>
+</section>
+<section id="initialization-scheme-distribution-of-activations">
+<h2>Initialization scheme &amp; distribution of activations<a class="headerlink" href="#initialization-scheme-distribution-of-activations" title="Link to this heading">#</a></h2>
+<p>We now reproduce the empirical result on the distribution of activations, and will thereafter show empirically that the distribution of activations is shift-invariant as well!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy.fft</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">fft</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">eformat</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">prec</span><span class="p">,</span> <span class="n">exp_digits</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%.*e</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">mantissa</span><span class="p">,</span> <span class="n">exp</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+    <span class="c1"># add 1 to digits as 1 is taken by sign +/-</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">e</span><span class="si">%+0*d</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">mantissa</span><span class="p">,</span> <span class="n">exp_digits</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">exp</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">format_x_ticks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Format odd tick positions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">eformat</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">format_y_ticks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Format odd tick positions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">eformat</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_spectrum</span><span class="p">(</span><span class="n">activations</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">activations</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">activations</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[:</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
+
+    <span class="n">max_freq</span> <span class="o">=</span> <span class="mi">100</span>                
+    <span class="n">freq</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mf">2.</span><span class="o">/</span><span class="n">n</span><span class="p">)[:</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">freq</span><span class="p">[:</span><span class="n">max_freq</span><span class="p">],</span> <span class="n">spectrum</span><span class="p">[:</span><span class="n">max_freq</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_all_activations_and_grads</span><span class="p">(</span><span class="n">activations</span><span class="p">):</span>
+    <span class="n">num_cols</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">num_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">activations</span><span class="p">)</span>
+    
+    <span class="n">fig_width</span> <span class="o">=</span> <span class="mf">5.5</span>
+    <span class="n">fig_height</span> <span class="o">=</span> <span class="n">num_rows</span><span class="o">/</span><span class="n">num_cols</span><span class="o">*</span><span class="n">fig_width</span>
+    <span class="n">fig_height</span> <span class="o">=</span> <span class="mi">9</span>
+    
+    <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">5</span>
+        
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">,</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;hspace&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;wspace&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">},</span>
+                            <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">fig_width</span><span class="p">,</span> <span class="n">fig_height</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Activation Distribution&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">fontfamily</span><span class="o">=</span><span class="s1">&#39;serif&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Activation Spectrum&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">fontfamily</span><span class="o">=</span><span class="s1">&#39;serif&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Gradient Distribution&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">fontfamily</span><span class="o">=</span><span class="s1">&#39;serif&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Gradient Spectrum&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">fontfamily</span><span class="o">=</span><span class="s1">&#39;serif&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span>
+
+    <span class="n">x_formatter</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">format_x_ticks</span><span class="p">)</span>
+    <span class="n">y_formatter</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">format_y_ticks</span><span class="p">)</span>
+
+    <span class="n">spec_rows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">activations</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>    
+        <span class="n">grad_value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">flat_grad</span> <span class="o">=</span> <span class="n">grad_value</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">flat_grad</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># (1, num_points, 256)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">flat_value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            
+        <span class="n">axs</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">flat_value</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                
+        <span class="k">if</span> <span class="n">idx</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">%</span><span class="mi">2</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+                <span class="n">axs</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">arcsine</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> 
+                                 <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">variance</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">sigma</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">sigma</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+                <span class="n">axs</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span> 
+                                 <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        
+        <span class="n">activ_freq</span><span class="p">,</span> <span class="n">activ_spec</span> <span class="o">=</span> <span class="n">get_spectrum</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">activ_freq</span><span class="p">,</span> <span class="n">activ_spec</span><span class="p">)</span>
+        
+        <span class="n">grad_freq</span><span class="p">,</span> <span class="n">grad_spec</span> <span class="o">=</span> <span class="n">get_spectrum</span><span class="p">(</span><span class="n">grad_value</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grad_freq</span><span class="p">,</span> <span class="n">grad_spec</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axs</span><span class="p">[</span><span class="n">idx</span><span class="p">]:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">,</span>
+                                    <span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> 
+            <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelrotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> 
+
+            <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">x_formatter</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">y_formatter</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Siren</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> 
+              <span class="n">hidden_layers</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">outermost_linear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">input_signal</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">65536</span><span class="o">//</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">65536</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">activations</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">forward_with_activations</span><span class="p">(</span><span class="n">input_signal</span><span class="p">,</span> <span class="n">retain_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">activations</span><span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">activations</span><span class="p">))]</span>
+
+<span class="c1"># Compute gradients. Because we have retain_grad=True on </span>
+<span class="c1"># activations, each activation stores its own gradient!</span>
+<span class="n">output</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+<span class="n">plot_all_activations_and_grads</span><span class="p">(</span><span class="n">activations</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note how the activations of Siren always alternate between a standard normal distribution with standard deviation one, and an arcsine distribution. If you have a beefy computer, you can put this to the extreme and increase the number of layers - this property holds even for more than 50 layers!</p>
+<p><a id='shift_invariance'></a></p>
+</section>
+<section id="distribution-of-activations-is-shift-invariant">
+<h2>Distribution of activations is shift-invariant<a class="headerlink" href="#distribution-of-activations-is-shift-invariant" title="Link to this heading">#</a></h2>
+<p>One of the key properties of the periodic sine nonlinearity is that it affords a degree of shift-invariance. Consider the first layer of a Siren: You can convince yourself that this layer can easily learn to map two different coordinates to <em>the same set of activations</em>. This means that whatever layers come afterwards will apply the same function to these two sets of coordinates.</p>
+<p>Moreoever, the distribution of activations similarly are shift-invariant. Let’s shift our input signal by 1000 and re-compute the activations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">input_signal</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">65536</span><span class="o">//</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">65536</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1000</span>
+<span class="n">activations</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">forward_with_activations</span><span class="p">(</span><span class="n">input_signal</span><span class="p">,</span> <span class="n">retain_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">activations</span><span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">activations</span><span class="p">))]</span>
+
+<span class="c1"># Compute gradients. Because we have retain_grad=True on </span>
+<span class="c1"># activations, each activation stores its own gradient!</span>
+<span class="n">output</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+<span class="n">plot_all_activations_and_grads</span><span class="p">(</span><span class="n">activations</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As we can see, the distributions of activations didn’t change at all - they are perfectly invariant to the shift.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/Chapter01_SIREN"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Implicit Neural Representations with Periodic Activation Functions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">4. References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#siren-explained-and-reproduced-theory-code-and-practice">SIREN Explained and Reproduced: Theory, Code, and Practice</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-input-coordinates-omega-and-activation">Notes on Input Coordinates, Omega, and Activation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#experiments">Experiments</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-an-image">Fitting an image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-siren-periodicity-out-of-range-behavior">Case study: Siren periodicity &amp; out-of-range behavior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-an-audio-signal">Fitting an audio signal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-poisson-s-equation">Solving Poisson’s equation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-siren-model">Instantiate SIREN model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-loss-function">Define the loss function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization-scheme-distribution-of-activations">Initialization scheme &amp; distribution of activations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-activations-is-shift-invariant">Distribution of activations is shift-invariant</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

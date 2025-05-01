@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Plug-and-Play Image Restoration with Deep Denoiser Prior &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter13_PlugAndPlay/Chapter13_PlugAndPlay';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Contents
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter13_PlugAndPlay/Chapter13_PlugAndPlay.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter13_PlugAndPlay/Chapter13_PlugAndPlay.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/Chapter13_PlugAndPlay/Chapter13_PlugAndPlay.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Plug-and-Play Image Restoration with Deep Denoiser Prior</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Plug-and-Play Image Restoration with Deep Denoiser Prior</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-maximum-a-posteriori-map">Review: Maximum A Posteriori (MAP)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-guessing-a-drink">🍵 Example: Guessing a Drink</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-hqs-super-resolve-function">Explanation of <code class="docutils literal notranslate"><span class="pre">hqs_super_resolve</span></code> function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-consistency-step-the-first-solution-data-solution-iterative">Data consistency step, the first solution: <code class="docutils literal notranslate"><span class="pre">_data_solution_iterative</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-consistency-step-the-second-solution-data-solution-closed-form">Data consistency step, the second solution: <code class="docutils literal notranslate"><span class="pre">_data_solution_closed_form</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoising-step">Denoising step</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="plug-and-play-image-restoration-with-deep-denoiser-prior">
+<h1>Plug-and-Play Image Restoration with Deep Denoiser Prior<a class="headerlink" href="#plug-and-play-image-restoration-with-deep-denoiser-prior" title="Link to this heading">#</a></h1>
+<p><img alt="image.png" src="../../_images/image12.png" />
+Code: GitHub Repository https://github.com/cszn/DPIR,
+Source Code in My Repo: ../../../../code/PnP/DPIR-master/main_dpir_deblocking_color.py</p>
+</section>
+<section id="highlights">
+<h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
+<p>Propose an independent deep denoising network that can be seamlessly plugged into traditional optimization loops. The network serves as a powerful prior for solving various inverse imaging problems via the Plug-and-Play framework.</p>
+</section>
+<section id="background">
+<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<p>Image restoration is a fundamental problem in computer vision and computational imaging. The goal is to recover a high-quality image <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> from its degraded observation <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, which may be blurred, noisy, downsampled, or compressed.</p>
+<p>A standard Bayesian approach is to perform Maximum A Posteriori (MAP) estimation:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0f89beb8-27c5-4a28-a3b0-56df1a3c5682">
+<span class="eqno">()<a class="headerlink" href="#equation-0f89beb8-27c5-4a28-a3b0-56df1a3c5682" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{\mathbf{x}} = \arg\max_{\mathbf{x}} \log p(\mathbf{y} \mid \mathbf{x}) + \log p(\mathbf{x})
+\tag{1}
+\end{equation}\]</div>
+<p>Assuming additive Gaussian noise, i.e.,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ad8b59c4-b7ba-4783-92d7-165e0d9d35a9">
+<span class="eqno">()<a class="headerlink" href="#equation-ad8b59c4-b7ba-4783-92d7-165e0d9d35a9" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+\mathbf{y} = \mathcal{T}(\mathbf{x}) + \mathbf{n}, \quad \mathbf{n} \sim \mathcal{N}(0, \sigma^2 \mathbf{I})
+\end{equation}\]</div>
+<p>the likelihood becomes:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-307fc161-0fd6-473c-829e-dbaca302e62f">
+<span class="eqno">()<a class="headerlink" href="#equation-307fc161-0fd6-473c-829e-dbaca302e62f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+p(\mathbf{y}|\mathbf{x}) = \frac{1}{Z} \exp\left(-\frac{1}{2\sigma^2} \|\mathbf{y} - \mathcal{T}(\mathbf{x})\|^2 \right)
+\tag{2}
+\end{equation}\]</div>
+<p>Taking the negative log of Equation (1) and substituting Equation (2) leads to the following optimization formulation:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-44c278d7-d7c5-4c9e-b289-90f6ceef21d5">
+<span class="eqno">()<a class="headerlink" href="#equation-44c278d7-d7c5-4c9e-b289-90f6ceef21d5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{\mathbf{x}} = \arg\min_{\mathbf{x}} \frac{1}{2\sigma^2} \| \mathbf{y} - \mathcal{T}(\mathbf{x}) \|^2 + \lambda \mathcal{R}(\mathbf{x})
+\tag{3}
+\end{equation}\]</div>
+<section id="review-maximum-a-posteriori-map">
+<h2>Review: Maximum A Posteriori (MAP)<a class="headerlink" href="#review-maximum-a-posteriori-map" title="Link to this heading">#</a></h2>
+<p>Maximum a posteriori (MAP) estimation solves:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0af5e55d-0cab-4db1-9892-3f518a233330">
+<span class="eqno">()<a class="headerlink" href="#equation-0af5e55d-0cab-4db1-9892-3f518a233330" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{\mathbf{x}} = \arg\max_{\mathbf{x}} \log p(\mathbf{y} \mid \mathbf{x}) + \log p(\mathbf{x})
+\tag{1}
+\end{equation}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(p(\mathbf{y} \mid \mathbf{x})\)</span>: likelihood (data consistency)</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span>: prior (natural image constraint)</p></li>
+</ul>
+<hr class="docutils" />
+<section id="example-guessing-a-drink">
+<h3>🍵 Example: Guessing a Drink<a class="headerlink" href="#example-guessing-a-drink" title="Link to this heading">#</a></h3>
+<p>You are given a glass of unknown liquid <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> and asked to guess what original drink <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> it came from.</p>
+<ol class="arabic simple">
+<li><p><strong>Likelihood</strong>: If <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> were tea, would adding water or ice turn it into what you taste now?</p></li>
+<li><p><strong>Prior</strong>: Is <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> a drink people normally make (e.g., tea, not soy sauce)?</p></li>
+</ol>
+<p>MAP chooses the <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> that both:</p>
+<ul class="simple">
+<li><p>Could realistically lead to <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> (via degradation)</p></li>
+<li><p>Is itself likely to be a valid original (natural prior)</p></li>
+</ul>
+<hr class="docutils" />
+<p>In this paper, the <strong>forward model</strong> <span class="math notranslate nohighlight">\(T(x)\)</span> is a deterministic function (like blurring, downsampling, etc). But in <strong>Bayesian inference</strong>, we always deal with <strong>uncertainty</strong>, so we represent the <strong>observation model</strong> probabilistically:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-657fb74d-0247-488f-a63d-6c169a88f3fc">
+<span class="eqno">()<a class="headerlink" href="#equation-657fb74d-0247-488f-a63d-6c169a88f3fc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+y = T(x) + \text{noise}
+\quad \Rightarrow \quad p(y|x)
+\end{equation}\]</div>
+<p>Even though <span class="math notranslate nohighlight">\(T(x)\)</span> is deterministic, <strong>the noise is random</strong>, so the output <span class="math notranslate nohighlight">\(y\)</span> becomes a <strong>random variable</strong>. That’s why we use <strong>likelihood functions</strong> <span class="math notranslate nohighlight">\(p(y|x)\)</span> — they describe the <strong>probability distribution of observed data</strong> given the true signal <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>So:</p>
+<ul class="simple">
+<li><p><strong>Forward model = deterministic process</strong></p></li>
+<li><p><strong>Likelihood = probabilistic model of observations</strong>, accounting for noise</p></li>
+</ul>
+<p>Authors use <span class="math notranslate nohighlight">\(p(y|x)\)</span> because it naturally connects optimization with <strong>probability theory</strong>, and allows us to apply Bayesian tools like MAP, variational inference, or even sampling (in generative models).</p>
+</section>
+</section>
+</section>
+<section id="method-overview">
+<h1>3. Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h1>
+<p>The Plug-and-Play (PnP) framework, first proposed by Venkatakrishnan et al. [1], makes a simple but powerful observation: instead of specifying an explicit prior <span class="math notranslate nohighlight">\(\mathcal{R}(\mathbf{x})\)</span>, we can <strong>plug in a denoiser</strong> as a black-box prior. In essence:
+<img alt="image.png" src="../../_images/image12.png" /></p>
+<blockquote>
+<div><p>Replace the proximal operator of the prior term with a denoising function.</p>
+</div></blockquote>
+<p>This enables using modern CNN-based denoisers, such as DnCNN or DRUNet, which are trained on clean/noisy image pairs, as implicit priors.</p>
+<p>The optimization problem becomes decoupled into two subproblems:</p>
+<p><strong>Data fidelity step:</strong></p>
+<div class="amsmath math notranslate nohighlight" id="equation-388d19e1-776d-4f7d-926e-99c9c605b9eb">
+<span class="eqno">()<a class="headerlink" href="#equation-388d19e1-776d-4f7d-926e-99c9c605b9eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\mathbf{x}^{(k)} = \arg\min_{\mathbf{x}} \| \mathbf{y} - \mathcal{T}(\mathbf{x}) \|^2 + \mu \| \mathbf{x} - \mathbf{z}^{(k-1)} \|^2
+\tag{4a}
+\end{equation}\]</div>
+<p><strong>Denoising step (Prior step):</strong></p>
+<div class="amsmath math notranslate nohighlight" id="equation-1bec2667-185c-415c-8ccb-c1fbb5d0c56a">
+<span class="eqno">()<a class="headerlink" href="#equation-1bec2667-185c-415c-8ccb-c1fbb5d0c56a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\mathbf{z}^{(k)} = \arg\min_{\mathbf{z}} \frac{1}{2} \left( \frac{\lambda}{\mu} \right)^2 \| \mathbf{z} - \mathbf{x}^{(k)} \|^2 + \mathcal{R}(\mathbf{z})
+\tag{4b}
+\end{equation}\]</div>
+<p>This is the core of the Half-Quadratic Splitting (HQS) formulation. Here, <span class="math notranslate nohighlight">\(k\)</span> denotes the iteration index of the optimization process. In PnP, the second step is not solved explicitly; rather, we perform:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-387fa666-b8eb-46e7-8b16-a2198e81fc16">
+<span class="eqno">()<a class="headerlink" href="#equation-387fa666-b8eb-46e7-8b16-a2198e81fc16" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\mathbf{z}^{(k)} = \text{Denoiser}(\mathbf{x}^{(k)}, \sigma_k)
+\tag{5}
+\end{equation}\]</div>
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<p>[1] Venkatakrishnan, S. V., Bouman, C. A., &amp; Wohlberg, B. (2013). Plug-and-play priors for model based reconstruction. <em>GlobalSIP</em>.</p>
+<p>[2] Zhang, K., Zuo, W., &amp; Zhang, L. (2017). Beyond a Gaussian denoiser: Residual learning of deep CNN for image denoising. <em>TIP</em>.</p>
+<p>[3] Zhang, K., Zuo, W., Gu, S., &amp; Zhang, L. (2021). Plug-and-Play Image Restoration with Deep Denoiser Prior. <em>TPAMI</em>.</p>
+<p>[4] Romano, Y., Elad, M., &amp; Milanfar, P. (2017). The little engine that could: Regularization by denoising (RED). <em>SIAM Imaging Sciences</em>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current working directory:&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+<span class="n">target_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;../../../code/PnP/DPIR-master/&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Appending path:&quot;</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dppp</span>  <span class="c1"># Your custom module (should include blur, psnr, lpips_alex, hqs_super_resolve, etc.)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Automatically select device</span>
+<span class="c1"># device = torch.device(&quot;cuda:1&quot; if torch.cuda.is_available() else &quot;cpu&quot;)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cpu&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using device:&quot;</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Dataset class to load images from a folder</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImageFolderDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_paths</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;.bmp&quot;</span><span class="p">))</span>
+        <span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_paths</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_paths</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+<span class="c1"># Smart image display function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">smart_imshow</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>  <span class="c1"># [C, H, W]</span>
+            <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># Already in [H, W, C]</span>
+            <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">tensor</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">title</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="c1"># Path to image dataset</span>
+<span class="n">data_root</span> <span class="o">=</span> <span class="s2">&quot;../../../../Datasets/CBSD68/original&quot;</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">ImageFolderDataset</span><span class="p">(</span><span class="n">data_root</span><span class="p">)</span>
+
+<span class="c1"># Load one image and move it to device</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># Shape: [1, 3, H, W]</span>
+
+<span class="c1"># Prepare a blur kernel</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">dppp</span><span class="o">.</span><span class="n">conv2D_filter_rgb</span><span class="p">(</span><span class="n">dppp</span><span class="o">.</span><span class="n">NB_DEBLURRING_LEVIN_KERNELS</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Simulate degraded image (blur + Gaussian noise)</span>
+<span class="n">noise_stddev</span> <span class="o">=</span> <span class="mf">0.04</span>
+<span class="n">degraded</span> <span class="o">=</span> <span class="n">dppp</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">noise_stddev</span><span class="o">=</span><span class="n">noise_stddev</span><span class="p">)</span>
+
+<span class="c1"># Load denoiser model (ensure it runs on the same device)</span>
+<span class="n">denoiser</span> <span class="o">=</span> <span class="n">dppp</span><span class="o">.</span><span class="n">load_denoiser</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Deconvolution via HQS (Plug-and-Play image restoration)</span>
+<span class="n">reconstructed</span> <span class="o">=</span> <span class="n">dppp</span><span class="o">.</span><span class="n">hqs_super_resolve</span><span class="p">(</span>
+    <span class="n">degraded</span><span class="o">=</span><span class="n">degraded</span><span class="p">,</span>
+    <span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span>
+    <span class="n">sr_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">denoiser</span><span class="o">=</span><span class="n">denoiser</span><span class="p">,</span>
+    <span class="n">max_denoiser_stddev</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>           <span class="c1"># Set to None to use iterative solver</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[],</span>          <span class="c1"># Optional hooks for visualization or logging</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<section id="explanation-of-hqs-super-resolve-function">
+<h2>Explanation of <code class="docutils literal notranslate"><span class="pre">hqs_super_resolve</span></code> function<a class="headerlink" href="#explanation-of-hqs-super-resolve-function" title="Link to this heading">#</a></h2>
+<p>This function implements a Plug-and-Play (PnP) super-resolution algorithm based on the Half-Quadratic Splitting (HQS) framework. The optimization problem is split into two sub-problems that are solved alternately in an iterative manner.</p>
+<hr class="docutils" />
+<p>We aim to solve the following HQS formulation:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9794d802-fc0b-4822-b874-b643b4938133">
+<span class="eqno">()<a class="headerlink" href="#equation-9794d802-fc0b-4822-b874-b643b4938133" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\mathbf{x}^{(k)} = \arg\min_{\mathbf{x}} \| \mathbf{y} - \mathcal{T}(\mathbf{x}) \|^2 + \mu \| \mathbf{x} - \mathbf{z}^{(k-1)} \|^2
+\tag{4a}
+\end{equation}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data consistency step</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">data_solution</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rhos</span><span class="p">[</span><span class="n">step</span><span class="p">])</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><strong>Denoising step (Prior step):</strong></p>
+<div class="amsmath math notranslate nohighlight" id="equation-fd15352e-9c86-4fdf-8507-861b3908e8eb">
+<span class="eqno">()<a class="headerlink" href="#equation-fd15352e-9c86-4fdf-8507-861b3908e8eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\mathbf{z}^{(k)} = \arg\min_{\mathbf{z}} \frac{1}{2} \left( \frac{\lambda}{\mu} \right)^2 \| \mathbf{z} - \mathbf{x}^{(k)} \|^2 + \mathcal{R}(\mathbf{z})
+\tag{4b}
+\end{equation}\]</div>
+<p>This is the core of the Half-Quadratic Splitting (HQS) formulation. Here, <span class="math notranslate nohighlight">\(k\)</span> denotes the iteration index of the optimization process. In PnP, the second step is not solved explicitly; rather, we perform:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-abe16dcd-2e07-4b5f-8650-44672316e2dc">
+<span class="eqno">()<a class="headerlink" href="#equation-abe16dcd-2e07-4b5f-8650-44672316e2dc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\mathbf{z}^{(k)} = \text{Denoiser}(\mathbf{x}^{(k)}, \sigma_k)
+\tag{5}
+\end{equation}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Denoising step (Plug-and-Play prior)</span>
+<span class="n">sigma_map</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">B</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">),</span> <span class="n">sigmas</span><span class="p">[</span><span class="n">step</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<span class="n">x_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">sigma_map</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">denoiser</span><span class="p">(</span><span class="n">x_input</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="data-consistency-step-the-first-solution-data-solution-iterative">
+<h2>Data consistency step, the first solution: <code class="docutils literal notranslate"><span class="pre">_data_solution_iterative</span></code><a class="headerlink" href="#data-consistency-step-the-first-solution-data-solution-iterative" title="Link to this heading">#</a></h2>
+<p>This function approximates the solution to Eq. (4a) using iterative back-projection:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_data_solution_iterative</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">degraded</span><span class="p">,</span> <span class="n">resize_fn</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bicubic&#39;</span>
+<span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+        <span class="c1"># Downsample</span>
+        <span class="k">if</span> <span class="n">resize_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x_down</span> <span class="o">=</span> <span class="n">resize_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">upsample</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">H</span> <span class="o">//</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">W</span> <span class="o">//</span> <span class="n">scale_factor</span>
+            <span class="n">x_down</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">align_corners</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Residual</span>
+        <span class="n">data_err</span> <span class="o">=</span> <span class="n">degraded</span> <span class="o">-</span> <span class="n">x_down</span>
+
+        <span class="c1"># Upsample</span>
+        <span class="k">if</span> <span class="n">resize_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data_err_up</span> <span class="o">=</span> <span class="n">resize_fn</span><span class="p">(</span><span class="n">data_err</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">upsample</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">data_err_up</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">data_err</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">align_corners</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Update</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">data_err_up</span>
+
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>This method is simple and generic, relying on forward and backward projections using bicubic interpolation or a custom resize function.</p>
+</section>
+<hr class="docutils" />
+<section id="data-consistency-step-the-second-solution-data-solution-closed-form">
+<h2>Data consistency step, the second solution: <code class="docutils literal notranslate"><span class="pre">_data_solution_closed_form</span></code><a class="headerlink" href="#data-consistency-step-the-second-solution-data-solution-closed-form" title="Link to this heading">#</a></h2>
+<p>When a known degradation kernel is available, the following closed-form solution in the Fourier domain is used:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_data_solution_closed_form</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">FB</span><span class="p">,</span> <span class="n">FBC</span><span class="p">,</span> <span class="n">F2B</span><span class="p">,</span> <span class="n">FBFy</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">):</span>
+    <span class="n">alpha_complex</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">complex64</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">x_cf</span> <span class="o">=</span> <span class="n">x</span>  <span class="c1"># shape [B, C, H, W]</span>
+
+    <span class="n">FR</span> <span class="o">=</span> <span class="n">FBFy</span> <span class="o">+</span> <span class="n">_rfft2d</span><span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">x_cf</span><span class="p">)</span>
+
+    <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">x_cf</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">FBR</span> <span class="o">=</span> <span class="n">_splits</span><span class="p">(</span><span class="n">FB</span> <span class="o">*</span> <span class="n">FR</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">invW</span> <span class="o">=</span> <span class="n">_splits</span><span class="p">(</span><span class="n">F2B</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">invWBR</span> <span class="o">=</span> <span class="n">FBR</span> <span class="o">/</span> <span class="p">(</span><span class="n">invW</span> <span class="o">+</span> <span class="n">alpha_complex</span><span class="p">)</span>
+    <span class="n">invWBR_tiled</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">invWBR</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">))[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="n">FBC</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+    <span class="n">FCBinvWBR</span> <span class="o">=</span> <span class="n">FBC</span> <span class="o">*</span> <span class="n">invWBR_tiled</span>
+    <span class="n">FX</span> <span class="o">=</span> <span class="p">(</span><span class="n">FR</span> <span class="o">-</span> <span class="n">FCBinvWBR</span><span class="p">)</span> <span class="o">/</span> <span class="n">alpha_complex</span>
+    <span class="n">x_est</span> <span class="o">=</span> <span class="n">_irfft2d</span><span class="p">(</span><span class="n">FX</span><span class="p">,</span> <span class="n">like</span><span class="o">=</span><span class="n">x_cf</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">x_est</span>
+</pre></div>
+</div>
+<p>This method uses efficient convolution via the FFT to solve the data term in one shot, which is significantly faster when the degradation model is known.</p>
+</section>
+<hr class="docutils" />
+<section id="denoising-step">
+<h2>Denoising step<a class="headerlink" href="#denoising-step" title="Link to this heading">#</a></h2>
+<p>Instead of solving the prior optimization problem explicitly, we define:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sigma_map</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">B</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">),</span> <span class="n">sigmas</span><span class="p">[</span><span class="n">step</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<span class="n">x_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">sigma_map</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">denoiser</span><span class="p">(</span><span class="n">x_input</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This corresponds to Eq. (5), where the denoiser is conditioned on the current noise level <span class="math notranslate nohighlight">\(\sigma_k\)</span>.</p>
+<hr class="docutils" />
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/Chapter13_PlugAndPlay"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Plug-and-Play Image Restoration with Deep Denoiser Prior</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-maximum-a-posteriori-map">Review: Maximum A Posteriori (MAP)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-guessing-a-drink">🍵 Example: Guessing a Drink</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">3. Method Overview</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-hqs-super-resolve-function">Explanation of <code class="docutils literal notranslate"><span class="pre">hqs_super_resolve</span></code> function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-consistency-step-the-first-solution-data-solution-iterative">Data consistency step, the first solution: <code class="docutils literal notranslate"><span class="pre">_data_solution_iterative</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-consistency-step-the-second-solution-data-solution-closed-form">Data consistency step, the second solution: <code class="docutils literal notranslate"><span class="pre">_data_solution_closed_form</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoising-step">Denoising step</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,1 +1,16 @@
-# Welcome to the Computational Imaging Book
+# Contents
+
+- [Chapter 1: SIREN](chapters/Chapter01_SIREN/Chapter01_SIREN.md)
+- [Chapter 2: NeRF](chapters/Chapter02_NeRF/index.md)
+- [Chapter 3: FourierFeatures](chapters/Chapter03_FourierFeatures/Chapter03_FourierFeatures.md)
+- [Chapter 4: 3D Gaussian Splatting](chapters/Chapter04_3D_Gaussian_Splatting/Chapter04_3D_Gaussian_Splatting.md)
+- [Chapter 5: Gaussian Image](chapters/Chapter05_Gaussian_Image/Chapter05_Gaussian_Image.md)
+- [Chapter 6: Pixel2Gaussian](chapters/Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian.md)
+- [Chapter 7: FPM INR](chapters/Chapter07_FPM_INR/Chapter07_FPM_INR.md)
+- [Chapter 8: DeCAF](chapters/Chapter08_DeCAF/Chapter08_DeCAF.md)
+- [Chapter 9: Neural SpaceTime](chapters/Chapter09_Neural_SpaceTime/Chapter09_Neural_SpaceTime.md)
+- [Chapter 10: DDPM](chapters/Chapter10_DDPM/Chapter10_DDPM.md)
+- [Chapter 11: DPS](chapters/Chapter11_DPS/Chapter11_DPS.md)
+- [Chapter 12: ScoreDiffusion](chapters/Chapter12_ScoreDiffusion/Chapter12_ScoreDiffusion.md)
+- [Chapter 13: PlugAndPlay](chapters/Chapter13_PlugAndPlay/Chapter13_PlugAndPlay.md)
+- [Chapter 14: PnP-DM](chapters/Chapter14_PnP-DM/Chapter14_PnP-DM.md)

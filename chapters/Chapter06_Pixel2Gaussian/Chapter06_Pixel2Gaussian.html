@@ -1,0 +1,730 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Contents
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/Chapter06_Pixel2Gaussian/Chapter06_Pixel2Gaussian.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">2. Method Overview</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-not-directly-predict-gaussians-from-lr">2.1 Why not directly predict Gaussians from LR?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-gaussian-prior-dgp">2.1.1 <strong>Deep Gaussian Prior (DGP)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dgp-driven-covariance-weighting-ddcw">2.1.2 <strong>DGP-Driven Covariance Weighting (DDCW)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-position-drifting-apd">2.1.3 <strong>Adaptive Position Drifting (APD)</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contributions">3. Contributions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">4. References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">Demo</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pixel-to-gaussian-ultra-fast-continuous-super-resolution-with-2d-gaussian-modeling">
+<h1>Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling<a class="headerlink" href="#pixel-to-gaussian-ultra-fast-continuous-super-resolution-with-2d-gaussian-modeling" title="Link to this heading">#</a></h1>
+<p><img alt="image.png" src="../../_images/image5.png" /></p>
+<p>Code: https://github.com/Xinjie-Q/GaussianImage,
+Source Code in My Repo: ../../../../code/GS/ContinuousSR-main/demo.py</p>
+</section>
+<section id="highlights">
+<h1>1. Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
+<p>Fast end-to-end arbitrary-scale super-resolution via 2D Gaussian modeling.</p>
+</section>
+<section id="background">
+<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<p>Although GaussianImage(https://xingtongge.github.io/GaussianImage-page/) is an efficient image representation and compression method using 2D Gaussian Splatting with up to 2000 FPS rendering speed, it cannot perform arbitrary-scale super-resolution because it lacks an end-to-end inference mechanism and requires overfitting each image individually.</p>
+<p>Super-resolution (SR) aims to recover a high-resolution (HR) image from its low-resolution (LR) counterpart. Traditional SR methods focus on fixed integer scales like ×2, ×3, or ×4, which limits flexibility in real applications.</p>
+<p>To solve this, <strong>Arbitrary-Scale Super-Resolution (ASSR)</strong> was proposed. A landmark method, <strong>LIIF</strong> [Chen et al., 2021], introduces <em>implicit neural representation (INR)</em> to map coordinates to RGB values via an MLP. Given any continuous coordinate <span class="math notranslate nohighlight">\((x, y)\)</span>, the network outputs the corresponding color, enabling continuous upscaling.</p>
+<p>However, such INR-based methods suffer from:</p>
+<ul class="simple">
+<li><p>Inefficiency: each pixel requires repeated querying and decoding.</p></li>
+<li><p>Limited fidelity: coordinate-based MLPs struggle to capture high-frequency textures.</p></li>
+<li><p>Complex pipeline: involves multiple upsampling-decoding stages.</p></li>
+</ul>
+<p>In essence, while INR methods can do continuous SR, they do so <strong>slowly</strong> and <strong>with limited detail reconstruction</strong>.</p>
+</section>
+<section id="method-overview">
+<h1>2. Method Overview<a class="headerlink" href="#method-overview" title="Link to this heading">#</a></h1>
+<p><img alt="image-2.png" src="../../_images/image-2.png" />
+This paper proposes a fundamentally new idea:<br />
+Instead of <strong>learning a function to query pixels</strong>, learn to <strong>explicitly construct a continuous image field</strong>, represented by a set of 2D <strong>Gaussian kernels</strong>.</p>
+<p>Each kernel is parameterized by its spatial position <span class="math notranslate nohighlight">\(\mu\)</span>, covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span>, and RGB color <span class="math notranslate nohighlight">\(c_{rgb}\)</span>. The reconstructed image is the sum of <span class="math notranslate nohighlight">\(N\)</span> such Gaussians:</p>
+<div class="math notranslate nohighlight">
+\[
+f_c(x, y) = \sum_{i=1}^N G_i(x, y)
+\]</div>
+<p>Each Gaussian kernel <span class="math notranslate nohighlight">\(G_i\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+G_i(x, y, c_{rgb}, \Sigma) = c_{rgb} \cdot \frac{1}{2\pi |\Sigma|} \exp \left( -\frac{1}{2} d^T \Sigma^{-1} d \right)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(d = \begin{bmatrix} x - \mu_x \\ y - \mu_y \end{bmatrix}\)</span>.</p>
+<p>The covariance matrix is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\Sigma = \begin{bmatrix}
+\sigma_x^2 &amp; \rho \sigma_x \sigma_y \\
+\rho \sigma_x \sigma_y &amp; \sigma_y^2
+\end{bmatrix}
+\end{split}\]</div>
+<section id="why-not-directly-predict-gaussians-from-lr">
+<h2>2.1 Why not directly predict Gaussians from LR?<a class="headerlink" href="#why-not-directly-predict-gaussians-from-lr" title="Link to this heading">#</a></h2>
+<p>Directly predicting Gaussian parameters (<span class="math notranslate nohighlight">\(\mu\)</span>, <span class="math notranslate nohighlight">\(\Sigma\)</span>) from a low-resolution image is highly challenging due to the nature of the Gaussian space:</p>
+<ul class="simple">
+<li><p>The space is <strong>high-dimensional and sensitive</strong>.</p></li>
+<li><p>Even small errors in <span class="math notranslate nohighlight">\(\mu\)</span> (position) or <span class="math notranslate nohighlight">\(\Sigma\)</span> (covariance) can cause significant visual distortions.</p></li>
+<li><p>Direct optimization easily gets stuck in poor local minima.</p></li>
+</ul>
+<p>To overcome this, the authors propose three key components:</p>
+<section id="deep-gaussian-prior-dgp">
+<h3>2.1.1 <strong>Deep Gaussian Prior (DGP)</strong><a class="headerlink" href="#deep-gaussian-prior-dgp" title="Link to this heading">#</a></h3>
+<p>The authors analyze 40,000 natural images and discover that the covariance parameters of Gaussian kernels follow a compact and roughly Gaussian-distributed range:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sigma_x^2 \in [0, 2.4]\)</span>, <span class="math notranslate nohighlight">\(\sigma_y^2 \in [0, 2.2]\)</span>, <span class="math notranslate nohighlight">\(\rho \in [-0.9, 1.5]\)</span></p></li>
+</ul>
+<p>This prior, called <strong>Deep Gaussian Prior (DGP)</strong>, serves as a statistical guideline for efficient parameter estimation.</p>
+<p><img alt="image.png" src="../../_images/image5.png" /></p>
+</section>
+<section id="dgp-driven-covariance-weighting-ddcw">
+<h3>2.1.2 <strong>DGP-Driven Covariance Weighting (DDCW)</strong><a class="headerlink" href="#dgp-driven-covariance-weighting-ddcw" title="Link to this heading">#</a></h3>
+<p>Rather than directly predicting the full covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span>, the model:</p>
+<ul class="simple">
+<li><p>Samples <span class="math notranslate nohighlight">\(N\)</span> candidate Gaussian covariances from the DGP distribution;</p></li>
+<li><p>Learns a set of weights <span class="math notranslate nohighlight">\(w_i\)</span> to form the final kernel as a weighted combination:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+G_{\text{target}} = \sum_{i=1}^N w_i \cdot G_i
+\]</div>
+<p>This drastically reduces the optimization complexity by converting regression into a soft selection problem.</p>
+</section>
+<section id="adaptive-position-drifting-apd">
+<h3>2.1.3 <strong>Adaptive Position Drifting (APD)</strong><a class="headerlink" href="#adaptive-position-drifting-apd" title="Link to this heading">#</a></h3>
+<p>To avoid rigid Gaussian placements at LR grid centers, the model learns <strong>dynamic position offsets</strong> from LR image features:</p>
+<div class="math notranslate nohighlight">
+\[
+P_{\text{final}} = P_{\text{init}} + \tanh(\text{MLP}(F_{LR}))
+\]</div>
+<p>This enables the model to adaptively shift Gaussians toward textured or edge-rich regions, improving structural accuracy and expressiveness.</p>
+<p>Together, DGP, DDCW, and APD allow robust, efficient modeling of Gaussian fields from LR images while avoiding the instability of naive direct prediction.</p>
+</section>
+</section>
+</section>
+<section id="contributions">
+<h1>3. Contributions<a class="headerlink" href="#contributions" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Propose <strong>ContinuousSR</strong>, the first to reconstruct 2D continuous signals explicitly from LR images using 2D Gaussian splatting.</p></li>
+<li><p>Discover <strong>Deep Gaussian Prior (DGP)</strong> and propose <strong>DGP-Driven Covariance Weighting (DDCW)</strong> to simplify optimization.</p></li>
+<li><p>Introduce <strong>Adaptive Position Drifting (APD)</strong> to dynamically place kernels based on image content.</p></li>
+<li><p>Achieve <strong>19.5× speedup</strong> and <strong>+0.9 dB PSNR gain</strong> over previous SOTA (e.g., CiaoSR, LIIF) on multiple benchmarks.</p></li>
+</ul>
+</section>
+<section id="references">
+<h1>4. References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<p>[1] Chen et al. “Learning Continuous Image Representation with Local Implicit Image Function.” CVPR, 2021.<br />
+[2] Peng et al. “Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling.” CVPR, 2025.<br />
+[3] Cao et al. “CiaoSR: Continuous Implicit Attention-in-Attention Network for ASSR.” CVPR, 2023.<br />
+[4] Zhang et al. “GaussianImage: High-Fidelity 2D Gaussian Splatting for SR.” ECCV, 2024.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="demo">
+<h1>Demo<a class="headerlink" href="#demo" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current working directory:&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+<span class="n">target_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;../../../code/GS/ContinuousSR-main&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Appending path:&quot;</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datasets</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">models</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">utils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_coord</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_image</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--input&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../code/GS/ContinuousSR-main/butterflyx4.png&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Input image file&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--model&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../code/GS/ContinuousSR-main/ContinuousSR.pth&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to the model file&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--scale&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;4,4&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Scaling factors for the image (default: 4,4)&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--output&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;../../../../code/GS/ContinuousSR-main/output.png&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Output image file&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--gpu&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;GPU index to use (default: 0)&#39;</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([])</span>
+
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Current working directory: ../../../../Awesome-Computational-Imaging/chapters/Chapter06_Pixel2Gaussian
+Appending path: ../../../../code/GS/ContinuousSR-main
+
+
+/home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/jaxtyping/__init__.py:231: UserWarning: jaxtyping version &gt;=0.2.23 should be used with Equinox version &gt;=0.11.1
+  warnings.warn(
+/home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/timm/models/layers/__init__.py:48: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f&quot;Importing from {__name__} is deprecated, please import via timm.layers&quot;, FutureWarning)
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load image and model</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">model_spec</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">)[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="n">model_spec</span><span class="p">,</span> <span class="n">load_sd</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+
+<span class="c1"># Prepare scales</span>
+<span class="n">scales</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>  <span class="c1"># you can add more scales</span>
+<span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="s2">&quot;×2.5&quot;</span><span class="p">,</span> <span class="s2">&quot;×4&quot;</span><span class="p">,</span> <span class="s2">&quot;×6&quot;</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Predict and store each scale result</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">scales</span><span class="p">:</span>
+        <span class="n">scale_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">scale_tensor</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">pred</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">pred</span><span class="p">))</span>
+
+<span class="c1"># Also include original image for comparison</span>
+<span class="n">original_img</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">img</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span>
+<span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">original_img</span>  <span class="c1"># ensure original is first</span>
+
+<span class="c1"># Plot all results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">titles</span><span class="p">,</span> <span class="n">results</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scales</span><span class="p">),</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_494914/3970855738.py:3: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don&#39;t have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model_spec = torch.load(args.model)[&#39;model&#39;]
+/home/xqgao/anaconda3/envs/inr/lib/python3.12/site-packages/torch/functional.py:534: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1729647329220/work/aten/src/ATen/native/TensorShape.cpp:3595.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+../../../../code/GS/ContinuousSR-main/models/gaussian.py:241: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  get_xyz = torch.tensor(get_coord(lr_h*2, lr_w*2)).reshape(lr_h*2, lr_w*2, 2).cuda()
+</pre></div>
+</div>
+<p><img alt="png" src="../../_images/Chapter06_Pixel2Gaussian_5_1.png" /></p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/Chapter06_Pixel2Gaussian"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#method-overview">2. Method Overview</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-not-directly-predict-gaussians-from-lr">2.1 Why not directly predict Gaussians from LR?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-gaussian-prior-dgp">2.1.1 <strong>Deep Gaussian Prior (DGP)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dgp-driven-covariance-weighting-ddcw">2.1.2 <strong>DGP-Driven Covariance Weighting (DDCW)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-position-drifting-apd">2.1.3 <strong>Adaptive Position Drifting (APD)</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contributions">3. Contributions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">4. References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">Demo</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

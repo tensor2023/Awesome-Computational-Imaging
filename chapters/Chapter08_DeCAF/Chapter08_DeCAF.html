@@ -1,0 +1,879 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields &#8212; Awesome Computational Imaging</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Chapter08_DeCAF/Chapter08_DeCAF';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Awesome Computational Imaging</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Contents
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/edit/master/compimg_book/chapters/Chapter08_DeCAF/Chapter08_DeCAF.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/tensor2023/Awesome-Computational-Imaging/issues/new?title=Issue%20on%20page%20%2Fchapters/Chapter08_DeCAF/Chapter08_DeCAF.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/Chapter08_DeCAF/Chapter08_DeCAF.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-idea-of-decaf">3. Core Idea of DeCAF</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contributions-of-the-paper">3. Contributions of the Paper</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">4. References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-files">Loading files</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">Inference</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="recovery-of-continuous-3d-refractive-index-maps-from-discrete-intensity-only-measurements-using-neural-fields">
+<h1>Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields<a class="headerlink" href="#recovery-of-continuous-3d-refractive-index-maps-from-discrete-intensity-only-measurements-using-neural-fields" title="Link to this heading">#</a></h1>
+<p><img alt="image.png" src="../../_images/image7.png" /></p>
+<p>Code: GitHub Repository https://github.com/wustl-cig/DeCAF,
+Source Code in My Repo: ../../../../code/NeRF_optics/DeCAF-master/predict.py</p>
+</section>
+<section id="highlights">
+<h1>1. Highlights:<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h1>
+<p>Like FPM_INR, DeCAF uses an <strong>implicit neural representation (INR)</strong> to model a continuous 3D refractive index (RI) field without relying on voxel grids and reconstructs the RI volume <strong>directly from intensity-only 2D measurements</strong>, using the physics-based <strong>IDT forward model</strong> for supervision.</p>
+</section>
+<section id="background">
+<h1>2. Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<p>Imaging biological samples without labeling or staining is crucial in biophotonics and quantitative phase imaging. One core technique, <strong>Intensity Diffraction Tomography (IDT)</strong>, reconstructs the 3D <strong>Refractive Index (RI)</strong> distribution of a sample by capturing 2D intensity images under varied illuminations.</p>
+<p>In IDT, the input consists of a series of 2D intensity-only measurements acquired by illuminating the sample from multiple angles using an LED array. These measurements capture how the sample scatters light but lack any phase information. The goal is to reconstruct a 3D complex-valued RI volume, where each spatial location <span class="math notranslate nohighlight">\((x, y, z)\)</span> has a real part representing optical phase delay and an imaginary part corresponding to absorption.</p>
+<p>This task is fundamentally challenging due to two key limitations: First, cameras only record intensity <span class="math notranslate nohighlight">\(I = |E|^2\)</span>, not the optical field <span class="math notranslate nohighlight">\(E\)</span> itself, leading to a loss of phase information. Second, because illumination angles are restricted to a narrow range, the 3D Fourier space is undersampled along the axial (<span class="math notranslate nohighlight">\(z\)</span>) direction—a phenomenon known as the missing-cone problem—which causes artefacts and axial blur in the reconstruction.</p>
+<p>Understanding what goes in (2D intensities) and what comes out (3D RI map) is essential because it frames IDT as an <strong>inverse problem</strong>. This guides how models are designed: the forward model predicts measurable intensities from a hypothetical RI volume, and learning aims to find an RI that best explains the actual measurements. Without knowing this input-output relationship, it’s impossible to justify or optimize any computational reconstruction method.</p>
+<section id="core-idea-of-decaf">
+<h2>3. Core Idea of DeCAF<a class="headerlink" href="#core-idea-of-decaf" title="Link to this heading">#</a></h2>
+<p><img alt="image.png" src="../../_images/image7.png" />
+DeCAF is a self-supervised reconstruction method that learns a <strong>continuous 3D refractive index (RI) volume</strong> directly from <strong>intensity-only 2D images</strong> captured under multiple illuminations. It requires no ground-truth RI maps.</p>
+<p><strong>Input:</strong> a set of intensity measurements <span class="math notranslate nohighlight">\(y_\rho\)</span> (2D images)<br />
+<strong>Output:</strong> a continuous complex-valued RI field <span class="math notranslate nohighlight">\(n(x, y, z)\)</span><br />
+<strong>Forward model:</strong> a linear IDT model approximated as <span class="math notranslate nohighlight">\(y_\rho \approx A_\rho \Delta \epsilon\)</span> (Eq. (3) in paper), where <span class="math notranslate nohighlight">\(\Delta \epsilon\)</span> is the complex permittivity contrast</p>
+<p>DeCAF represents the RI field using a <strong>coordinate-based MLP</strong> <span class="math notranslate nohighlight">\(M_\phi\)</span>, which takes spatial coordinates <span class="math notranslate nohighlight">\((x, y, z)\)</span> and predicts the corresponding <span class="math notranslate nohighlight">\(\Delta \epsilon_{\text{re}}, \Delta \epsilon_{\text{im}}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+(x, y, z) \xrightarrow{M_\phi} \Delta \epsilon
+\]</div>
+<p>From <span class="math notranslate nohighlight">\(\Delta \epsilon\)</span>, the RI values are derived via (Eq. (4)):</p>
+<div class="math notranslate nohighlight">
+\[
+n_{\text{re}} = \sqrt{\frac{1}{2} \left( n_0^2 + \Delta \epsilon_{\text{re}} + \sqrt{(n_0^2 + \Delta \epsilon_{\text{re}})^2 + \Delta \epsilon_{\text{im}}^2} \right)}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+n_{\text{im}} = \frac{\Delta \epsilon_{\text{im}}}{2 \cdot n_{\text{re}}}
+\]</div>
+<p><strong>Training objective</strong> (Eq. (1)):<br />
+Find <span class="math notranslate nohighlight">\(\phi^*\)</span> to minimize the measurement loss and regularization:</p>
+<div class="math notranslate nohighlight">
+\[
+\phi^* = \arg\min_\phi \left\{ \mathcal{L}(F(M_\phi(c)), y_\rho) + \mathcal{R}(M_\phi(c)) \right\}
+\]</div>
+<p>This setup makes DeCAF a test-time trained <strong>implicit neural representation (INR)</strong> method — the MLP serves as both the model and regularizer, optimized per sample using only the physical forward model.</p>
+</section>
+</section>
+<section id="contributions-of-the-paper">
+<h1>3. Contributions of the Paper<a class="headerlink" href="#contributions-of-the-paper" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Introduced <strong>DeCAF</strong>, a test-time self-supervised method using neural fields for 3D RI reconstruction from intensity-only data.</p></li>
+<li><p>Designed a novel <strong>radial encoding</strong> to improve neural field performance in the x–y plane.</p></li>
+<li><p>Combined <strong>implicit (MLP)</strong> and <strong>explicit (CNN denoiser)</strong> regularization for enhanced reconstruction.</p></li>
+<li><p>Achieved <strong>artefact-free RI maps</strong> that significantly reduce missing-cone distortions and outperform baselines like Tikhonov and SIMBA.</p></li>
+<li><p>Demonstrated <strong>continuous spatial representation</strong> and super-resolution sampling capability without retraining.</p></li>
+</ul>
+</section>
+<section id="references">
+<h1>4. References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<ol class="arabic simple">
+<li><p>Liu, R., Sun, Y., Zhu, J., Tian, L., &amp; Kamilov, U. S. (2022). Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields. <em>Nature Machine Intelligence</em>, 4, 781–791. https://doi.org/10.1038/s42256-022-00530-3</p></li>
+<li><p>Park, Y., Depeursinge, C., &amp; Popescu, G. (2018). Quantitative phase imaging in biomedicine. <em>Nature Photonics</em>, 12(10), 578–589.</p></li>
+<li><p>Sitzmann, V., et al. (2020). Implicit neural representations with periodic activation functions. <em>NeurIPS</em>, 7462–7473.</p></li>
+<li><p>Wu, Z., et al. (2020). SIMBA: Scalable inversion in optical tomography using deep denoising priors. <em>IEEE JSTSP</em>, 14(6), 1163–1175.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current working directory:&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+<span class="n">target_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;../../../code/NeRF_optics/DeCAF-master&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Appending path:&quot;</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CUDA_VISIBLE_DEVICES&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TF_CPP_MIN_LOG_LEVEL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;3&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TF_FORCE_GPU_ALLOW_GROWTH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">absl</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">flags</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">imageio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">model.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">model.provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecafEndToEndProvider</span>
+
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">absl</span><span class="w"> </span><span class="kn">import</span> <span class="n">flags</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">FLAGS</span>
+
+<span class="c1"># input, output dirs.</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span><span class="s2">&quot;input_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;directory for Hreal &amp; Himag&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span><span class="s2">&quot;model_save_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;saved_model&quot;</span><span class="p">,</span> <span class="s2">&quot;directory for saving model&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span><span class="s2">&quot;result_save_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;result&quot;</span><span class="p">,</span> <span class="s2">&quot;directory for saving results&quot;</span><span class="p">)</span>
+
+<span class="c1"># Prediction config.</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;z_min&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;minimum depth in micrometer&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;z_max&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;maximum depth in micrometer&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;z_train_delta&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;z delta in training data&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;z_delta&quot;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;depth for each layer in micrometer&quot;</span><span class="p">)</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_boolean</span><span class="p">(</span>
+    <span class="s2">&quot;partial_render&quot;</span><span class="p">,</span>
+    <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;Whether to render a subset of z. z_render_min, z_render_max only&quot;</span>
+    <span class="s2">&quot;works if this is True&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;z_render_min&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;minimum depth to render in micrometer&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;z_render_max&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="s2">&quot;maximum depth to render in micrometer&quot;</span><span class="p">)</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;row_render_min&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;minimum row to render in pixel&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;row_render_max&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;maximum row to render in pixel&quot;</span><span class="p">)</span>
+
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;col_render_min&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;minimum col to render in pixel&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span><span class="s2">&quot;col_render_max&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;maximum col to render in pixel&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;super_resolution_scale&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;super resolution scale&quot;</span><span class="p">)</span>
+
+<span class="c1"># Render config.</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;n0&quot;</span><span class="p">,</span> <span class="mf">1.33</span><span class="p">,</span> <span class="s2">&quot;n0 of the medium.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;render_max&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="s2">&quot;Range above average in rendering.&quot;</span><span class="p">)</span>
+<span class="n">flags</span><span class="o">.</span><span class="n">DEFINE_float</span><span class="p">(</span><span class="s2">&quot;render_min&quot;</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="s2">&quot;Range below average in rendering.&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">is_parsed</span><span class="p">():</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;predict.py&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;--flagfile=../../../../code/NeRF_optics/DeCAF-master/datasets/Celegans_head/pred_config.txt&#39;</span>
+    <span class="p">]</span>
+    <span class="n">FLAGS</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>  <span class="c1"># 显式触发解析</span>
+
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Current working directory: ../../../../Awesome-Computational-Imaging/chapters/Chapter08_DeCAF
+Appending path: ../../../../code/NeRF_optics/DeCAF-master
+</pre></div>
+</div>
+<p>#Permittivity to RI conversion</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">perm2RI</span><span class="p">(</span><span class="n">er</span><span class="p">,</span> <span class="n">ei</span><span class="p">,</span> <span class="n">n0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Description: This function converts the recovered object&#39;s permittivity contrast into refractive index values more</span>
+<span class="sd">                 commonly found in the literature.</span>
+<span class="sd">    :param er:  Scalar, 2D, or 3D matrix containing object&#39;s real permittivity contrast</span>
+<span class="sd">    :param ei:  scalar, 2D, or 3D matrix containing object&#39;s imaginary permittivity contrast</span>
+<span class="sd">    :param n0:  Scalar value containing value of imaging medium&#39;s refractive index value. in Air n0 = 1, in water n0 = 1.33</span>
+<span class="sd">    :return: nr: Scalar, 2D, or 3D matrix of object&#39;s real refractive index value.</span>
+<span class="sd">             ni: scalar, 2D, or 3D matrix of object&#39;s imaginary refractive index value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;er max: </span><span class="si">{}</span><span class="s2">, er min:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">er</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
+    <span class="n">nr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">n0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">er</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">n0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">er</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">ei</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
+    <span class="n">ni</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">nr</span><span class="p">,</span> <span class="n">ni</span>
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loading-files">
+<h1>Loading files<a class="headerlink" href="#loading-files" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;../../../../code/NeRF_optics/DeCAF-master/datasets/Celegans_head/Celegans_head.mat&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="c1">#data = h5py.File(FLAGS.input_dir, &#39;r&#39;)</span>
+<span class="n">provider</span> <span class="o">=</span> <span class="n">DecafEndToEndProvider</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>measurement shape: (2, 1000, 1000), Hreal shape: (2, 1, 41, 256, 256), Himag shape (2, 1, 41, 256, 256)
+Using equal padding
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="inference">
+<h1>Inference<a class="headerlink" href="#inference" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">provider</span><span class="o">.</span><span class="n">measurement_size</span><span class="p">)</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">provider</span><span class="o">.</span><span class="n">measurement_size</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_min</span> <span class="o">&lt;</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_min</span> <span class="o">+</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_delta</span> <span class="o">&lt;</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_max</span>
+<span class="n">key_zs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">z_max</span> <span class="o">+</span> <span class="mf">1e-8</span> <span class="o">-</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_train_delta</span><span class="p">)</span>
+<span class="n">zs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">z_max</span> <span class="o">+</span> <span class="mf">1e-8</span> <span class="o">-</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_delta</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">partial_render</span><span class="p">:</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">super_resolution_scale</span>
+    <span class="n">adjustment</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">scale</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">scale</span>
+    <span class="n">rows_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">row_render_min</span> <span class="o">-</span> <span class="n">adjustment</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">row_render_max</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">adjustment</span><span class="p">,</span>
+        <span class="n">num</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">row_render_max</span> <span class="o">-</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">row_render_min</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">super_resolution_scale</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">cols_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">col_render_min</span> <span class="o">-</span> <span class="n">adjustment</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">col_render_max</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">adjustment</span><span class="p">,</span>
+        <span class="n">num</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">col_render_max</span> <span class="o">-</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">col_render_min</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">super_resolution_scale</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_min</span> <span class="o">&lt;=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_render_min</span> <span class="o">&lt;=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_render_max</span> <span class="o">&lt;=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_max</span>
+
+    <span class="n">key_z_min</span> <span class="o">=</span> <span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">z_render_min</span> <span class="o">-</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_train_delta</span>
+    <span class="n">partial_zs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">z_render_max</span> <span class="o">+</span> <span class="mf">1e-8</span> <span class="o">-</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_render_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_delta</span>
+    <span class="p">)</span>
+    <span class="n">key_z_max</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_render_min</span> <span class="o">+</span> <span class="p">(</span><span class="n">partial_zs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_delta</span> <span class="o">-</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_min</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_train_delta</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key_z_max</span><span class="p">)</span>
+    <span class="n">zs_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">key_z_min</span><span class="p">,</span> <span class="n">key_z_max</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">partial_zs</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">rows_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span>
+    <span class="n">cols_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+    <span class="n">zs_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">key_zs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">zs</span><span class="p">))</span>
+<span class="n">r_mesh</span><span class="p">,</span> <span class="n">z_mesh</span><span class="p">,</span> <span class="n">c_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">cols_idx</span><span class="p">,</span> <span class="n">zs_idx</span><span class="p">,</span> <span class="n">rows_idx</span><span class="p">)</span>
+
+<span class="n">r_mesh</span> <span class="o">=</span> <span class="p">(</span><span class="n">r_mesh</span> <span class="o">/</span> <span class="n">rows</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">c_mesh</span> <span class="o">=</span> <span class="p">(</span><span class="n">c_mesh</span> <span class="o">/</span> <span class="n">cols</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">z_mesh</span> <span class="o">=</span> <span class="p">(</span><span class="n">z_mesh</span> <span class="o">/</span> <span class="n">key_zs</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">mesh_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">r_mesh</span><span class="p">,</span> <span class="n">c_mesh</span><span class="p">,</span> <span class="n">z_mesh</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+
+<span class="n">FLAGS</span><span class="o">.</span><span class="n">view_size</span> <span class="o">=</span> <span class="n">rows_idx</span><span class="o">.</span><span class="n">size</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">output_dir</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">result_save_dir</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">recon</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">model_save_dir</span><span class="p">,</span> <span class="n">mesh_grid</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">partial_render</span><span class="p">:</span>
+    <span class="n">save_name</span> <span class="o">=</span> <span class="s2">&quot;prediction_result_zmax</span><span class="si">{}</span><span class="s2">_zmin</span><span class="si">{}</span><span class="s2">_zdelta</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">_to_</span><span class="si">{}</span><span class="s2">_x</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">output_dir</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_max</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_min</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_delta</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">row_render_min</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">row_render_max</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">col_render_min</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">col_render_max</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_render_min</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_render_max</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">super_resolution_scale</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">save_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">.mat&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">save_name</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">save_name</span> <span class="o">=</span> <span class="s2">&quot;prediction_result_zmax</span><span class="si">{}</span><span class="s2">_zmin</span><span class="si">{}</span><span class="s2">_zdelta</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_max</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_min</span><span class="p">,</span>
+        <span class="n">FLAGS</span><span class="o">.</span><span class="n">z_delta</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">save_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">.mat&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">output_dir</span><span class="p">,</span>
+        <span class="n">save_name</span>
+    <span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Inference ended in </span><span class="si">{:4}</span><span class="s2"> seconds.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">))</span>
+<span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">h5_file</span><span class="p">:</span>
+    <span class="n">h5_file</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;recon&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">recon</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prediction saved to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">save_path</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>WARNING:tensorflow:You are casting an input of type complex64 to an incompatible dtype float32.  This will discard the imaginary part and may not be what you intended.
+WARNING:tensorflow:You are casting an input of type complex64 to an incompatible dtype float32.  This will discard the imaginary part and may not be what you intended.
+INFO:tensorflow:Restoring parameters from ../../../../code/NeRF_optics/DeCAF-master/datasets/Celegans_head/trained_model/model
+Inference ended in 18.539338678121567 seconds.
+Prediction saved to ../../../../code/NeRF_optics/DeCAF-master/datasets/Celegans_head/inference//prediction_result_zmax10.0_zmin-10.0_zdelta0.25.mat
+</pre></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="visualization">
+<h1>Visualization<a class="headerlink" href="#visualization" title="Link to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ab</span> <span class="o">=</span> <span class="n">recon</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">ph</span> <span class="o">=</span> <span class="n">recon</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="n">visual</span> <span class="o">=</span> <span class="s2">&quot;n_re&quot;</span>
+<span class="n">n_re</span><span class="p">,</span> <span class="n">n_im</span> <span class="o">=</span> <span class="n">perm2RI</span><span class="p">(</span><span class="n">ph</span><span class="p">,</span> <span class="n">ab</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">n0</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">n_re</span>
+
+<span class="k">if</span> <span class="n">visual</span> <span class="o">==</span> <span class="s1">&#39;n_re&#39;</span><span class="p">:</span>
+    <span class="n">up</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">n0</span> <span class="o">+</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">render_max</span><span class="p">;</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">n0</span> <span class="o">+</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">render_min</span><span class="p">;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">up</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">render_max</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">render_min</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="p">(</span><span class="n">up</span> <span class="o">+</span> <span class="n">low</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">up</span> <span class="o">-</span> <span class="n">low</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">up</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">*=</span> <span class="mi">255</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">show_slice</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted RI Slice z=</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;z-slice&#39;</span><span class="p">)</span>
+<span class="n">widgets</span><span class="o">.</span><span class="n">interact</span><span class="p">(</span><span class="n">show_slice</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">slider</span><span class="p">)</span>
+
+
+
+<span class="n">video_frames</span> <span class="o">=</span><span class="p">[]</span>
+<span class="n">image_dir</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">save_name</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">image_dir</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">image_dir</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">image_dir</span> <span class="o">+</span> <span class="s1">&#39;img_</span><span class="si">{}</span><span class="s1">.tif&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+    <span class="n">video_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">.mp4&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">save_name</span><span class="p">)</span>
+<span class="c1"># imageio.mimwrite(f, video_frames, fps=8, quality=7)</span>
+<span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.mp4&quot;</span><span class="p">,</span> <span class="s2">&quot;.gif&quot;</span><span class="p">,</span> <span class="s2">&quot;.avi&quot;</span><span class="p">]:</span>
+    <span class="n">imageio</span><span class="o">.</span><span class="n">mimwrite</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">video_frames</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">quality</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">imageio</span><span class="o">.</span><span class="n">mimwrite</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">video_frames</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>er max: 0.053090374916791916, er min:-0.04331733286380768
+
+
+
+interactive(children=(IntSlider(value=0, description=&#39;z-slice&#39;, max=80), Output()), _dom_classes=(&#39;widget-inte…
+
+
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (1000, 1000) to (1008, 1008) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[swscaler @ 0x577ac80] Warning: data is not aligned! This can lead to a speed loss
+
+
+
+在当前单元格或上一个单元格中执行代码时 Kernel 崩溃。
+
+
+请查看单元格中的代码，以确定故障的可能原因。
+
+
+单击&lt;a href=&#39;https://aka.ms/vscodeJupyterKernelCrash&#39;&gt;此处&lt;/a&gt;了解详细信息。
+
+
+有关更多详细信息，请查看 Jupyter &lt;a href=&#39;command:jupyter.viewOutput&#39;&gt;log&lt;/a&gt;。
+</pre></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/Chapter08_DeCAF"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#highlights">1. Highlights:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#background">2. Background</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-idea-of-decaf">3. Core Idea of DeCAF</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contributions-of-the-paper">3. Contributions of the Paper</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">4. References</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-files">Loading files</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">Inference</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xueqing Gao
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
