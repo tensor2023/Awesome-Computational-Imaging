@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "Neural space–time model for dynamic multi-shot imaging"
+### From Paper to Code: Understanding and Reproducing "Neural space–time model for dynamic multi-shot imaging"
 ![image.png](Chapter09_Neural_SpaceTime_files/image.png)
 Code: [GitHub Repository](https://github.com/rmcao/nstm), 
 Source Code in My Repo: ../../../../code/NeRF_optics/nstm-main/examples/notebook-DPC.ipynb

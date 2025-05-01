@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting"
+### From Paper to Code: Understanding and Reproducing "GaussianImage: 1000 FPS Image Representation  and Compression by 2D Gaussian Splatting"
 ![image.png](Chapter05_Gaussian_Image_files/image.png)
 Code: [GitHub Repository](https://github.com/Xinjie-Q/GaussianImage), 
 Source Code in My Repo: ../../../code/GS/GaussianImage-main/train.py

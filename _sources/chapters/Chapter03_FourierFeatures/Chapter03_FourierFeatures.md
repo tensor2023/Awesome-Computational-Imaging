@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains"
+### From Paper to Code: Understanding and Reproducing "Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains"
 ![image.png](Chapter03_FourierFeatures_files/image.png)
 Code: [GitHub Repository](https://bmild.github.io/fourfeat/)
 Source Code in My Repo: ../../../../code/NeRF/fourier-feature-networks-master/fourier-feature-networks-master/demo.py

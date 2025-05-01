@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "Implicit Neural Representations with Periodic Activation Functions"
+### From Paper to Code: Understanding and Reproducing "Implicit Neural Representations with Periodic Activation Functions"
 ![image.png](SIREN_files/image.png)
 Code: GitHub Repository https://vsitzmann.github.io/siren/
 Source Code in My Repo: ../../../../code/NeRF/siren-master/explore_siren.ipynb

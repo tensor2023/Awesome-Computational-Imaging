@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "Score-Based Diffusion Models as Principled Priors for Inverse Imaging"
+### From Paper to Code: Understanding and Reproducing "Score-Based Diffusion Models as Principled Priors for Inverse Imaging"
 ![image.png](Chapter12_ScoreDiffusion_files/image.png)
 Code: [GitHub Repository](https://github.com/berthyf96/score_prior), 
 Corresponding code: ../../../../code/Inv/score_prior-main/demos/2d_posterior_sampling.py

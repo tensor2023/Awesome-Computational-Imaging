@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis"
+### From Paper to Code: Understanding and Reproducing "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis"
 ![image.png](Chapter02_NeRF_files/image.png)
 Code: [GitHub Repository(Tnsorflow)](https://github.com/bmild/nerf), [GitHub Repository(Pytorch)](https://github.com/yenchenlin/nerf-pytorch)
 Source Code in My Repo: ../../../code/NeRF/nerf-pytorch-master/run_nerf.py

@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling"
+### From Paper to Code: Understanding and Reproducing "Pixel to Gaussian: Ultra-Fast Continuous Super-Resolution with 2D Gaussian Modeling"
 ![image.png](Chapter06_Pixel2Gaussian_files/image.png)
 Code: [GitHub Repository](https://github.com/Xinjie-Q/GaussianImage), 
 Source Code in My Repo: ../../../../code/GS/ContinuousSR-main/demo.py

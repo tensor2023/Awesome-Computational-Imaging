@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields"
+### From Paper to Code: Understanding and Reproducing "Recovery of continuous 3D refractive index maps from discrete intensity-only measurements using neural fields"
 ![image.png](Chapter08_DeCAF_files/image.png)
 Code: [GitHub Repository](https://github.com/wustl-cig/DeCAF), 
 Source Code in My Repo: ../../../code/NeRF_optics/DeCAF-master/predict.py

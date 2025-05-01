@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "Plug-and-Play Image Restoration with Deep Denoiser Prior"
+### From Paper to Code: Understanding and Reproducing "Plug-and-Play Image Restoration with Deep Denoiser Prior"
 ![image.png](Chapter13_PlugAndPlay_files/image.png)
 Code: [GitHub Repository](https://github.com/cszn/DPIR), 
 Source Code in My Repo: ../../../../code/PnP/DPIR-master/main_dpir_deblocking_color.py

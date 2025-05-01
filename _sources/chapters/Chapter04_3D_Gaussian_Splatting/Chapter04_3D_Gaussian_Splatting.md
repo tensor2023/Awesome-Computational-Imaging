@@ -1,4 +1,4 @@
-## From Paper to Code: Understanding and Reproducing "3D Gaussian Splatting for Real-Time Radiance Field Rendering"
+### From Paper to Code: Understanding and Reproducing "3D Gaussian Splatting for Real-Time Radiance Field Rendering"
 ![image.png](Chapter04_3D_Gaussian_Splatting_files/image.png)
 Code: https://github.com/graphdeco-inria/gaussian-splatting
 Code: [GitHub Repository](https://bmild.github.io/fourfeat/)
